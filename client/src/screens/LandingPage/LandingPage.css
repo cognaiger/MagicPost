@@ -1,0 +1,170 @@
+.topbar-child {
+    position: absolute;
+    top: 34px;
+    left: 102px;
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+  }
+  .magicpost {
+    position: absolute;
+    top: 38px;
+    left: 188px;
+    font-size: 40px;
+  }
+  .locations,
+  .services,
+  .tracking {
+    position: absolute;
+    top: 53px;
+    left: 447px;
+    font-weight: 600;
+  }
+  .locations,
+  .tracking {
+    left: 543px;
+  }
+  .locations {
+    left: 640px;
+  }
+  .instance-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 8px;
+    background-color: #000;
+  }
+  .sign-up {
+    position: absolute;
+    top: 32%;
+    left: 25%;
+    font-weight: 600;
+  }
+  .rectangle-parent {
+    position: absolute;
+    top: 36px;
+    right: 93px;
+    width: 120px;
+    height: 50px;
+    color: #fff;
+  }
+  .log-in,
+  .topbar {
+    position: absolute;
+  }
+  .log-in {
+    top: 53px;
+    right: 248px;
+    font-weight: 600;
+  }
+  .topbar {
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 125px;
+    overflow: hidden;
+  }
+  .screenshot-from-2023-10-24-09- {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 592px;
+    height: 644px;
+    object-fit: cover;
+  }
+  .right-part {
+    position: absolute;
+    top: 0;
+    left: 596px;
+    width: 592px;
+    height: 644px;
+    overflow: hidden;
+  }
+  .your-lighting-fast {
+    margin: 0;
+  }
+  .your-lighting-fast-delivery-container {
+    position: absolute;
+    top: 54px;
+    left: 37px;
+    display: inline-block;
+    width: 485px;
+  }
+  .magicpost-is-a-container {
+    position: absolute;
+    top: 213px;
+    left: 37px;
+    font-size: 20px;
+  }
+  .left-part-child {
+    position: absolute;
+    top: 349px;
+    left: 35px;
+    width: 482px;
+    height: 2px;
+  }
+  .span {
+    color: #000;
+  }
+  .span1 {
+    color: #db2848;
+  }
+  .expedition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 120px;
+  }
+  .packages-delivered {
+    margin: 0;
+    font-size: 20px;
+  }
+  .m-packages-delivered-container {
+    position: absolute;
+    top: 0;
+    left: 210px;
+  }
+  .frame,
+  .frame1,
+  .left-part {
+    position: absolute;
+    overflow: hidden;
+  }
+  .frame1 {
+    top: 409px;
+    left: 69px;
+    width: 397px;
+    height: 68px;
+    font-size: 40px;
+  }
+  .frame,
+  .left-part {
+    top: 30px;
+    left: 0;
+    width: 574px;
+    height: 582px;
+  }
+  .frame {
+    top: 130px;
+    left: 44px;
+    width: 1188px;
+    height: 644px;
+    font-size: 48px;
+  }
+  .landing-page {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 832px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 16px;
+    color: #000;
+    font-family: Inter;
+  }
+  
