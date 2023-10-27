@@ -1,4 +1,4 @@
-export enum UserRole {
+export enum Role {
     Boss = 'Boss',
     EPManager = 'EPManager',
     EPOperator = 'EPOperator',
