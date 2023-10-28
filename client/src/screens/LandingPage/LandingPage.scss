@@ -1,0 +1,127 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0px 1px;
+  gap: 1px;
+  justify-content: center;
+  align-items: stretch;
+  background-color: #ffffff;
+
+  .top {
+    display: flex;
+    padding: 34px 98px;
+    align-items: center;
+    justify-content: space-between;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      .text {
+        color: #000;
+
+        /* Brand */
+        font-family: Inter;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+
+      img {
+        width: 56px;
+        height: 56px;
+      }
+    }
+
+    .menu {
+      display: flex;
+      align-items: flex-start;
+      gap: 29px;
+
+      div {
+        color: #000;
+
+        /* NavTitle */
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+
+      .loginbtn {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        background-color: #ffffff;
+        border: hidden;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    align-items: flex-start;
+
+    .left {
+      flex: 1;
+      font-family: Inter;
+
+      .ti1 {
+        color: #000;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+
+      .ti2 {
+        color: #000;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .line {
+        width: 482.001px;
+        height: 1px;
+        background: #000;
+      }
+
+      .statistic {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 90px;
+
+        div {
+          color: #000;
+          font-size: 40px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
+      }
+    }
+
+    .right {
+      flex: 1;
+      padding-top: 8px;
+    }
+  }
+}

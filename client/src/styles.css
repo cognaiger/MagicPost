@@ -1,0 +1,14 @@
+:root {
+    --brand-font-family: "Inter-Bold", Helvetica;
+    --brand-font-size: 40px;
+    --brand-font-style: normal;
+    --brand-font-weight: 700;
+    --brand-letter-spacing: 0px;
+    --brand-line-height: normal;
+    --nav-title-font-family: "Inter-SemiBold", Helvetica;
+    --nav-title-font-size: 16px;
+    --nav-title-font-style: normal;
+    --nav-title-font-weight: 600;
+    --nav-title-letter-spacing: 0px;
+    --nav-title-line-height: normal;
+}

@@ -1,76 +1,47 @@
 import { useNavigate } from "react-router-dom";
-import "./LandingPage.css";
+import logo from "../../img/logo.png";
+import map from "../../img/mapbig.png";
+import "./LandingPage.scss";
+import Button from "../../components/Button/Button";
 
 const LandingPage = () => {
     const navigate = useNavigate();
 
   return (
-    <div className="landing-page">
-      <div className="topbar">
-        <img className="topbar-child" alt="" src="/rectangle-1@2x.png" />
-        <b className="magicpost">MagicPost</b>
-        <div className="services">Services</div>
-        <div className="tracking">Tracking</div>
-        <div className="locations">Locations</div>
-        <div className="rectangle-parent">
-          <div className="instance-child" />
-          <button className="sign-up" onClick={() => navigate("/register")}>Sign up</button>
+    <div className="page">
+      <div className="top">
+        <div className="brand">
+          <img src={logo} alt="logo" />
+          <div className="text">MagicPost</div>
         </div>
-        <div className="log-in">Log in</div>
+
+        <div className="menu">
+          <div>Services</div>
+          <div>Tracking</div>
+          <div>Locations</div>
+        </div>
+
+        <div className="button">
+          <button className="loginbtn" onClick={() => navigate("/login")}>Log in</button>
+          <Button content={"Sign up"} onClick={() => navigate("/register")} />
+        </div>
       </div>
-      <div className="frame">
-        <div className="right-part">
-          <img
-            className="screenshot-from-2023-10-24-09-"
-            alt=""
-            src="/screenshot-from-20231024-095500-1@2x.png"
-          />
+
+      <div className="content">
+        <div className="left">
+          <div className="ti1">Your lighting-fast delivery partner</div>
+          <div className="ti2">MagicPost is a logistic company providing courier, package delivery and express mail service. It helps everyone to send
+            documents, packages, parcels and letter to desired destination
+          </div>
+          <div className="line"></div>
+          <div className="statistic">
+            <div>24/7 Expedition</div>
+            <div>5M+ Packages Delivered</div>
+          </div>
         </div>
-        <div className="left-part">
-          <b className="your-lighting-fast-delivery-container">
-            <p className="your-lighting-fast">{`Your lighting-fast `}</p>
-            <p className="your-lighting-fast">delivery partner</p>
-          </b>
-          <div className="magicpost-is-a-container">
-            <p className="your-lighting-fast">{`MagicPost is a logistic company providing courier, `}</p>
-            <p className="your-lighting-fast">
-              package delivery and express mail service. It helps
-            </p>
-            <p className="your-lighting-fast">
-              everyone to send documents, packages, parcels
-            </p>
-            <p className="your-lighting-fast">
-              and letter to desired destination
-            </p>
-          </div>
-          <img className="left-part-child" alt="" src="/line-1.svg" />
-          <div className="frame1">
-            <div className="expedition">
-              <p className="your-lighting-fast">
-                <b>
-                  <span className="span">24</span>
-                  <span className="span1">/</span>
-                </b>
-                <span>
-                  <b>7</b>
-                </span>
-              </p>
-              <p className="packages-delivered">
-                <span>
-                  <span>{`Expedition `}</span>
-                </span>
-              </p>
-            </div>
-            <div className="m-packages-delivered-container">
-              <p className="your-lighting-fast">
-                <b>
-                  <span>5M</span>
-                  <span className="span1">+</span>
-                </b>
-              </p>
-              <p className="packages-delivered">{`Packages Delivered `}</p>
-            </div>
-          </div>
+
+        <div className="right">
+          <img src={map} alt="map" />
         </div>
       </div>
     </div>
