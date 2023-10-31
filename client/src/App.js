@@ -2,10 +2,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
-import BossHome from "./screens/BossHome/BossHome";
-import CPManagerHome from "./screens/CPManagerHome/CPManagerHome";
-import ProtectedBossHome from "./screens/BossHome/ProtectedBossHome";
+import CPManagerHome from "./screens/CPManager/CPManagerHome/CPManagerHome";
 import { setAuthToken } from "./context/authContext";
+import BHome from "./screens/Boss/BHome/BHome";
+import BDashboard from "./screens/Boss/BDashboard/BDashboard";
+import BAccount from "./screens/Boss/BAccount/BAccount";
+import BLocation from "./screens/Boss/BLocation/BLocation";
 
 function App() {
 
@@ -26,7 +28,11 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/bhome" element={<BossHome />} />
+        <Route path="/bhome" element={<BHome />}>
+          <Route path="" element={<BDashboard />} />
+          <Route path="account" element={<BAccount />} />
+          <Route path="location" element={<BLocation />} />
+        </Route>
         <Route path="cpmanagerhome" element={<CPManagerHome />} />
       </Routes>
     </div>

@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
                     role: response.data.role,
                     name: response.data.name
                 }
+                console.log(user);
                 setCurrentUser(user);
 
                 if (user.role === "Boss") {
@@ -59,7 +60,8 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     const logout = () => {
-        
+        setCurrentUser(null);
+        navigate('/login');
     }
 
     useEffect(() => {
@@ -67,7 +69,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [currentUser]);
 
     return (
-        <AuthContext.Provider value={{ currentUser, login }}>
+        <AuthContext.Provider value={{ currentUser, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
