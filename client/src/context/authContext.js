@@ -33,15 +33,33 @@ export const AuthContextProvider = ({ children }) => {
                 setAuthToken(accessToken);
                 const payload = jwtDecode(accessToken);
                 const user = {
-                    id: payload['id']
+                    id: payload['id'],
+                    role: response.data.role,
+                    name: response.data.name
                 }
                 setCurrentUser(user);
 
-                navigate("/");
+                if (user.role === "Boss") {
+                    navigate("/bhome");
+                } else if (user.role === "EPManager") {
+                    navigate("/epmanagerhome");
+                } else if (user.role === "EPOperator") {
+                    navigate("/");
+                } else if (user.role === "CPStaff") {
+                    navigate("/");
+                } else if (user.role === "CPManager") {
+                    navigate("/");
+                } else {
+                    navigate("/")
+                }
             }
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const logout = () => {
+        
     }
 
     useEffect(() => {
@@ -49,7 +67,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [currentUser]);
 
     return (
-        <AuthContext.Provider value={{ login }}>
+        <AuthContext.Provider value={{ currentUser, login }}>
             {children}
         </AuthContext.Provider>
     )

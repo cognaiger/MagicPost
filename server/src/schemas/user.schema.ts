@@ -16,7 +16,7 @@ export class User {
     password: string;
 
     @Prop({ required: true, type: String, enum: Role, default: Role.Client })
-    type: Role;
+    role: Role;
 
     @Prop({ required: true })
     createdAt: Date;
