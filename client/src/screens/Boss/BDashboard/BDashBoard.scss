@@ -1,0 +1,28 @@
+.bdashboard {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(178, 168, 171, 0.31);
+    height: 100%;
+
+    .top {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px;
+        background-color: #fff;
+
+        .title {
+            color: #000;
+            font-family: Poppins;
+            font-size: 45px;
+            font-weight: 700;
+        }
+    }
+
+    .content {
+        flex: 11;
+        padding: 40px;
+    }
+}
