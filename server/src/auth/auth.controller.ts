@@ -6,6 +6,7 @@ import { Role } from "src/common/const";
 import { Roles } from "src/decorator/roles.decorator";
 import { AuthGuard } from "./guard/auth.guard";
 import { Public } from "src/decorator/public.decorator";
+import { RoleGuard } from "./guard/role.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +27,7 @@ export class AuthController {
     }
 
     @Roles(Role.Boss)
+    @UseGuards(RoleGuard)
     @Post('bregister')
     async bregister(@Body() registerDto: RegisterDto): Promise<any> {
         return await this.authService.bregister(registerDto);
