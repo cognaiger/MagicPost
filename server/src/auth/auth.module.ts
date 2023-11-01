@@ -5,10 +5,18 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { User, UserSchema } from "src/schemas/user.schema";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthGuard } from "./guard/auth.guard";
 
 @Module({
     controllers: [AuthController],
-    providers: [AuthService],
+    providers: [
+        AuthService,
+        {
+            provide: APP_GUARD,
+            useClass: AuthGuard
+        }
+    ],
     imports: [
         MongooseModule.forFeature([
         { name: User.name, schema: UserSchema }

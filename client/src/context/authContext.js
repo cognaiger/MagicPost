@@ -34,7 +34,7 @@ export const AuthContextProvider = ({ children }) => {
                 const payload = jwtDecode(accessToken);
                 const user = {
                     id: payload['id'],
-                    role: response.data.role,
+                    role: payload['role'],
                     name: response.data.name
                 }
                 console.log(user);

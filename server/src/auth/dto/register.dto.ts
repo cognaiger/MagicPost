@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { Role } from "src/common/const";
 
 export class RegisterDto {
     @IsEmail()
@@ -15,4 +16,8 @@ export class RegisterDto {
     @MinLength(8)
     @MaxLength(100)
     password: string;
+
+    @IsEnum(Role)
+    @IsNotEmpty()
+    role: string;
 }

@@ -28,13 +28,13 @@ export class AuthService {
         }
 
         const payload = {
-            id: user.id
+            id: user.id,
+            role: user.role
         }
 
         return {
             accessToken: await this.jwtService.signAsync(payload),
             name: user.fullName,
-            role: user.role
         };
     }
 
@@ -53,7 +53,72 @@ export class AuthService {
             email: email,
             fullName: fullName,
             password: hash,
+            role: "Client",
             createdAt: new Date()
         }).save();
+    }
+
+    async bregister(registerDto: RegisterDto) {
+        const { email, fullName, password, role } = registerDto;
+
+        if (role !== 'EPManager' && role !== 'CPManager') {
+            throw new ConflictException("Can't create this type of accounts", { cause: new Error() });
+        }
+
+        const existingUser = await this.userModel.findOne({ email: email }).exec();
+        if (existingUser) {
+            throw new ConflictException("Email already exist!", { cause: new Error() });
+        }
+
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(password, saltOrRounds);
+
+        return await new this.userModel({
+            email: email,
+            fullName: fullName,
+            password: hash,
+            role: role,
+            createdAt: new Date()
+        }).save(); 
+    }
+
+    async epregister(registerDto: RegisterDto) {
+        const { email, fullName, password } = registerDto;
+
+        const existingUser = await this.userModel.findOne({ email: email }).exec();
+        if (existingUser) {
+            throw new ConflictException("Email already exist!", { cause: new Error() });
+        }
+
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(password, saltOrRounds);
+
+        return await new this.userModel({
+            email: email,
+            fullName: fullName,
+            password: hash,
+            role: "EPOperator",
+            createdAt: new Date()
+        }).save(); 
+    }
+
+    async cpregister(registerDto: RegisterDto) {
+        const { email, fullName, password } = registerDto;
+
+        const existingUser = await this.userModel.findOne({ email: email }).exec();
+        if (existingUser) {
+            throw new ConflictException("Email already exist!", { cause: new Error() });
+        }
+
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(password, saltOrRounds);
+
+        return await new this.userModel({
+            email: email,
+            fullName: fullName,
+            password: hash,
+            role: "CPStaff",
+            createdAt: new Date()
+        }).save(); 
     }
 }
