@@ -6,3 +6,8 @@ export enum Role {
     CPStaff = 'CPStaff',
     Client = 'Client'
 }
+
+export enum PointType {
+    EPoint = 'EPoint',
+    CPoint = 'CPoint'
+}
