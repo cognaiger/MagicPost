@@ -27,7 +27,7 @@ const BDashboard = () => {
         <div className='content'>
             <div className='number'>
                 <SimpleGrid spacing={4} templateColumns='1fr 1fr 1fr' columnGap={40}>
-                    <Card width={400} height={250} borderRadius={8} backgroundColor='#9CFF84'>
+                    <Card width={300} height={250} borderRadius={8} backgroundColor='#9CFF84'>
                         <CardHeader display='flex' justifyContent='space-between'>
                             <Heading size='md'>Sent Packages</Heading>
                             <LocalPostOfficeOutlinedIcon />
@@ -36,7 +36,7 @@ const BDashboard = () => {
                             <Text fontSize={50} fontWeight={700}>500</Text>
                         </CardBody>
                     </Card>
-                    <Card width={400} height={250} borderRadius={8} backgroundColor='#FF738C'>
+                    <Card width={300} height={250} borderRadius={8} backgroundColor='#FF738C'>
                         <CardHeader display='flex' justifyContent='space-between'>
                             <Heading size='md'>Pending Packages</Heading>
                             <LocalShippingOutlinedIcon />
@@ -45,7 +45,7 @@ const BDashboard = () => {
                             <Text fontSize={50} fontWeight={700}>500</Text>
                         </CardBody>
                     </Card>
-                    <Card width={400} height={250} borderRadius={8} backgroundColor='#9EC5FF'>
+                    <Card width={300} height={250} borderRadius={8} backgroundColor='#9EC5FF'>
                         <CardHeader display='flex' justifyContent='space-between'>
                             <Heading size='md'>Received Packages</Heading>
                             <CallReceivedOutlinedIcon />

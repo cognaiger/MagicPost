@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import BossImg from "../../img/bossimg.png";
 import "./SideBarBoss.scss";
@@ -7,10 +7,27 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import { useNavigate } from 'react-router-dom';
+import MenuBtn from '../MenuBtn/MenuBtn';
 
 function SideBarBoss() {
   const { currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [activeBtn, setActiveBtn] = useState('Db');
+
+  const handleDbClick = () => {
+    navigate('/bhome');
+    setActiveBtn('Db');
+  }
+
+  const handleLocationClick = () => {
+    navigate('/bhome/location');
+    setActiveBtn('Location');
+  }
+
+  const handleAccountClick = () => {
+    navigate("/bhome/account");
+    setActiveBtn("Account");
+  }
 
   return (
     <div className='sideBar'>
@@ -19,22 +36,22 @@ function SideBarBoss() {
         <div className='name'>{currentUser.name}</div>
       </div>
       <div className='menu'>
-        <button className='option' onClick={() => navigate("/bhome")}>
+        <MenuBtn onClick={handleDbClick} isActive={activeBtn === 'Db' ? true : false}>
           <DashboardOutlinedIcon />
           <div>Dashboard</div>
-        </button>
-        <button className='option' onClick={() => navigate("/bhome/location")}>
+        </MenuBtn>
+        <MenuBtn className='option' onClick={handleLocationClick} isActive={activeBtn === 'Location' ? true : false}>
           <LocationOnOutlinedIcon />
           <div>Location</div>
-        </button>
-        <button className='option' onClick={() => navigate("/bhome/account")}>
+        </MenuBtn>
+        <MenuBtn className='option' onClick={handleAccountClick} isActive={activeBtn === 'Account' ? true : false}>
           <AccountCircleOutlinedIcon />
           <div>Account</div>
-        </button>
-        <button className='option' onClick={logout}>
+        </MenuBtn>
+        <MenuBtn className='option' onClick={logout} isActive={false}>
           <ExitToAppOutlinedIcon />
           <div>Log out</div>
-        </button>
+        </MenuBtn>
       </div>
     </div>
   )
