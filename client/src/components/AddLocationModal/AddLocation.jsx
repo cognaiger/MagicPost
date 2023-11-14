@@ -2,7 +2,7 @@ import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButt
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddLocation = ({ addOpen, setAddOpen }) => {
+const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => {
     const [type, setType] = useState('TPoint');
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
@@ -10,15 +10,18 @@ const AddLocation = ({ addOpen, setAddOpen }) => {
     const addLocation = async (e) => {
         e.preventDefault();
 
+        const newLocation = {
+            name: name,
+            location: location,
+            type: type
+        }
+
         try {
-            const response = await axios.post("http://localhost:2504/point/add", {
-                name: name,
-                location: location,
-                type: type
-            });
+            const response = await axios.post("http://localhost:2504/point/add", newLocation);
 
             if (response.status === 201) {
                 console.log("successful");
+                setLocationData([...locationData, newLocation])
             } else {
                 console.log("err");
             }

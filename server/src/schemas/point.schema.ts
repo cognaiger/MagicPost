@@ -28,7 +28,7 @@ export class Point {
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     associatedPoint: ObjectId;
 
-    @Prop()
+    @Prop({ default: '' })
     managerName: String;
 
     @Prop()

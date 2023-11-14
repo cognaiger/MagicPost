@@ -9,7 +9,8 @@ export class PointService {
     constructor(@InjectModel(Point.name) private readonly pointModel: Model<PointDocument>) {}
 
     async getAllPoint() {
-        const location = await this.pointModel.find();
+        const location = await this.pointModel.find(null, 'name location type managerName').exec();
+        return location;
     }
 
     async addLocation(addLocationDto: AddLocationDto) {

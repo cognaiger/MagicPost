@@ -1,42 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './BLocation.scss';
 import { Menu, MenuButton, MenuItem, MenuList, Button, Divider } from '@chakra-ui/react';
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import LocationInfo from '../../../components/LocationInfo/LocationInfo';
 import AddLocation from '../../../components/AddLocationModal/AddLocation';
+import axios from 'axios';
 
 const BLocation = () => {
   const [addOpen, setAddOpen] = useState(false);
+  const [locationData, setLocationData] = useState([]);
 
-  const locationData = [
-    {
-      name: "Transaction Point 2",
-      location: "212 Wall Street, Pa, New York",
-      head: "Jame Miller",
-      type: "Transaction Point"
-    },
-    {
-      name: "Transaction Point 2",
-      location: "212 Wall Street, Pa, New York",
-      head: "Jame Miller",
-      type: "Transaction Point"
-    },
-    {
-      name: "Transaction Point 2",
-      location: "212 Wall Street, Pa, New York",
-      head: "Jame Miller",
-      type: "Transaction Point"
-    },
-    {
-      name: "Transaction Point 2",
-      location: "212 Wall Street, Pa, New York",
-      head: "Jame Miller",
-      type: "Transaction Point"
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchData() {
+      try {
+        const res = await axios.get("http://localhost:2504/point");
+        if (!ignore) {
+          setLocationData(res.data);
+        }
+      } catch(err) {
+        console.log(err);
+      }
     }
-  ]
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    }
+  }, []);
 
   const addLocation = () => {
     setAddOpen(true);
+  }
+
+  const getCollectionPoint = () => {
+
+  }
+
+  const getExchangePoint = () => {
+    
   }
 
   return (
@@ -56,8 +60,8 @@ const BLocation = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>All</MenuItem>
-            <MenuItem>Exchange Point</MenuItem>
-            <MenuItem>Collection Point</MenuItem>
+            <MenuItem onClick={getExchangePoint}>Exchange Point</MenuItem>
+            <MenuItem onClick={getCollectionPoint}>Collection Point</MenuItem>
           </MenuList>
         </Menu>
       </div>
@@ -70,7 +74,7 @@ const BLocation = () => {
         }
       </div>
 
-      <AddLocation addOpen={addOpen} setAddOpen={setAddOpen} />
+      <AddLocation addOpen={addOpen} setAddOpen={setAddOpen} locationData={locationData} setLocationData={setLocationData} />
     </div>
   )
 }

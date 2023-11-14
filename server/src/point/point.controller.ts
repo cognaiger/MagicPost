@@ -8,6 +8,7 @@ export class PointController {
     constructor(private readonly pointService: PointService) {}
 
     @Get('/')
+    @Public()
     async getAllPoint(): Promise<any> {
         return await this.pointService.getAllPoint();
     }
