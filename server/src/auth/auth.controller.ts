@@ -11,7 +11,6 @@ import { RoleGuard } from "./guard/role.guard";
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {
-
     };
 
     @Public()
