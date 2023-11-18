@@ -28,4 +28,8 @@ export class RegisterDto {
     @IsMongoId()
     @IsOptional()
     cPoint?: string;
+
+    @IsString()
+    @IsOptional()
+    branch?: string;
 }

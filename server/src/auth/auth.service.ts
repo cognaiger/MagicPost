@@ -59,7 +59,7 @@ export class AuthService {
     }
 
     async bregister(registerDto: RegisterDto) {
-        const { email, fullName, password, role } = registerDto;
+        const { email, fullName, password, role, ePoint, cPoint, branch } = registerDto;
 
         if (role !== 'EPManager' && role !== 'CPManager') {
             throw new ConflictException("Can't create this type of accounts", { cause: new Error() });
@@ -73,11 +73,17 @@ export class AuthService {
         const saltOrRounds = 10;
         const hash = await bcrypt.hash(password, saltOrRounds);
 
+        console.log(ePoint);
+        console.log(cPoint);
+
         return await new this.userModel({
             email: email,
             fullName: fullName,
             password: hash,
             role: role,
+            ePoint: ePoint,
+            cPoint: cPoint,
+            branch: branch,
             createdAt: new Date()
         }).save(); 
     }
@@ -123,7 +129,7 @@ export class AuthService {
     }
 
     async getAccount(type: string) {
-        const account = await this.userModel.find({ role: type }, 'email fullName role branch createdAt').exec();
+        const account = await this.userModel.find({ role: type }, 'email fullName role branch').exec();
         return account;
     }
 }

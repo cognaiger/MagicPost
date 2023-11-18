@@ -73,7 +73,6 @@ const BAccount = () => {
                 <Th>Email</Th>
                 <Th>Role</Th>
                 <Th>Branch</Th>
-                <Th>Created At</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -83,7 +82,6 @@ const BAccount = () => {
                   <Td>{el.email}</Td>
                   <Td>{el.role === 'EPManager' ? "Exchange Point Manager" : "Collection Point Manager"}</Td>
                   <Td>{el.branch}</Td>
-                  <Td>{el.createdAt}</Td>
                   <Td>
                     <MoreVertIcon />
                   </Td>

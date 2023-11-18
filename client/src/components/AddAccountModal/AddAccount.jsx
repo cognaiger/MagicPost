@@ -52,6 +52,7 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
             email: email,
             password: password,
             role: role,
+            branch: branchName
         }
 
         role === "EPManager" ? newAccount['ePoint'] = branchId : newAccount['cPoint'] = branchId;
@@ -75,6 +76,8 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
     const onChooseItem = (id, name) => {
         setBranchId(id);
         setBranchName(name);
+        console.log(id);
+        console.log(name);
     }
 
     return (
@@ -114,11 +117,11 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
                             {
                                 role === 'EPManager' ?
                                 ePoint.map((el, i) => (
-                                    <MenuItem key={i} onClick={() => onChooseItem(el.id, el.name)}>{el.name}</MenuItem>
+                                    <MenuItem key={i} onClick={() => onChooseItem(el._id, el.name)}>{el.name}</MenuItem>
                                 ))
                                 :
                                 cPoint.map((el, i) => (
-                                    <MenuItem key={i} onClick={() => onChooseItem(el.id, el.name)}>{el.name}</MenuItem>
+                                    <MenuItem key={i} onClick={() => onChooseItem(el._id, el.name)}>{el.name}</MenuItem>
                                 ))
                             }
                         </MenuList>
