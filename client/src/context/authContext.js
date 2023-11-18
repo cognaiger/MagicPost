@@ -35,7 +35,9 @@ export const AuthContextProvider = ({ children }) => {
                 const user = {
                     id: payload['id'],
                     role: payload['role'],
-                    name: response.data.name
+                    name: response.data.name,
+                    epoint: response.data.epoint,
+                    cpoint: response.data.cpoint
                 }
                 console.log(user);
                 setCurrentUser(user);
@@ -43,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
                 if (user.role === "Boss") {
                     navigate("/bhome");
                 } else if (user.role === "EPManager") {
-                    navigate("/epmanagerhome");
+                    navigate("/epmhome");
                 } else if (user.role === "EPOperator") {
                     navigate("/");
                 } else if (user.role === "CPStaff") {

@@ -32,4 +32,8 @@ export class PointService {
             type: type
         }).save();
     }
+
+    async getPointById(id: string) {
+        return await this.pointModel.find({ _id: id }, 'name type sentPackage pendingPackage receivedPackage').exec();
+    }
 }

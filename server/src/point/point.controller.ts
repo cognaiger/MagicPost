@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { PointService } from "./point.service";
 import { AddLocationDto } from "./dto/addLocation.dto";
 import { Public } from "src/decorator/public.decorator";
@@ -17,5 +17,11 @@ export class PointController {
     @Public()
     async addLocation(@Body() addLocationDto: AddLocationDto): Promise<any> {
         return await this.pointService.addLocation(addLocationDto);
+    }
+
+    @Get(':id')
+    @Public()
+    async getPointById(@Param('id') id: string): Promise<any> {
+        return await this.pointService.getPointById(id);
     }
 }

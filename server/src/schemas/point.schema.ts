@@ -20,6 +20,9 @@ export class Point {
     sentPackage: Number;
 
     @Prop({ required: true, default: 0 })
+    pendingPackage: Number;
+
+    @Prop({ required: true, default: 0 })
     receivedPackage: Number;
 
     @Prop({ type: mongoose.Types.ObjectId, ref: User.name })
