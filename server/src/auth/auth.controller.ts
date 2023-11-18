@@ -32,6 +32,7 @@ export class AuthController {
         return await this.authService.bregister(registerDto);
     }
 
+    @Public()
     @Roles(Role.EPManager)
     @Post('epregister')
     async epregister(@Body() registerDto: RegisterDto): Promise<any> {

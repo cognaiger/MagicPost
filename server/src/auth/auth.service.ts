@@ -36,7 +36,8 @@ export class AuthService {
             accessToken: await this.jwtService.signAsync(payload),
             name: user.fullName,
             epoint: user.ePoint,
-            cpoint: user.cPoint
+            cpoint: user.cPoint,
+            branch: user.branch
         };
     }
 
@@ -91,7 +92,7 @@ export class AuthService {
     }
 
     async epregister(registerDto: RegisterDto) {
-        const { email, fullName, password } = registerDto;
+        const { email, fullName, password, branch } = registerDto;
 
         const existingUser = await this.userModel.findOne({ email: email }).exec();
         if (existingUser) {
@@ -106,6 +107,7 @@ export class AuthService {
             fullName: fullName,
             password: hash,
             role: "EPOperator",
+            branch: branch,
             createdAt: new Date()
         }).save(); 
     }

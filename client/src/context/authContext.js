@@ -37,7 +37,8 @@ export const AuthContextProvider = ({ children }) => {
                     role: payload['role'],
                     name: response.data.name,
                     epoint: response.data.epoint,
-                    cpoint: response.data.cpoint
+                    cpoint: response.data.cpoint,
+                    branch: response.data.branch
                 }
                 console.log(user);
                 setCurrentUser(user);
