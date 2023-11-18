@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 import { Role } from "src/common/const";
 
 export class RegisterDto {
@@ -20,4 +20,12 @@ export class RegisterDto {
     @IsEnum(Role)
     @IsNotEmpty()
     role: string;
+
+    @IsMongoId()
+    @IsOptional()
+    ePoint?: string;
+
+    @IsMongoId()
+    @IsOptional()
+    cPoint?: string;
 }
