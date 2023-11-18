@@ -8,9 +8,14 @@ import { AddLocationDto } from "./dto/addLocation.dto";
 export class PointService {
     constructor(@InjectModel(Point.name) private readonly pointModel: Model<PointDocument>) {}
 
-    async getAllPoint() {
-        const location = await this.pointModel.find(null, 'name location type managerName').exec();
-        return location;
+    async getAllPoint(type: string) {
+        if (type === 'all') {
+            return await this.pointModel.find(null, 'name location type managerName').exec();
+        } else if (type === 'ep') {
+            return await this.pointModel.find({ type: 'EPoint' }, 'name location type managerName').exec();
+        } 
+        
+        return await this.pointModel.find({ type: 'CPoint' }, 'name location type managerName').exec();
     }
 
     async addLocation(addLocationDto: AddLocationDto) {

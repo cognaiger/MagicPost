@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./BAccount.scss";
 import { Button, Divider, Menu, MenuButton, MenuItem, MenuList, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import axios from 'axios';
+import AddAccount from '../../../components/AddAccountModal/AddAccount';
 
 const BAccount = () => {
+  const [addOpen, setAddOpen] = useState(false);
+  const [accountData, setAccountData] = useState([]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchData() {
+      try {
+        const res1 = await axios.get("http://localhost:2504/auth/account", {
+          params: {
+            type: 'EPManager'
+          }
+        });
+        const res2 = await axios.get("http://localhost:2504/auth/account", {
+          params: {
+            type: 'CPManager'
+          }
+        });
+        if (!ignore) {
+          setAccountData([...res1.data, ...res2.data]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    }
+  }, []);
+
+
   return (
     <div className='baccount'>
       <div className='top'>
@@ -13,7 +49,7 @@ const BAccount = () => {
       </div>
 
       <div className='option'>
-        <Button colorScheme='purple' leftIcon={<AddIcon />}>
+        <Button colorScheme='purple' leftIcon={<AddIcon />} onClick={() => setAddOpen(true)}>
           Add account
         </Button>
         <Menu>
@@ -41,40 +77,24 @@ const BAccount = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>Ragnar Lothbrok</Td>
-                <Td>ragnar@gmail.com</Td>
-                <Td>Head of exchange point</Td>
-                <Td>123A, PA, New York</Td>
-                <Td>April 10, 2023 7:20 PM</Td>
-                <Td>
-                  <MoreVertIcon />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Ragnar Lothbrok</Td>
-                <Td>ragnar@gmail.com</Td>
-                <Td>Head of exchange point</Td>
-                <Td>123A, PA, New York</Td>
-                <Td>April 10, 2023 7:20 PM</Td>
-                <Td>
-                  <MoreVertIcon />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Ragnar Lothbrok</Td>
-                <Td>ragnar@gmail.com</Td>
-                <Td>Head of exchange point</Td>
-                <Td>123A, PA, New York</Td>
-                <Td>April 10, 2023 7:20 PM</Td>
-                <Td>
-                  <MoreVertIcon />
-                </Td>
-              </Tr>
+              {accountData.map((el, i) => (
+                <Tr key={i}>
+                  <Td>{el.fullName}</Td>
+                  <Td>{el.email}</Td>
+                  <Td>{el.role === 'EPManager' ? "Exchange Point Manager" : "Collection Point Manager"}</Td>
+                  <Td>{el.branch}</Td>
+                  <Td>{el.createdAt}</Td>
+                  <Td>
+                    <MoreVertIcon />
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </TableContainer>
       </div>
+
+      <AddAccount addOpen={addOpen} setAddOpen={setAddOpen} accountData={accountData} setAccountData={setAccountData} />
     </div>
   )
 }

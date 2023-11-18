@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
@@ -25,8 +25,8 @@ export class AuthController {
         return await this.authService.register(registerDto);
     }
 
+    @Public()
     @Roles(Role.Boss)
-    @UseGuards(RoleGuard)
     @Post('bregister')
     async bregister(@Body() registerDto: RegisterDto): Promise<any> {
         return await this.authService.bregister(registerDto);
@@ -42,5 +42,11 @@ export class AuthController {
     @Post('cpregister')
     async cpregister(@Body() registerDto: RegisterDto): Promise<any> {
         return await this.authService.cpregister(registerDto);
+    }
+
+    @Public()
+    @Get('account')
+    async getAccount(@Query('type') type: string): Promise<any> {
+        return await this.authService.getAccount(type);
     }
 }

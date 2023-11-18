@@ -121,4 +121,9 @@ export class AuthService {
             createdAt: new Date()
         }).save(); 
     }
+
+    async getAccount(type: string) {
+        const account = await this.userModel.find({ role: type }, 'email fullName role branch createdAt').exec();
+        return account;
+    }
 }

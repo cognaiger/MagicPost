@@ -8,6 +8,6 @@ export enum Role {
 }
 
 export enum PointType {
-    TPoint = 'TPoint',
+    TPoint = 'EPoint',
     CPoint = 'CPoint'
 }

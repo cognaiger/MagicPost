@@ -17,7 +17,7 @@ const LocationInfo = ({ name, location, head, type }) => {
                 </div>
                 <div className='prop'>
                     <div className='key'>Type</div>
-                    <div className='value'>{type === 'TPoint' ? "Transaction Point" : "Collection Point"}</div>
+                    <div className='value'>{type === 'EPoint' ? "Exchange Point" : "Collection Point"}</div>
                 </div>
             </div>
             <MoreVertIcon />

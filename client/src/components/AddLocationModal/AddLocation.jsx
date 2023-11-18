@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => {
-    const [type, setType] = useState('TPoint');
+    const [type, setType] = useState('EPoint');
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
 
@@ -50,7 +50,7 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => 
 
                     <RadioGroup onChange={setType} value={type} mt={6}>
                         <Stack direction='row'>
-                            <Radio value='TPoint' onChange={() => setType('TPoint')}>Transaction Point</Radio>
+                            <Radio value='EPoint' onChange={() => setType('EPoint')}>Exchange Point</Radio>
                             <Radio value='CPoint' onChange={() => setType('CPoint')}>Collection Point</Radio>
                         </Stack>
                     </RadioGroup>

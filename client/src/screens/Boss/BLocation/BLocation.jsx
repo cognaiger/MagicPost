@@ -15,7 +15,11 @@ const BLocation = () => {
 
     async function fetchData() {
       try {
-        const res = await axios.get("http://localhost:2504/point");
+        const res = await axios.get("http://localhost:2504/point", {
+          params: {
+            type: "all"
+          }
+        });
         if (!ignore) {
           setLocationData(res.data);
         }
@@ -69,7 +73,7 @@ const BLocation = () => {
       <div className='info'>
         {
           locationData.map((el, i) => (
-            <LocationInfo name={el.name} location={el.location} head={el.head} type={el.type} />
+            <LocationInfo name={el.name} location={el.location} head={el.head} type={el.type} key={i} />
           ))
         }
       </div>
