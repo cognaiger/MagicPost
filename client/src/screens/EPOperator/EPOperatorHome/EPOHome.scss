@@ -1,0 +1,12 @@
+.bossHome {
+    display: flex;
+    flex-direction: row;
+
+    .sideBar {
+        flex: 1;
+    }
+
+    .content {
+        flex: 4;
+    }
+}

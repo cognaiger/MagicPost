@@ -11,6 +11,10 @@ import BLocation from "./screens/Boss/BLocation/BLocation";
 import EPManagerHome from "./screens/EPManager/EPManagerHome/EPManagerHome";
 import EPMDashboard from "./screens/EPManager/EPMDashboard/EPMDashboard";
 import EPMAccount from "./screens/EPManager/EPMAccount/EPMAccount";
+import EPOHome from "./screens/EPOperator/EPOperatorHome/EPOHome";
+import EPODashboard from "./screens/EPOperator/EPODashboard/EPODashboard";
+import EPOOrder from "./screens/EPOperator/EPOOrder/EPOOrder";
+import EPOBill from "./screens/EPOperator/EPOBill/EPOBill";
 
 function App() {
 
@@ -39,6 +43,11 @@ function App() {
         <Route path="/epmhome" element={<EPManagerHome />}>
           <Route path="" element={<EPMDashboard />} />
           <Route path="account" element={<EPMAccount />} />
+        </Route>
+        <Route path="/epohome" element={<EPOHome />}>
+          <Route path="" element={<EPODashboard />} />
+          <Route path="order" element={<EPOOrder />} />
+          <Route path="bill" element={<EPOBill />} />
         </Route>
         <Route path="cpmanagerhome" element={<CPManagerHome />} />
       </Routes>
