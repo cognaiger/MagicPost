@@ -3,9 +3,9 @@ import { AuthContext } from '../../context/authContext';
 import BossImg from "../../img/bossimg.png";
 import "./SideBarEPO.scss";
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import { useNavigate } from 'react-router-dom';
 import MenuBtn from '../MenuBtn/MenuBtn';
 
@@ -45,11 +45,11 @@ const SideBarEPO = () => {
           <div>Dashboard</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={handleBillClick} isActive={activeBtn === 'Bill' ? true : false}>
-          <LocationOnOutlinedIcon />
+          <InsertDriveFileOutlinedIcon />
           <div>Bill</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={handleShipmentClick} isActive={activeBtn === 'Order' ? true : false}>
-          <AccountCircleOutlinedIcon />
+          <LocalShippingOutlinedIcon />
           <div>Ship Order</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={logout} isActive={false}>
