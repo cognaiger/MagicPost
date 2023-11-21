@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument, ObjectId } from "mongoose";
 import { Point } from "./point.schema";
+import { FailOption, PackageType } from "src/common/const";
 
 export type BillDocument = HydratedDocument<Bill>;
 
-@Schema()
+@Schema({ _id: false })
 class Sender {
     @Prop()
     email: String;
@@ -16,14 +17,14 @@ class Sender {
     mobile: String;
 
     @Prop({ required: true })
-    location: String;
+    address: String;
 
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     point: ObjectId;
 }
 const senderSchema = SchemaFactory.createForClass(Sender);
 
-@Schema()
+@Schema({ _id: false })
 class Receiver {
     @Prop()
     email: String;
@@ -35,7 +36,7 @@ class Receiver {
     mobile: String;
 
     @Prop({ required: true })
-    location: String;
+    address: String;
 
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     point: ObjectId;
@@ -50,6 +51,12 @@ export class Bill {
     @Prop({ type: receiverSchema })
     receiver: Receiver;
 
+    @Prop({ required: true, type: String, enum: PackageType, default: PackageType.Document })
+    packageType: String;
+
+    @Prop({ required: true, type: String, enum: FailOption, default: FailOption.Op1 })
+    failOption: String;
+
     @Prop({ required: true})
     timeSent: Date;
 
@@ -61,6 +68,9 @@ export class Bill {
 
     @Prop({ required: true })
     weigh: Number;
+
+    @Prop({ required: true })
+    receiverPayment: Number;
 }
 
 export const BillSchema = SchemaFactory.createForClass(Bill);

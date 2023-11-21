@@ -1,13 +1,16 @@
 import { Button, FormControl, FormLabel, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FailOption } from '../../common/const';
+import { AuthContext } from '../../context/authContext';
 
-const AddBillModal = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
+const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
+    const [senderEmail, setSenderEmail] = useState('');
     const [senderName, setSenderName] = useState('');
     const [senderNum, setSenderNum] = useState('');
     const [senderAddr, setSenderAddr] = useState('');
+    const [receiverEmail, setReceiverEmail] = useState('');
     const [receiverName, setReceiverName] = useState('');
     const [receiverNum, setReceiverNum] = useState('');
     const [receiverAddr, setReceiverAddr] = useState('');
@@ -19,6 +22,8 @@ const AddBillModal = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
     const [desEP, setDesEP] = useState('');
     const [desEPName, setDesEPName] = useState('');
     const [ePoint, setEPoint] = useState([]);
+
+    const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
         let ignore = false;
@@ -47,6 +52,39 @@ const AddBillModal = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
 
     const addBill = async (e) => {
         e.preventDefault();
+
+        const newBill = {
+            senderEmail: senderEmail,
+            senderName: senderName,
+            senderNum: senderNum,
+            senderAddr: senderAddr,
+            senderPoint: currentUser.epoint,
+            receiverEmail: receiverEmail,
+            receiverName: receiverName,
+            receiverNum: receiverNum,
+            receiverAddr: receiverAddr,
+            receiverPoint: desEP,
+            packageType: type,
+            failOption: failOption,
+            fee: fee,
+            weigh: weigh,
+            receiverPayment: receiverPayment
+        }
+
+        console.log(newBill);
+
+        try {
+            const response = await axios.post("http://localhost:2504/bill/add", newBill);
+            if (response.status === 201) {
+                console.log("successful");
+            } else {
+                console.log("err");
+            }
+            setAddOpen(false);
+        } catch (err) {
+            console.log("in catch");
+            console.log(err);
+        }
     }
 
     const onChooseItem = (id, name) => {
@@ -65,14 +103,16 @@ const AddBillModal = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
                 <ModalBody>
                     <FormControl>
                         <FormLabel fontWeight={600}>Sender</FormLabel>
-                        <Input placeholder='Name' value={senderName} onChange={(e) => setSenderName(e.target.value)} />
+                        <Input placeholder='Email' value={senderEmail} onChange={(e) => setSenderEmail(e.target.value)} />
+                        <Input placeholder='Name' value={senderName} onChange={(e) => setSenderName(e.target.value)} mt={6} />
                         <Input placeholder='Mobile Number' value={senderNum} onChange={(e) => setSenderNum(e.target.value)} mt={6} />
                         <Input placeholder='Address' value={senderAddr} onChange={(e) => setSenderAddr(e.target.value)} mt={6} />
                     </FormControl>
 
                     <FormControl mt={4}>
                         <FormLabel fontWeight={600}>Receiver</FormLabel>
-                        <Input placeholder='Name' value={receiverName} onChange={(e) => setReceiverName(e.target.value)} />
+                        <Input placeholder='Email' value={receiverEmail} onChange={(e) => setReceiverEmail(e.target.value)} />
+                        <Input placeholder='Name' value={receiverName} onChange={(e) => setReceiverName(e.target.value)} mt={6} />
                         <Input placeholder='Mobile Number' value={receiverNum} onChange={(e) => setReceiverNum(e.target.value)} mt={6} />
                         <Input placeholder='Address' value={receiverAddr} onChange={(e) => setReceiverAddr(e.target.value)} mt={6} />
                     </FormControl>

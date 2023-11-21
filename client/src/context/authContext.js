@@ -38,7 +38,7 @@ export const AuthContextProvider = ({ children }) => {
                     name: response.data.name,
                     epoint: response.data.epoint,
                     cpoint: response.data.cpoint,
-                    branch: response.data.branch
+                    branch: response.data.branch,
                 }
                 console.log(user);
                 setCurrentUser(user);

@@ -37,7 +37,7 @@ export class AuthService {
             name: user.fullName,
             epoint: user.ePoint,
             cpoint: user.cPoint,
-            branch: user.branch
+            branch: user.branch,
         };
     }
 
@@ -92,7 +92,7 @@ export class AuthService {
     }
 
     async epregister(registerDto: RegisterDto) {
-        const { email, fullName, password, branch } = registerDto;
+        const { email, fullName, password, branch, ePoint } = registerDto;
 
         const existingUser = await this.userModel.findOne({ email: email }).exec();
         if (existingUser) {
@@ -108,6 +108,7 @@ export class AuthService {
             password: hash,
             role: "EPOperator",
             branch: branch,
+            ePoint: ePoint,
             createdAt: new Date()
         }).save(); 
     }
