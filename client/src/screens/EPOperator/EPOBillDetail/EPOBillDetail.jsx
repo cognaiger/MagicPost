@@ -82,7 +82,7 @@ const EPOBillDetail = () => {
             <div className='action'>
                 <button className='btn1'>
                     <div className='text'>
-                        Create Shipment Order
+                        Create Delivery Order
                     </div>
                 </button>
                 <button className='btn2'>

@@ -77,6 +77,7 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
             const response = await axios.post("http://localhost:2504/bill/add", newBill);
             if (response.status === 201) {
                 console.log("successful");
+                setBillData([...billData, newBill]);
             } else {
                 console.log("err");
             }

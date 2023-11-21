@@ -1,7 +1,10 @@
-import { Prop, Schema } from "@nestjs/mongoose";
-import mongoose, { ObjectId } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { HydratedDocument, ObjectId } from "mongoose";
 import { Bill } from "./bill.schema";
 import { Point } from "./point.schema";
+import { OrderStatus } from "src/common/const";
+
+export type DeliveryOrderDocument = HydratedDocument<DeliveryOrder>;
 
 @Schema()
 export class DeliveryOrder {
@@ -14,7 +17,7 @@ export class DeliveryOrder {
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     to: ObjectId;
 
-    @Prop()
+    @Prop({ required: true, type: String, enum: OrderStatus, default: OrderStatus.NotConfirmed })
     status: String;
 
     @Prop({ required: true })
@@ -23,3 +26,5 @@ export class DeliveryOrder {
     @Prop()
     confirmedAt: Date;
 }
+
+export const DeliveryOrderSchema = SchemaFactory.createForClass(DeliveryOrder);

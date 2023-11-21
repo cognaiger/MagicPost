@@ -32,3 +32,9 @@ export enum BillStatus {
     Delivered = "Delivered",
     FailAttempt = "Fail attempt"
 }
+
+export enum OrderStatus {
+    NotConfirmed = 'Not confirmed',
+    Confirmeed = 'Confirmed',
+    Cancel = 'Cancel'
+}

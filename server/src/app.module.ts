@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PointModule } from './point/point.module';
 import { BillModule } from './bill/bill.module';
+import { OrderModule } from './deliveryOrder/deliveryOrder.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { BillModule } from './bill/bill.module';
     MongooseModule.forRoot("mongodb+srv://cognaiger:cognaig@cluster0.qkltkuw.mongodb.net/?retryWrites=true&w=majority"),
     AuthModule,
     PointModule,
-    BillModule
+    BillModule,
+    OrderModule
   ]
 })
 export class AppModule {}
