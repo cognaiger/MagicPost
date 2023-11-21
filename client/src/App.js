@@ -15,6 +15,7 @@ import EPOHome from "./screens/EPOperator/EPOperatorHome/EPOHome";
 import EPODashboard from "./screens/EPOperator/EPODashboard/EPODashboard";
 import EPOOrder from "./screens/EPOperator/EPOOrder/EPOOrder";
 import EPOBill from "./screens/EPOperator/EPOBill/EPOBill";
+import EPOBillDetail from "./screens/EPOperator/EPOBillDetail/EPOBillDetail";
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="" element={<EPODashboard />} />
           <Route path="order" element={<EPOOrder />} />
           <Route path="bill" element={<EPOBill />} />
+          <Route path="bill/:id" element={<EPOBillDetail />} />
         </Route>
         <Route path="cpmanagerhome" element={<CPManagerHome />} />
       </Routes>

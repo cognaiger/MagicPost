@@ -4,8 +4,10 @@ import { Button, Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import AddBillModal from '../../../components/AddBillModal/AddBillModal';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 const EPOBill = () => {
+    const navigate = useNavigate();
     const [addOpen, setAddOpen] = useState(false);
     const [billData, setBillData] = useState([]);
 
@@ -61,7 +63,7 @@ const EPOBill = () => {
                         </Thead>
                         <Tbody>
                             {billData.map((el, i) => (
-                                <Tr key={i}>
+                                <Tr key={i} onClick={() => navigate(`${el._id}`)} cursor='pointer'>
                                     <Td>{el._id}</Td>
                                     <Td>{el.sender.name}</Td>
                                     <Td>{el.receiver.name}</Td>
