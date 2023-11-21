@@ -1,0 +1,30 @@
+.cpmaccount {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+
+    .top {
+        display: flex;
+        flex-direction: column;
+        padding-top: 50px;
+        padding-left: 50px;
+
+        .title {
+            font-family: Poppins;
+            font-size: 35px;
+            font-weight: 700;
+        }
+    }
+
+    .option {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .content {
+        padding: 50px;
+    }
+}

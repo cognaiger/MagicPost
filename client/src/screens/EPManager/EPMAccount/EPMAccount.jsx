@@ -4,7 +4,6 @@ import { Button, Divider, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from
 import { AddIcon } from '@chakra-ui/icons';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import AddAccount from '../../../components/AddAccountModal/AddAccount';
 import AddAccountEPO from '../../../components/AddAccountEPO/AddAccountEPO';
 
 const EPMAccount = () => {

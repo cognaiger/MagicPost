@@ -16,6 +16,8 @@ import EPODashboard from "./screens/EPOperator/EPODashboard/EPODashboard";
 import EPOOrder from "./screens/EPOperator/EPOOrder/EPOOrder";
 import EPOBill from "./screens/EPOperator/EPOBill/EPOBill";
 import EPOBillDetail from "./screens/EPOperator/EPOBillDetail/EPOBillDetail";
+import CPMDashboard from "./screens/CPManager/CPManagerDashboard/CPMDashboard";
+import CPMAccount from "./screens/CPManager/CPManagerAccount/CPMAccount";
 
 function App() {
 
@@ -51,7 +53,10 @@ function App() {
           <Route path="bill" element={<EPOBill />} />
           <Route path="bill/:id" element={<EPOBillDetail />} />
         </Route>
-        <Route path="cpmanagerhome" element={<CPManagerHome />} />
+        <Route path="cpmhome" element={<CPManagerHome />}>
+          <Route path="" element={<CPMDashboard />} />
+          <Route path="account" element={<CPMAccount />} />
+        </Route>
       </Routes>
     </div>
   );

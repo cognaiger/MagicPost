@@ -114,7 +114,7 @@ export class AuthService {
     }
 
     async cpregister(registerDto: RegisterDto) {
-        const { email, fullName, password } = registerDto;
+        const { email, fullName, password, branch, cPoint } = registerDto;
 
         const existingUser = await this.userModel.findOne({ email: email }).exec();
         if (existingUser) {
@@ -129,12 +129,17 @@ export class AuthService {
             fullName: fullName,
             password: hash,
             role: "CPStaff",
+            branch: branch,
+            cPoint: cPoint,
             createdAt: new Date()
         }).save(); 
     }
 
     async getAccount(type: string) {
-        const account = await this.userModel.find({ role: type }, 'email fullName role branch').exec();
+        const account = await this.userModel
+            .find({ role: type }, 'email fullName role branch')
+            .sort({ createdAt: -1 })
+            .exec();
         return account;
     }
 }

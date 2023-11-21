@@ -52,7 +52,7 @@ export const AuthContextProvider = ({ children }) => {
                 } else if (user.role === "CPStaff") {
                     navigate("/");
                 } else if (user.role === "CPManager") {
-                    navigate("/");
+                    navigate("/cpmhome");
                 } else {
                     navigate("/")
                 }

@@ -29,4 +29,12 @@ export class OrderService {
 
         return await this.orderModel.findByIdAndUpdate(id, { status: OrderStatus.Cancel });
     }
+
+    async getOrderFrom(id: string) {
+
+    }
+
+    async getOrderTo(id: string) {
+        
+    }
 }
