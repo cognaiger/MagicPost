@@ -8,6 +8,10 @@ import { AddBillDto } from "./dto/addBill.dto";
 export class BillService {
     constructor(@InjectModel(Bill.name) private readonly billModel: Model<BillDocument>) {}
 
+    async getAllBill() {
+        return await this.billModel.find(null, '_id sender.name receiver.name timeSent status');
+    }
+
     async addBill(addBillDto: AddBillDto) {
         return await new this.billModel({
             sender: {
@@ -31,5 +35,9 @@ export class BillService {
             weigh: addBillDto.weigh,
             receiverPayment: addBillDto.receiverPayment
         }).save();
+    }
+
+    async getBillById(id: string) {
+        return await this.billModel.findById(id).exec();
     }
 }

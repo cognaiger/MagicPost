@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument, ObjectId } from "mongoose";
 import { Point } from "./point.schema";
-import { FailOption, PackageType } from "src/common/const";
+import { BillStatus, FailOption, PackageType } from "src/common/const";
 
 export type BillDocument = HydratedDocument<Bill>;
 
@@ -71,6 +71,9 @@ export class Bill {
 
     @Prop({ required: true })
     receiverPayment: Number;
+
+    @Prop({ required: true, type: String, enum: BillStatus, default: BillStatus.Pending })
+    status: String;
 }
 
 export const BillSchema = SchemaFactory.createForClass(Bill);

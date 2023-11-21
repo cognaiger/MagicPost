@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import "./EPOBill.scss";
-import { Menu, MenuButton, MenuItem, MenuList, Button, Divider } from '@chakra-ui/react';
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import LocationInfo from '../../../components/LocationInfo/LocationInfo';
-import AddLocation from '../../../components/AddLocationModal/AddLocation';
+import { Button, Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import AddBillModal from '../../../components/AddBillModal/AddBillModal';
 
 const EPOBill = () => {
     const [addOpen, setAddOpen] = useState(false);
-    const [locationData, setLocationData] = useState([]);
+    const [billData, setBillData] = useState([]);
 
     useEffect(() => {
         let ignore = false;
 
         async function fetchData() {
             try {
-                const res = await axios.get("http://localhost:2504/point", {
-                    params: {
-                        type: "all"
-                    }
-                });
+                const res = await axios.get("http://localhost:2504/bill");
                 if (!ignore) {
-                    setLocationData(res.data);
+                    setBillData(res.data);
                 }
             } catch (err) {
                 console.log(err);
@@ -40,16 +34,8 @@ const EPOBill = () => {
         setAddOpen(true);
     }
 
-    const getCollectionPoint = () => {
-
-    }
-
-    const getExchangePoint = () => {
-
-    }
-
     return (
-        <div className='blocation'>
+        <div className='epobill'>
             <div className='top'>
                 <div className='title'>Bill Management</div>
                 <Divider />
@@ -59,27 +45,36 @@ const EPOBill = () => {
                 <Button colorScheme='purple' leftIcon={<AddIcon />} onClick={addBill}>
                     Add bill
                 </Button>
-                <Menu>
-                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                        Choose type
-                    </MenuButton>
-                    <MenuList>
-                        <MenuItem>All</MenuItem>
-                        <MenuItem onClick={getExchangePoint}>Exchange Point</MenuItem>
-                        <MenuItem onClick={getCollectionPoint}>Collection Point</MenuItem>
-                    </MenuList>
-                </Menu>
             </div>
 
-            <div className='info'>
-                {
-                    locationData.map((el, i) => (
-                        <LocationInfo name={el.name} location={el.location} head={el.head} type={el.type} key={i} />
-                    ))
-                }
+            <div className='content'>
+                <TableContainer>
+                    <Table variant='simple'>
+                        <Thead>
+                            <Tr>
+                                <Th>Id</Th>
+                                <Th>Sender</Th>
+                                <Th>Receiver</Th>
+                                <Th>Time created</Th>
+                                <Th>Status</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {billData.map((el, i) => (
+                                <Tr key={i}>
+                                    <Td>{el._id}</Td>
+                                    <Td>{el.sender.name}</Td>
+                                    <Td>{el.receiver.name}</Td>
+                                    <Td>{el.timeSent}</Td>
+                                    <Td>{el.status}</Td>
+                                </Tr>
+                            ))}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
             </div>
 
-            <AddBillModal addOpen={addOpen} setAddOpen={setAddOpen} locationData={locationData} setLocationData={setLocationData} />
+            <AddBillModal addOpen={addOpen} setAddOpen={setAddOpen} billData={billData} setBillData={setBillData} />
         </div>
     )
 }

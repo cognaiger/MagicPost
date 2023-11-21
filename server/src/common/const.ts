@@ -24,3 +24,11 @@ export enum FailOption {
     Op4 = 'Call the sender',
     Op5 = 'Cancel'
 }
+
+export enum BillStatus {
+    Pending = "Pending",
+    InTransit = "In transit",
+    ReachDesEP = "Reach destination exchange point",
+    Delivered = "Delivered",
+    FailAttempt = "Fail attempt"
+}
