@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
                 } else if (user.role === "EPOperator") {
                     navigate("/epohome");
                 } else if (user.role === "CPStaff") {
-                    navigate("/");
+                    navigate("/cpshome");
                 } else if (user.role === "CPManager") {
                     navigate("/cpmhome");
                 } else {
