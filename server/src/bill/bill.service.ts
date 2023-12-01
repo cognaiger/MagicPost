@@ -6,10 +6,14 @@ import { AddBillDto } from "./dto/addBill.dto";
 
 @Injectable()
 export class BillService {
-    constructor(@InjectModel(Bill.name) private readonly billModel: Model<BillDocument>) {}
+    constructor(@InjectModel(Bill.name) private readonly billModel: Model<BillDocument>) { }
 
     async getAllBill() {
         return await this.billModel.find(null, '_id sender.name receiver.name timeSent status');
+    }
+
+    async getBillByPoint(id: string) {
+        return await this.billModel.find({ 'sender.point': id }, '_id sender.name receiver.name timeSent status');
     }
 
     async addBill(addBillDto: AddBillDto) {

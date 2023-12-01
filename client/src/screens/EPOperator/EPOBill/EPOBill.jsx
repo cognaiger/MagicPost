@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./EPOBill.scss";
 import { Button, Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import AddBillModal from '../../../components/AddBillModal/AddBillModal';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../context/authContext';
 
 const EPOBill = () => {
     const navigate = useNavigate();
+    const { currentPoint } = useContext(AuthContext);
     const [addOpen, setAddOpen] = useState(false);
-    const [billData, setBillData] = useState([]);
+    const [billData, setBillData] = useState();
 
     useEffect(() => {
         let ignore = false;
 
         async function fetchData() {
             try {
-                const res = await axios.get("http://localhost:2504/bill");
+                const res = await axios.get(`http://localhost:2504/bill/point`, {
+                    params: {
+                        id: currentPoint.epoint
+                    }
+                });
                 if (!ignore) {
                     setBillData(res.data);
                 }
@@ -62,15 +68,18 @@ const EPOBill = () => {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {billData.map((el, i) => (
-                                <Tr key={i} onClick={() => navigate(`${el._id}`)} cursor='pointer'>
-                                    <Td>{el._id}</Td>
-                                    <Td>{el.sender.name}</Td>
-                                    <Td>{el.receiver.name}</Td>
-                                    <Td>{el.timeSent}</Td>
-                                    <Td>{el.status}</Td>
-                                </Tr>
-                            ))}
+                            {billData && (
+                                billData.map((el, i) => (
+                                    <Tr key={i} onClick={() => navigate(`${el._id}`)} cursor='pointer'>
+                                        <Td>{el._id}</Td>
+                                        <Td>{el.sender.name}</Td>
+                                        <Td>{el.receiver.name}</Td>
+                                        <Td>{el.timeSent}</Td>
+                                        <Td>{el.status}</Td>
+                                    </Tr>
+                                ))
+                            )}
+
                         </Tbody>
                     </Table>
                 </TableContainer>

@@ -20,7 +20,9 @@ export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(
         JSON.parse(localStorage.getItem('user') || null)
     );
-    const [currentPoint, setCurrentPoint] = useState();
+    const [currentPoint, setCurrentPoint] = useState(
+        JSON.parse(localStorage.getItem('point') || null)
+    );
 
     const login = async (email, password) => {
         try {
@@ -40,13 +42,13 @@ export const AuthContextProvider = ({ children }) => {
                     name: response.data.name,                    
                 }
                 let point;
-                if (payload['role'] === ROLE.EPMANAGER || payload === ROLE.EPOPERATOR) {
+                if (payload['role'] === ROLE.EPMANAGER || payload['role'] === ROLE.EPOPERATOR) {
                     point = {
                         epoint: response.data.epoint,
                         branch: response.data.branch,
                         associatedPoint: response.data.associatedPoint
                     }
-                } else if (payload['role'] === ROLE.CPMANAGER || payload === ROLE.CPSTAFF) {
+                } else if (payload['role'] === ROLE.CPMANAGER || payload['role'] === ROLE.CPSTAFF) {
                     point = {
                         cpoint: response.data.cpoint,
                         branch: response.data.branch,
@@ -77,11 +79,13 @@ export const AuthContextProvider = ({ children }) => {
 
     const logout = () => {
         setCurrentUser(null);
+        setCurrentPoint(null);
         navigate('/login');
     }
 
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(currentUser));
+        localStorage.setItem('point', JSON.stringify(currentPoint));
     }, [currentUser]);
 
     return (

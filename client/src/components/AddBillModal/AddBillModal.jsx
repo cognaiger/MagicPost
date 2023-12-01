@@ -23,7 +23,7 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
     const [desEPName, setDesEPName] = useState('');
     const [ePoint, setEPoint] = useState([]);
 
-    const { currentUser } = useContext(AuthContext);
+    const { currentPoint } = useContext(AuthContext);
 
     useEffect(() => {
         let ignore = false;
@@ -52,13 +52,14 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
 
     const addBill = async (e) => {
         e.preventDefault();
+        console.log(currentPoint?.epoint);
 
         const newBill = {
             senderEmail: senderEmail,
             senderName: senderName,
             senderNum: senderNum,
             senderAddr: senderAddr,
-            senderPoint: currentUser.epoint,
+            senderPoint: currentPoint.epoint,
             receiverEmail: receiverEmail,
             receiverName: receiverName,
             receiverNum: receiverNum,
@@ -77,7 +78,6 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
             const response = await axios.post("http://localhost:2504/bill/add", newBill);
             if (response.status === 201) {
                 console.log("successful");
-                setBillData([...billData, newBill]);
             } else {
                 console.log("err");
             }

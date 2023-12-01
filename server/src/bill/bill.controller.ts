@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { Public } from "src/decorator/public.decorator";
 import { BillService } from "./bill.service";
 import { AddBillDto } from "./dto/addBill.dto";
@@ -12,6 +12,12 @@ export class BillController {
     @Get()
     async getAllBill(): Promise<any> {
         return await this.billService.getAllBill();
+    }
+
+    @Public()
+    @Get('point')
+    async getBillByPoint(@Query('id') id: string): Promise<any> {
+        return await this.billService.getBillByPoint(id);
     }
 
     @Public()
