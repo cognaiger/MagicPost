@@ -1,19 +1,55 @@
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Stack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Button, FormControl, FormLabel, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Radio, RadioGroup, Stack } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => {
     const [type, setType] = useState('EPoint');
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
+    const [cpointData, setCpointData] = useState();
+    const [associatedCP, setAssociatedCP] = useState();
+    const [associatedCPName, setAssociatedCPName] = useState('');
+
+    useEffect(() => {
+        let ignore = false;
+
+        async function fetchCPoint() {
+            try {
+                const res = await axios.get("http://localhost:2504/point", {
+                    params: {
+                        type: "cp"
+                    }
+                });
+                if (!ignore) {
+                    setCpointData(res.data);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchCPoint();
+
+        return () => {
+            ignore = true;
+        }
+    }, []);
 
     const addLocation = async (e) => {
         e.preventDefault();
 
-        const newLocation = {
+        let newLocation = {
             name: name,
             location: location,
             type: type
+        }
+
+        if (type === 'EPoint') {
+            newLocation = {
+                ...newLocation,
+                associatedPoint: associatedCP
+            }
         }
 
         try {
@@ -29,6 +65,13 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => 
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const onChooseItem = (id, name) => {
+        setAssociatedCP(id);
+        setAssociatedCPName(name);
+        console.log(id);
+        console.log(name);
     }
 
     return (
@@ -54,6 +97,21 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => 
                             <Radio value='CPoint' onChange={() => setType('CPoint')}>Collection Point</Radio>
                         </Stack>
                     </RadioGroup>
+
+                    {type === 'EPoint' && (
+                        <Menu>
+                            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} mt={6}>
+                                {associatedCPName === '' ? "Choose Associated Collection Point" : associatedCPName}
+                            </MenuButton>
+                            <MenuList>
+                                {
+                                    cpointData?.map((el, i) => (
+                                        <MenuItem key={i} onClick={() => onChooseItem(el._id, el.name)}>{el.name}</MenuItem>
+                                    ))
+                                }
+                            </MenuList>
+                        </Menu>
+                    )}
                 </ModalBody>
 
                 <ModalFooter>

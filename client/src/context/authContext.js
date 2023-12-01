@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { ROLE } from '../common/const';
 
 export const setAuthToken = (token) => {
     if (token) {
@@ -19,6 +20,7 @@ export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(
         JSON.parse(localStorage.getItem('user') || null)
     );
+    const [currentPoint, setCurrentPoint] = useState();
 
     const login = async (email, password) => {
         try {
@@ -35,23 +37,34 @@ export const AuthContextProvider = ({ children }) => {
                 const user = {
                     id: payload['id'],
                     role: payload['role'],
-                    name: response.data.name,
-                    epoint: response.data.epoint,
-                    cpoint: response.data.cpoint,
-                    branch: response.data.branch,
+                    name: response.data.name,                    
                 }
-                console.log(user);
+                let point;
+                if (payload['role'] === ROLE.EPMANAGER || payload === ROLE.EPOPERATOR) {
+                    point = {
+                        epoint: response.data.epoint,
+                        branch: response.data.branch,
+                        associatedPoint: response.data.associatedPoint
+                    }
+                } else if (payload['role'] === ROLE.CPMANAGER || payload === ROLE.CPSTAFF) {
+                    point = {
+                        cpoint: response.data.cpoint,
+                        branch: response.data.branch,
+                    }
+                }
                 setCurrentUser(user);
+                setCurrentPoint(point);
+                console.log(point);
 
-                if (user.role === "Boss") {
+                if (user.role === ROLE.BOSS) {
                     navigate("/bhome");
-                } else if (user.role === "EPManager") {
+                } else if (user.role === ROLE.EPMANAGER) {
                     navigate("/epmhome");
-                } else if (user.role === "EPOperator") {
+                } else if (user.role === ROLE.EPOPERATOR) {
                     navigate("/epohome");
-                } else if (user.role === "CPStaff") {
+                } else if (user.role === ROLE.CPSTAFF) {
                     navigate("/cpshome");
-                } else if (user.role === "CPManager") {
+                } else if (user.role === ROLE.CPMANAGER) {
                     navigate("/cpmhome");
                 } else {
                     navigate("/")
@@ -72,7 +85,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [currentUser]);
 
     return (
-        <AuthContext.Provider value={{ currentUser, login, logout }}>
+        <AuthContext.Provider value={{ currentUser, login, logout, currentPoint }}>
             {children}
         </AuthContext.Provider>
     )

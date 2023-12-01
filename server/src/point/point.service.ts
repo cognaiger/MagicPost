@@ -19,7 +19,7 @@ export class PointService {
     }
 
     async addLocation(addLocationDto: AddLocationDto) {
-        const { name, location, type } = addLocationDto;
+        const { name, location, type, associatedPoint } = addLocationDto;
 
         const existingLocation = await this.pointModel.findOne({ name: name }).exec();
         if (existingLocation) {
@@ -29,7 +29,8 @@ export class PointService {
         return await new this.pointModel({
             name: name,
             location: location,
-            type: type
+            type: type,
+            associatedPoint: associatedPoint
         }).save();
     }
 

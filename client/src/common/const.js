@@ -5,3 +5,12 @@ export const FailOption = Object.freeze({
     Op4: 'Call the sender',
     Op5: 'Cancel'
 })
+
+export const ROLE = {
+    BOSS: 'Boss',
+    EPMANAGER: 'EPManager',
+    CPMANAGER: 'CPManager',
+    EPOPERATOR: 'EPOperator',
+    CPSTAFF: 'CPStaff',
+    CLIENT: 'Client'
+}

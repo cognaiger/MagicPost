@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument, ObjectId } from "mongoose";
 import { Role } from "src/common/const";
-import { EPoint } from "./exchangePoint.schema";
-import { CPoint } from "./collectionPoint.schema";
+import { Point } from "./point.schema";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -29,10 +28,10 @@ export class User {
     @Prop()
     deletedAt?: Date;
 
-    @Prop({ type: mongoose.Types.ObjectId, ref: EPoint.name })
+    @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     ePoint: ObjectId;
 
-    @Prop({ type: mongoose.Types.ObjectId, ref: CPoint.name })
+    @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     cPoint: ObjectId;
 
     @Prop()

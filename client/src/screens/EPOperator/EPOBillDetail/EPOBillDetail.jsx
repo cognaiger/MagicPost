@@ -3,10 +3,12 @@ import "./EPOBillDetail.scss";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ModalConfirm from './ModalConfirm';
 
 const EPOBillDetail = () => {
     const { id } = useParams();
     const [billData, setBillData] = useState();
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     useEffect(() => {
         let ignore = false;
@@ -29,6 +31,16 @@ const EPOBillDetail = () => {
             ignore = true;
         }
     }, []);
+
+    const createDelivery = async () => {
+        try {
+            const res = await axios.post("http://localhost:2504/order/add", {
+                bill: billData._id,
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     if (!billData) {
         return (
@@ -80,7 +92,7 @@ const EPOBillDetail = () => {
             </div>
 
             <div className='action'>
-                <button className='btn1'>
+                <button className='btn1' onClick={() => setConfirmOpen(true)}>
                     <div className='text'>
                         Create Delivery Order
                     </div>
@@ -89,6 +101,8 @@ const EPOBillDetail = () => {
                     <div className='text'>Cancel Bill</div>
                 </button>
             </div>
+
+            {confirmOpen && <ModalConfirm isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} confirm={createDelivery} />}
         </div>
     )
 }

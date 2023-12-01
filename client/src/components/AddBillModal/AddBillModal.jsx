@@ -99,8 +99,8 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
         <Modal isOpen={addOpen} onClose={() => setAddOpen(false)} isCentered size='full'>
             <ModalOverlay />
             <ModalContent mt={80}>
-                <ModalHeader>Add Bill</ModalHeader>
-                <ModalCloseButton />
+                <ModalHeader mt={20}>Add Bill</ModalHeader>
+                <ModalCloseButton mt={20} />
                 <ModalBody>
                     <FormControl>
                         <FormLabel fontWeight={600}>Sender</FormLabel>

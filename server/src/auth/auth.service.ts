@@ -6,13 +6,14 @@ import { RegisterDto } from "./dto/register.dto";
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from "./dto/login.dto";
 import { JwtService } from "@nestjs/jwt";
+import { Role } from "src/common/const";
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
         private readonly jwtService: JwtService
-    ) {}
+    ) { }
 
     async login(loginDto: LoginDto) {
         const { email, password } = loginDto;
@@ -32,13 +33,38 @@ export class AuthService {
             role: user.role
         }
 
+        let userInfo;
+        if (user.role === Role.EPManager || user.role === Role.EPOperator) {
+            userInfo = await this.userModel
+                .findOne({ email: email })
+                .populate('ePoint')
+                .exec();
+
+            return {
+                accessToken: await this.jwtService.signAsync(payload),
+                name: userInfo.fullName,
+                epoint: userInfo.ePoint._id,
+                branch: userInfo.ePoint.name,
+                associatedPoint: userInfo.ePoint.associatedPoint
+            }
+        } else if (user.role === Role.CPManager || user.role === Role.CPStaff) {
+            userInfo = await this.userModel
+                .findOne({ email: email })
+                .populate('cPoint')
+                .exec();
+
+            return {
+                accessToken: await this.jwtService.signAsync(payload),
+                name: userInfo.fullName,
+                cpoint: userInfo.cPoint._id,
+                branch: userInfo.cPoint.name,
+            }
+        }
+
         return {
             accessToken: await this.jwtService.signAsync(payload),
             name: user.fullName,
-            epoint: user.ePoint,
-            cpoint: user.cPoint,
-            branch: user.branch,
-        };
+        }
     }
 
     async register(registerDto: RegisterDto) {
@@ -88,7 +114,7 @@ export class AuthService {
             cPoint: cPoint,
             branch: branch,
             createdAt: new Date()
-        }).save(); 
+        }).save();
     }
 
     async epregister(registerDto: RegisterDto) {
@@ -110,7 +136,7 @@ export class AuthService {
             branch: branch,
             ePoint: ePoint,
             createdAt: new Date()
-        }).save(); 
+        }).save();
     }
 
     async cpregister(registerDto: RegisterDto) {
@@ -132,7 +158,7 @@ export class AuthService {
             branch: branch,
             cPoint: cPoint,
             createdAt: new Date()
-        }).save(); 
+        }).save();
     }
 
     async getAccount(type: string) {

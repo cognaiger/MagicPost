@@ -17,6 +17,7 @@ export class OrderService {
             bill: bill,
             from: from,
             to: to,
+            status: OrderStatus.NotConfirmed,
             createdAt: new Date()
         }).save();
     }

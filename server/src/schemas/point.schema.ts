@@ -25,9 +25,6 @@ export class Point {
     @Prop({ required: true, default: 0 })
     receivedPackage: Number;
 
-    @Prop({ type: mongoose.Types.ObjectId, ref: User.name })
-    manager: ObjectId;
-
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     associatedPoint: ObjectId;
 

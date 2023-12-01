@@ -8,12 +8,12 @@ import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 
 const EPMDashboard = () => {
-    const { currentUser } = useContext(AuthContext);
+    const { currentPoint } = useContext(AuthContext);
     const [pointInfo, setPointInfo] = useState({});
 
     useEffect(() => {
         let ignore = false;
-        const id = currentUser.epoint;
+        const id = currentPoint.epoint;
 
         async function fetchData() {
             try {

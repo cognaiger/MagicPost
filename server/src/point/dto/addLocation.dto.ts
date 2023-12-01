@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { PointType } from "src/common/const";
 
 export class AddLocationDto {
@@ -13,4 +13,8 @@ export class AddLocationDto {
     @IsEnum(PointType)
     @IsNotEmpty()
     type: String;
+
+    @IsMongoId()
+    @IsOptional()
+    associatedPoint?: String;  
 }

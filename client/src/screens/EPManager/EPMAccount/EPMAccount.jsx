@@ -66,7 +66,7 @@ const EPMAccount = () => {
                 <Tr key={i}>
                   <Td>{el.fullName}</Td>
                   <Td>{el.email}</Td>
-                  <Td>{el.role === 'EPManager' ? "Exchange Point Manager" : "Collection Point Manager"}</Td>
+                  <Td>Exchange Point Operator</Td>
                   <Td>{el.branch}</Td>
                   <Td>
                     <MoreVertIcon />
