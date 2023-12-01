@@ -3,23 +3,33 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DeliveryOrder, DeliveryOrderDocument } from "src/schemas/deliveryOrder.schema";
 import { AddOrderDto } from "./dto/addOrder.dto";
-import { OrderStatus } from "src/common/const";
+import { BillStatus, OrderStatus } from "src/common/const";
+import { Bill, BillDocument } from "src/schemas/bill.schema";
 
 @Injectable()
 export class OrderService {
-    constructor(@InjectModel(DeliveryOrder.name) private readonly orderModel: Model<DeliveryOrderDocument>) {
-
+    constructor(
+        @InjectModel(DeliveryOrder.name) private readonly orderModel: Model<DeliveryOrderDocument>,
+        @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>
+        ) {
     }
 
     async addOrder(addOrderDto: AddOrderDto) {
         const { bill, from, to } = addOrderDto;
-        return await new this.orderModel({
+        const res = await new this.orderModel({
             bill: bill,
             from: from,
             to: to,
             status: OrderStatus.NotConfirmed,
             createdAt: new Date()
         }).save();
+        if (res) {
+            return await this.billModel.updateOne({
+                _id: bill
+            }, {
+                $set: { status: BillStatus.InTransit }
+            })
+        }
     }
 
     async cancelOrder(id: string) {
@@ -36,6 +46,8 @@ export class OrderService {
     }
 
     async getOrderTo(id: string) {
-        
+        return await this.orderModel.find({
+            to: id
+        }, 'bill from createdAt').populate('from', 'name').exec();
     }
 }

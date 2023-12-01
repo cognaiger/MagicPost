@@ -14,3 +14,11 @@ export const ROLE = {
     CPSTAFF: 'CPStaff',
     CLIENT: 'Client'
 }
+
+export const BILLSTATUS = {
+    PENDING: "Pending",
+    INTRANSIT: "In transit",
+    REACHDESEP: "Reach destination exchange point",
+    DELIVERED: "Delivered",
+    FAILATTEMPT: "Fail attempt"
+}

@@ -1,13 +1,16 @@
 import { Divider } from '@chakra-ui/react';
 import "./EPOBillDetail.scss";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalConfirm from './ModalConfirm';
+import { AuthContext } from '../../../context/authContext';
+import { BILLSTATUS } from '../../../common/const';
 
 const EPOBillDetail = () => {
     const { id } = useParams();
     const [billData, setBillData] = useState();
+    const { currentPoint } = useContext(AuthContext);
     const [confirmOpen, setConfirmOpen] = useState(false);
 
     useEffect(() => {
@@ -30,14 +33,20 @@ const EPOBillDetail = () => {
         return () => {
             ignore = true;
         }
-    }, []);
+    }, [id]);
 
     const createDelivery = async () => {
         try {
             const res = await axios.post("http://localhost:2504/order/add", {
                 bill: billData._id,
+                from: currentPoint.epoint,
+                to: currentPoint.associatedPoint
             })
+            if (res) {
+                console.log('successful');
+            }
         } catch (err) {
+            console.log('in catch');
             console.log(err);
         }
     }
@@ -92,11 +101,22 @@ const EPOBillDetail = () => {
             </div>
 
             <div className='action'>
-                <button className='btn1' onClick={() => setConfirmOpen(true)}>
-                    <div className='text'>
-                        Create Delivery Order
-                    </div>
-                </button>
+                {
+                    billData.status === BILLSTATUS.PENDING ? (
+                        <button className='btn1' onClick={() => setConfirmOpen(true)}>
+                            <div className='text'>
+                                Create Delivery Order
+                            </div>
+                        </button>
+                    ) : (
+                        <button className='btn1'>
+                            <div className='text'>
+                                Have Created Delivery Order
+                            </div>
+                        </button>
+                    )
+                }
+
                 <button className='btn2'>
                     <div className='text'>Cancel Bill</div>
                 </button>
