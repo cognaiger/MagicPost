@@ -22,6 +22,7 @@ import CPSHome from "./screens/CPStaff/CPStaffHome/CPStaffHome";
 import CPSDashboard from "./screens/CPStaff/CPSDashboard/CPSDashboard";
 import CPSInOrder from "./screens/CPStaff/CPSInOrder/CPSInOrder";
 import CPSOutOrder from "./screens/CPStaff/CPSOutOrder/CPSOutOrder";
+import CPSBill from "./screens/CPStaff/CPSBill/CPSBill";
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
         </Route>
         <Route path="/cpshome" element={<CPSHome />}>
           <Route path="" element={<CPSDashboard />} />
+          <Route path="bill" element={<CPSBill />} />
           <Route path="inorder" element={<CPSInOrder />} />
           <Route path="outorder" element={<CPSOutOrder />} />
         </Route>

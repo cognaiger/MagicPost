@@ -44,6 +44,7 @@ const EPOBillDetail = () => {
             })
             if (res) {
                 console.log('successful');
+                setConfirmOpen(false);
             }
         } catch (err) {
             console.log('in catch');

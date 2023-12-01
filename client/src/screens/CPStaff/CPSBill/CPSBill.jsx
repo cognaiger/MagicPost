@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import "./EPOBill.scss";
-import { Button, Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import './CPSBill.scss';
+import { Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakra-ui/react';
 import axios from 'axios';
-import AddBillModal from '../../../components/AddBillModal/AddBillModal';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/authContext';
 
-const EPOBill = () => {
+const CPSBill = () => {
     const navigate = useNavigate();
     const { currentPoint } = useContext(AuthContext);
-    const [addOpen, setAddOpen] = useState(false);
     const [billData, setBillData] = useState();
 
     useEffect(() => {
@@ -18,9 +15,9 @@ const EPOBill = () => {
 
         async function fetchData() {
             try {
-                const res = await axios.get(`http://localhost:2504/bill/point`, {
+                const res = await axios.get(`http://localhost:2504/bill/atpoint`, {
                     params: {
-                        id: currentPoint.epoint
+                        id: currentPoint.cpoint
                     }
                 });
                 if (!ignore) {
@@ -38,21 +35,11 @@ const EPOBill = () => {
         }
     }, [currentPoint.epoint]);
 
-    const addBill = () => {
-        setAddOpen(true);
-    }
-
     return (
-        <div className='epobill'>
+        <div className='cpsbill'>
             <div className='top'>
                 <div className='title'>Bill Management</div>
                 <Divider />
-            </div>
-
-            <div className='option'>
-                <Button colorScheme='purple' leftIcon={<AddIcon />} onClick={addBill}>
-                    Add bill
-                </Button>
             </div>
 
             <div className='content'>
@@ -84,10 +71,8 @@ const EPOBill = () => {
                     </Table>
                 </TableContainer>
             </div>
-
-            <AddBillModal addOpen={addOpen} setAddOpen={setAddOpen} billData={billData} setBillData={setBillData} />
         </div>
     )
 }
 
-export default EPOBill;
+export default CPSBill;

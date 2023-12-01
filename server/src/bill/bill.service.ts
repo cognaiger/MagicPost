@@ -16,6 +16,10 @@ export class BillService {
         return await this.billModel.find({ 'sender.point': id }, '_id sender.name receiver.name timeSent status');
     }
 
+    async getBillAtPoint(id: string) {
+        return await this.billModel.find({ currentPoint: id }, '_id sender.name receiver.name timeSent status');
+    }
+
     async addBill(addBillDto: AddBillDto) {
         return await new this.billModel({
             sender: {
@@ -37,7 +41,8 @@ export class BillService {
             timeSent: new Date(),
             fee: addBillDto.fee,
             weigh: addBillDto.weigh,
-            receiverPayment: addBillDto.receiverPayment
+            receiverPayment: addBillDto.receiverPayment,
+            currentPoint: addBillDto.senderPoint
         }).save();
     }
 

@@ -31,7 +31,7 @@ const EPMDashboard = () => {
         return () => {
             ignore = true;
         }
-    }, []);
+    }, [currentPoint.epoint]);
 
     useEffect(() => {
         console.log(pointInfo);

@@ -6,6 +6,7 @@ import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import { useNavigate } from 'react-router-dom';
 import MenuBtn from '../MenuBtn/MenuBtn';
 
@@ -17,6 +18,11 @@ const SideBarCPS = () => {
   const handleDbClick = () => {
     navigate('');
     setActiveBtn('Db');
+  }
+
+  const handleBillClick = () => {
+    navigate('bill');
+    setActiveBtn('Bill');
   }
 
   const handleIncomingClick = () => {
@@ -43,6 +49,10 @@ const SideBarCPS = () => {
         <MenuBtn onClick={handleDbClick} isActive={activeBtn === 'Db' ? true : false}>
           <DashboardOutlinedIcon />
           <div>Dashboard</div>
+        </MenuBtn>
+        <MenuBtn onClick={handleBillClick} isActive={activeBtn === 'Bill' ? true : false}>
+          <InsertDriveFileOutlinedIcon />
+          <div>Bill</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={handleIncomingClick} isActive={activeBtn === 'IOrder' ? true : false}>
           <CallReceivedOutlinedIcon />

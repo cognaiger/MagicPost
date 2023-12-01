@@ -74,6 +74,9 @@ export class Bill {
 
     @Prop({ required: true, type: String, enum: BillStatus, default: BillStatus.Pending })
     status: String;
+
+    @Prop({ required: true, type: mongoose.Types.ObjectId, ref: Point.name })
+    currentPoint: String;
 }
 
 export const BillSchema = SchemaFactory.createForClass(Bill);

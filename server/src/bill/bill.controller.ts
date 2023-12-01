@@ -21,6 +21,12 @@ export class BillController {
     }
 
     @Public()
+    @Get('atpoint')
+    async getBillAtPoint(@Query('id') id: string): Promise<any> {
+        return await this.billService.getBillAtPoint(id);
+    }
+
+    @Public()
     @Post('/add')
     async addBill(@Body() addBillDto: AddBillDto): Promise<any> {
         return await this.billService.addBill(addBillDto);

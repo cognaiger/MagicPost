@@ -35,7 +35,7 @@ const CPSInOrder = () => {
         return () => {
             ignore = true;
         }
-    }, []);
+    }, [currentPoint.cpoint]);
 
     return (
         <div className='inorder'>

@@ -11,7 +11,7 @@ export class OrderService {
     constructor(
         @InjectModel(DeliveryOrder.name) private readonly orderModel: Model<DeliveryOrderDocument>,
         @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>
-        ) {
+    ) {
     }
 
     async addOrder(addOrderDto: AddOrderDto) {
@@ -49,5 +49,19 @@ export class OrderService {
         return await this.orderModel.find({
             to: id
         }, 'bill from createdAt').populate('from', 'name').exec();
+    }
+
+    async confirmOrder(id: string) {
+        const order = await this.orderModel.findByIdAndUpdate(id, {
+            status: OrderStatus.Confirmeed,
+            confirmedAt: new Date()
+        });
+        if (order) {
+            return await this.billModel.findByIdAndUpdate(order.bill, {
+                currentPoint: order.to
+            });
+        } else {
+            return
+        }
     }
 }

@@ -28,6 +28,12 @@ export class OrderController {
     }
 
     @Public()
+    @Put('/confirm')
+    async confirmOrder(@Query('id') id: string): Promise<any> {
+        return await this.orderSerive.confirmOrder(id);
+    }
+
+    @Public()
     @Put("/cancel/:id")
     async cancelOrder(@Param('id') id: string): Promise<any> {
         return await this.orderSerive.cancelOrder(id);
