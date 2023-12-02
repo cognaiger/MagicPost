@@ -5,12 +5,14 @@ import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 import ConfirmModal from './ConfirmModal';
 import CancelModal from './CancelModal';
+import { ORDERSTATUS } from '../../../common/const';
 
 const CPSInOrder = () => {
     const [orderData, setOrderData] = useState();
     const { currentPoint } = useContext(AuthContext);
     const [confirmModal, setConfirmModal] = useState(false);
     const [cancelModal, setCancelModal] = useState(false);
+    const [currentId, setCurrentId] = useState();
 
     useEffect(() => {
         let ignore = false;
@@ -37,6 +39,26 @@ const CPSInOrder = () => {
         }
     }, [currentPoint.cpoint]);
 
+    const onClickConfirm = async (id) => {
+        setConfirmModal(true);
+        setCurrentId(id);
+    }
+
+    const confirm = async () => {
+        try {
+            console.log(currentId);
+            const res = await axios.put('http://localhost:2504/order/confirm', {
+                id: currentId
+            });
+            if (res.status === 200) {
+                console.log(res);
+                setConfirmModal(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className='inorder'>
             <div className='top'>
@@ -44,7 +66,7 @@ const CPSInOrder = () => {
                 <Divider />
             </div>
 
-            {confirmModal && <ConfirmModal isOpen={confirmModal} onClose={() => setConfirmModal(false)} />}
+            {confirmModal && <ConfirmModal isOpen={confirmModal} onClose={() => setConfirmModal(false)} confirm={confirm} />}
             {cancelModal && <CancelModal isOpen={cancelModal} onClose={() => setCancelModal(false)} />}
 
             <div className='content'>
@@ -60,19 +82,30 @@ const CPSInOrder = () => {
                         <Tbody>
                             {orderData && (
                                 orderData.map((el, i) => (
-                                    <Tr>
+                                    <Tr key={i}>
                                         <Td>{el.bill}</Td>
                                         <Td>{el.from.name}</Td>
                                         <Td>{el.createdAt}</Td>
                                         <Td>
-                                            <div className='buttons'>
-                                                <button onClick={() => setConfirmModal(true)}>
-                                                    <div>Confirm</div>
-                                                </button>
-                                                <button onClick={() => setCancelModal(true)}>
-                                                    <div>Cancel</div>
-                                                </button>
-                                            </div>
+                                            {
+                                                el.status === ORDERSTATUS.NOTCONFIRMED ? (
+                                                    <div className='buttons'>
+                                                        <button onClick={() => onClickConfirm(el._id)} className='confirm'>
+                                                            <div>Confirm</div>
+                                                        </button>
+                                                        <button onClick={() => setCancelModal(true)} className='cancel'>
+                                                            <div>Cancel</div>
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <div className='buttons'>
+                                                        <button className='confirmed'>
+                                                            <div>Confirmed</div>
+                                                        </button>
+                                                    </div>
+                                                )
+                                            }
+
                                         </Td>
                                     </Tr>
                                 ))

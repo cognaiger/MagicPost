@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
 
 const AddAccountCPS = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
-    const { currentUser } = useContext(AuthContext);
+    const { currentPoint } = useContext(AuthContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,8 +17,8 @@ const AddAccountCPS = ({ addOpen, setAddOpen, accountData, setAccountData }) => 
             email: email,
             role: "CPStaff",
             password: password,
-            cPoint: currentUser.cpoint,
-            branch: currentUser.branch
+            cPoint: currentPoint.cpoint,
+            branch: currentPoint.branch
         }
 
         try {

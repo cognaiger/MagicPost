@@ -27,10 +27,15 @@ export enum FailOption {
 
 export enum BillStatus {
     Pending = "Pending",
-    InTransit = "In transit",
+    InTransit1 = "In transit 1",
+    AtCP1 = 'At collection point 1',
+    InTransit2 = 'In transit 2',
+    AtCP2 = 'At collection point 2',
+    InTransit3 = 'In transit 3',
     ReachDesEP = "Reach destination exchange point",
     Delivered = "Delivered",
-    FailAttempt = "Fail attempt"
+    FailAttempt = "Fail attempt",
+    Return = "Return"
 }
 
 export enum OrderStatus {

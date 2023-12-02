@@ -53,6 +53,10 @@ export const AuthContextProvider = ({ children }) => {
                         cpoint: response.data.cpoint,
                         branch: response.data.branch,
                     }
+                } else {
+                    point = {
+                        epoint: 'all'
+                    }
                 }
                 setCurrentUser(user);
                 setCurrentPoint(point);

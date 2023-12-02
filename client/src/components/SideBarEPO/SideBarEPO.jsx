@@ -4,7 +4,8 @@ import BossImg from "../../img/bossimg.png";
 import "./SideBarEPO.scss";
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
+import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
+import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import { useNavigate } from 'react-router-dom';
 import MenuBtn from '../MenuBtn/MenuBtn';
@@ -19,13 +20,18 @@ const SideBarEPO = () => {
     setActiveBtn('Db');
   }
 
-  const handleShipmentClick = () => {
-    navigate('/epohome/order');
-    setActiveBtn('Order');
+  const handleIncomingClick = () => {
+    navigate('iorder');
+    setActiveBtn('IOrder');
+  }
+
+  const handleOutgoingClick = () => {
+    navigate('oorder');
+    setActiveBtn('OOrder');
   }
 
   const handleBillClick = () => {
-    navigate("/epohome/bill");
+    navigate("bill");
     setActiveBtn("Bill");
   }
 
@@ -48,9 +54,13 @@ const SideBarEPO = () => {
           <InsertDriveFileOutlinedIcon />
           <div>Bill</div>
         </MenuBtn>
-        <MenuBtn className='option' onClick={handleShipmentClick} isActive={activeBtn === 'Order' ? true : false}>
-          <LocalShippingOutlinedIcon />
-          <div>Ship Order</div>
+        <MenuBtn className='option' onClick={handleIncomingClick} isActive={activeBtn === 'IOrder' ? true : false}>
+          <CallReceivedOutlinedIcon />
+          <div>Incoming Order</div>
+        </MenuBtn>
+        <MenuBtn className='option' onClick={handleOutgoingClick} isActive={activeBtn === 'OOrder' ? true : false}>
+          <CallMadeOutlinedIcon />
+          <div>Outgoing Order</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={logout} isActive={false}>
           <ExitToAppOutlinedIcon />

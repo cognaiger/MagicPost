@@ -24,11 +24,26 @@ export class OrderService {
             createdAt: new Date()
         }).save();
         if (res) {
-            return await this.billModel.updateOne({
-                _id: bill
-            }, {
-                $set: { status: BillStatus.InTransit }
-            })
+            const billData = await this.billModel.findById(bill);
+            if (billData.status === BillStatus.Pending) {
+                return await this.billModel.updateOne({
+                    _id: bill
+                }, {
+                    $set: { status: BillStatus.InTransit1 }
+                })
+            } else if (billData.status === BillStatus.AtCP1) {
+                return await this.billModel.updateOne({
+                    _id: bill
+                }, {
+                    $set: { status: BillStatus.InTransit2 }
+                })
+            } else {
+                return await this.billModel.updateOne({
+                    _id: bill
+                }, {
+                    $set: { status: BillStatus.InTransit3 }
+                })
+            }
         }
     }
 
@@ -48,20 +63,35 @@ export class OrderService {
     async getOrderTo(id: string) {
         return await this.orderModel.find({
             to: id
-        }, 'bill from createdAt').populate('from', 'name').exec();
+        }, 'bill from createdAt status').populate('from', 'name').exec();
     }
 
     async confirmOrder(id: string) {
+        console.log(id);
         const order = await this.orderModel.findByIdAndUpdate(id, {
             status: OrderStatus.Confirmeed,
             confirmedAt: new Date()
         });
         if (order) {
-            return await this.billModel.findByIdAndUpdate(order.bill, {
-                currentPoint: order.to
-            });
+            const bill = await this.billModel.findById(order.bill);
+            if (bill.status === BillStatus.InTransit2) {
+                return await this.billModel.findByIdAndUpdate(order.bill, {
+                    currentPoint: order.to,
+                    status: BillStatus.AtCP2
+                });
+            } else if (bill.status === BillStatus.InTransit1) {
+                return await this.billModel.findByIdAndUpdate(order.bill, {
+                    currentPoint: order.to,
+                    status: BillStatus.AtCP1
+                });
+            } else {
+                return await this.billModel.findByIdAndUpdate(order.bill, {
+                    currentPoint: order.to,
+                    status: BillStatus.ReachDesEP
+                });
+            }
         } else {
-            return
+            throw new NotFoundException("Not found order with id", { cause: new Error() });
         }
     }
 }

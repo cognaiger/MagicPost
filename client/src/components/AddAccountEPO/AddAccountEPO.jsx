@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
 
 const AddAccountEPO = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
-    const { currentUser } = useContext(AuthContext);
+    const { currentPoint } = useContext(AuthContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,11 +17,10 @@ const AddAccountEPO = ({ addOpen, setAddOpen, accountData, setAccountData }) => 
             email: email,
             role: "EPOperator",
             password: password,
-            ePoint: currentUser.epoint,
-            branch: currentUser.branch
+            ePoint: currentPoint.epoint,
+            branch: currentPoint.branch
         }
 
-        console.log(currentUser);
         console.log(newAccount);
 
         try {

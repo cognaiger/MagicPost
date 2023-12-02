@@ -47,6 +47,6 @@ export class BillService {
     }
 
     async getBillById(id: string) {
-        return await this.billModel.findById(id).exec();
+        return await this.billModel.findById(id).populate('receiver.point', 'associatedPoint').exec();
     }
 }

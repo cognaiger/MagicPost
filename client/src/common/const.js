@@ -17,8 +17,19 @@ export const ROLE = {
 
 export const BILLSTATUS = {
     PENDING: "Pending",
-    INTRANSIT: "In transit",
+    INTRANSIT1: "In transit 1",
+    ATCP1: 'At collection point 1',
+    INTRANSIT2: 'In transit 2',
+    ATCP2: 'At collection point 2',
+    INTRANSIT3: 'In transit 3',
     REACHDESEP: "Reach destination exchange point",
     DELIVERED: "Delivered",
-    FAILATTEMPT: "Fail attempt"
+    FAILATTEMPT: "Fail attempt",
+    RETURN: 'Return'
+}
+
+export const ORDERSTATUS = {
+    NOTCONFIRMED: 'Not confirmed',
+    CONFIRMED: 'Confirmed',
+    CANCEL: 'Cancel' 
 }

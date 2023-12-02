@@ -13,7 +13,6 @@ import EPMDashboard from "./screens/EPManager/EPMDashboard/EPMDashboard";
 import EPMAccount from "./screens/EPManager/EPMAccount/EPMAccount";
 import EPOHome from "./screens/EPOperator/EPOperatorHome/EPOHome";
 import EPODashboard from "./screens/EPOperator/EPODashboard/EPODashboard";
-import EPOOrder from "./screens/EPOperator/EPOOrder/EPOOrder";
 import EPOBill from "./screens/EPOperator/EPOBill/EPOBill";
 import EPOBillDetail from "./screens/EPOperator/EPOBillDetail/EPOBillDetail";
 import CPMDashboard from "./screens/CPManager/CPManagerDashboard/CPMDashboard";
@@ -23,6 +22,9 @@ import CPSDashboard from "./screens/CPStaff/CPSDashboard/CPSDashboard";
 import CPSInOrder from "./screens/CPStaff/CPSInOrder/CPSInOrder";
 import CPSOutOrder from "./screens/CPStaff/CPSOutOrder/CPSOutOrder";
 import CPSBill from "./screens/CPStaff/CPSBill/CPSBill";
+import CPSBillDetail from "./screens/CPStaff/CPSBillDetail/CPSBillDetail";
+import EPOInOrder from "./screens/EPOperator/EPOInOrder/EPOInOrder";
+import EPOOutOrder from "./screens/EPOperator/EPOOutOrder/EPOOutOrder";
 
 function App() {
 
@@ -54,7 +56,8 @@ function App() {
         </Route>
         <Route path="/epohome" element={<EPOHome />}>
           <Route path="" element={<EPODashboard />} />
-          <Route path="order" element={<EPOOrder />} />
+          <Route path="iorder" element={<EPOInOrder />} />
+          <Route path="oorder" element={<EPOOutOrder />} />
           <Route path="bill" element={<EPOBill />} />
           <Route path="bill/:id" element={<EPOBillDetail />} />
         </Route>
@@ -67,6 +70,7 @@ function App() {
           <Route path="bill" element={<CPSBill />} />
           <Route path="inorder" element={<CPSInOrder />} />
           <Route path="outorder" element={<CPSOutOrder />} />
+          <Route path="bill/:id" element={<CPSBillDetail /> } />
         </Route>
       </Routes>
     </div>

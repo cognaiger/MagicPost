@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { OrderService } from "./deliveryOrder.service";
 import { AddOrderDto } from "./dto/addOrder.dto";
 import { Public } from "src/decorator/public.decorator";
+import { ConfirmOrderDto } from "./dto/confirmOrder.dto";
 
 @Controller('order')
 export class OrderController {
@@ -29,7 +30,8 @@ export class OrderController {
 
     @Public()
     @Put('/confirm')
-    async confirmOrder(@Query('id') id: string): Promise<any> {
+    async confirmOrder(@Body() confirmOrderDto: ConfirmOrderDto): Promise<any> {
+        const { id } = confirmOrderDto;
         return await this.orderSerive.confirmOrder(id);
     }
 
