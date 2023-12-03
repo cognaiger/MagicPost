@@ -44,3 +44,12 @@ export enum OrderStatus {
     Confirmeed = 'Confirmed',
     Cancel = 'Cancel'
 }
+
+export enum CONFIRMORDER {
+    SUCCESSDELIVER = 'Success Deliver',
+    FAILDELIVER = 'Fail Deliver',
+    RECEIVEBILL = 'Receive Bill',
+    NOTRECEIVEBILL = 'Not Receive Bill'
+}
+
+export const CUSTOMERPOINT = '656b4524130a2b089708c464';

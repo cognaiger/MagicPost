@@ -30,9 +30,9 @@ export class OrderController {
 
     @Public()
     @Put('/confirm')
-    async confirmOrder(@Body() confirmOrderDto: ConfirmOrderDto): Promise<any> {
-        const { id } = confirmOrderDto;
-        return await this.orderSerive.confirmOrder(id);
+    async confirmSucessOrder(@Body() confirmOrderDto: ConfirmOrderDto): Promise<any> {
+        const { id, type } = confirmOrderDto;
+        return await this.orderSerive.confirmSuccessOrder(id, type);
     }
 
     @Public()

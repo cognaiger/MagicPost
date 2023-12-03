@@ -3,15 +3,16 @@ import { Divider } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ModalConfirm from '../EPOBillDetail/ModalConfirm';
+import ModalConfirm from '../../../components/ModalConfirm/ModalConfirm';
 import { AuthContext } from '../../../context/authContext';
-import { BILLSTATUS } from '../../../common/const';
+import { BILLSTATUS, CONFIRMORDER, ORDERSTATUS } from '../../../common/const';
 
 const EPOOrderDetail = () => {
     const { id } = useParams();
     const [orderData, setOrderData] = useState();
     const { currentPoint } = useContext(AuthContext);
-    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [successDeliverOpen, setSuccessDeliverOpen] = useState(false);
+    const [failDeliverOpen, setFailDeliverOpen] = useState(false);
 
     useEffect(() => {
         let ignore = false;
@@ -36,6 +37,54 @@ const EPOOrderDetail = () => {
         }
     }, [id]);
 
+    const confirmSuccessDeliver = async () => {
+        try {
+            const res = await axios.put('http://localhost:2504/order/confirm', {
+                id: orderData._id,
+                type: CONFIRMORDER.SUCCESSDELIVER
+            });
+            if (res.status === 200) {
+                console.log(res);
+                setSuccessDeliverOpen(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const confirmFailDeliver = async () => {
+        try {
+            const res = await axios.put('http://localhost:2504/order/confirm', {
+                id: orderData._id,
+                type: CONFIRMORDER.FAILDELIVER
+            });
+            if (res.status === 200) {
+                console.log(res);
+                setFailDeliverOpen(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const formatTime = (dateString) => {
+        let res = '';
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        const hour = date.getHours();
+        const min = date.getMinutes();
+        const sec = date.getSeconds();
+        res += hour < 10 ? `0${hour}h:` : `${hour}h:`;
+        res += min < 10 ? `0${min}m:` : `${min}m:`;
+        res += sec < 10 ? `0${sec}s ` : `${sec}s `;
+        res += day < 10 ? `0${day}/` : `${day}/`;
+        res += month < 10 ? `0${month}/` : `${month}/`;
+        res += year;
+        return res;
+    }
+
     if (!orderData) {
         return (
             <div>Loading...</div>
@@ -51,10 +100,13 @@ const EPOOrderDetail = () => {
 
             <div className='ordercontent'>
                 <div className='row'>
-                    <div className='header'>
-                        1. From: <span>{orderData.from.name}</span>
+                    <div className='col'>
+                        <div className='header'>
+                            1. From: <span>{orderData.from.name}</span>
+                        </div>
                     </div>
-                    <div>
+
+                    <div className='col'>
                         <div className='header'>
                             2. To: <span>{orderData.to.name}</span>
                         </div>
@@ -67,97 +119,156 @@ const EPOOrderDetail = () => {
                                     <div className='header1'>
                                         Mobile Number: <span>{orderData.bill.receiver.mobile}</span>
                                     </div>
+                                    <div className='header1'>
+                                        Address: <span>{orderData.bill.receiver.address}</span>
+                                    </div>
                                 </div>
                             )
                         }
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='header'>
-                        3. Status: <span>{orderData.status}</span>
+                    <div className='col'>
+                        <div className='header'>
+                            3. Status: <span>{orderData.status}</span>
+                        </div>
                     </div>
-                    <div className='header'>
-                        4. Created At: <span>{orderData.createdAt}</span>
+
+                    <div className='col'>
+                        <div className='header'>
+                            4. Created At: <span>{formatTime(orderData.createdAt)}</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <Divider />
+
             <div className='top'>
                 <div className='title'>Bill #{orderData.bill._id}</div>
             </div>
             <div className='content'>
-                <div className='peopleInfo'>
-                    <div>
+                <div className='row'>
+                    <div className='col'>
                         <div className='header'>1. Sender</div>
-                        <div>Name: {orderData.bill.sender.name}</div>
-                        <div>Address: {orderData.bill.sender.address}</div>
-                        <div>Mobile Number: {orderData.bill.sender.mobile}</div>
+                        <div className='header1'>
+                            Name: <span>{orderData.bill.sender.name}</span>
+                        </div>
+                        <div className='header1'>
+                            Address: <span>{orderData.bill.sender.address}</span>
+                        </div>
+                        <div className='header1'>
+                            Mobile Number: <span>{orderData.bill.sender.mobile}</span>
+                        </div>
                     </div>
 
-                    <div>
+                    <div className='col'>
                         <div className='header'>2. Receiver</div>
-                        <div>Name: {orderData.bill.receiver.name}</div>
-                        <div>Address: {orderData.bill.receiver.address}</div>
-                        <div>Mobile Number: {orderData.bill.receiver.mobile}</div>
+                        <div className='header1'>
+                            Name: <span>{orderData.bill.receiver.name}</span>
+                        </div>
+                        <div className='header1'>
+                            Address: <span>{orderData.bill.receiver.address}</span>
+                        </div>
+                        <div className='header1'>
+                            Mobile Number: <span>{orderData.bill.receiver.mobile}</span>
+                        </div>
                     </div>
                 </div>
-                <div className='header'>3. Package Type</div>
-                <div> {orderData.bill.packageType}</div>
-                <div className='header'>4. Fail Option</div>
-                <div>{orderData.bill.failOption}</div>
-                <div className='header'>5. Time created</div>
-                <div>{orderData.bill.timeSent}</div>
-                <div className='header'>6. Fee</div>
-                <div>${orderData.bill.fee}</div>
-                <div className='header'>7. Weigh</div>
-                <div>{orderData.bill.weigh} kg</div>
-                <div className='header'>8. Receiver's Payment</div>
-                <div>${orderData.bill.receiverPayment}</div>
-                <div className='header'>9. Status</div>
-                <div>{orderData.bill.status}</div>
+
+                <div className='row'>
+                    <div className='col'>
+                        <div className='header'>3. Package Type</div>
+                        <div> {orderData.bill.packageType}</div>
+                    </div>
+
+                    <div className='col'>
+                        <div className='header'>4. Fail Option</div>
+                        <div>{orderData.bill.failOption}</div>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col'>
+                        <div className='header'>5. Time created</div>
+                        <div>{formatTime(orderData.bill.timeSent)}</div>
+                    </div>
+
+                    <div className='col'>
+                        <div className='header'>6. Fee</div>
+                        <div>${orderData.bill.fee}</div>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col'>
+                        <div className='header'>7. Weigh</div>
+                        <div>{orderData.bill.weigh} kg</div>
+                    </div>
+
+                    <div className='col'>
+                        <div className='header'>8. Receiver's Payment</div>
+                        <div>${orderData.bill.receiverPayment}</div>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col'>
+                        <div className='header'>9. Status</div>
+                        <div>{orderData.bill.status}</div>
+                    </div>
+                </div>
             </div>
 
-            <div className='action'>
-                {
-                    currentPoint.epoint === orderData.bill.sender.point ? (
-                        orderData.bill.status === BILLSTATUS.PENDING ? (
-                            <button className='btn1' onClick={() => setConfirmOpen(true)}>
+            {
+                orderData.to._id === '656b4524130a2b089708c464' ? (
+                    orderData.status === ORDERSTATUS.NOTCONFIRMED ? (
+                        <div className='action'>
+                            <button className='btn1' onClick={() => setSuccessDeliverOpen(true)}>
+                                <div className='text'>
+                                    Deliver successfully
+                                </div>
+                            </button>
+                            <button className='btn2' onClick={() => setFailDeliverOpen(true)}>
+                                <div className='text'>
+                                    Deliver Fail
+                                </div>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className='action'>
+                            <button className='btn1' onClick={() => setSuccessDeliverOpen(true)}>
                                 <div className='text'>
                                     Create Delivery Order
                                 </div>
                             </button>
-                        ) : (
-                            <button className='btn1'>
-                                <div className='text'>
-                                    Have Created Delivery Order
-                                </div>
+                            <button className='btn2'>
+                                <div className='text'>Create Return Order</div>
                             </button>
-                        )
-                    ) : (
-                        orderData.bill.status === BILLSTATUS.REACHDESEP ? (
-                            <div className='action'>
-                                <button className='btn1' onClick={() => setConfirmOpen(true)}>
-                                    <div className='text'>
-                                        Create Delivery Order
-                                    </div>
-                                </button>
-                                <button className='btn2'>
-                                    <div className='text'>Create Return Order</div>
-                                </button>
-                            </div>
-                        ) : (
-                            <button className='btn1'>
-                                <div className='text'>
-                                    Have Created Delivery Order
-                                </div>
-                            </button>
-                        )
+                        </div>
                     )
-                }
-            </div>
+                ) : (
+                    <div className='action'>
+                    </div>
+                )
+            }
 
-            {confirmOpen && <ModalConfirm isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} />}
+            {successDeliverOpen &&
+                <ModalConfirm
+                    isOpen={successDeliverOpen}
+                    close={() => setSuccessDeliverOpen(false)}
+                    title="Confirm deliver successfully"
+                    confirm={confirmSuccessDeliver}
+                />
+            }
+            {failDeliverOpen &&
+                <ModalConfirm
+                    isOpen={failDeliverOpen}
+                    close={() => setFailDeliverOpen(false)}
+                    title="Confirm deliver fail"
+                    confirm={confirmFailDeliver}
+                />
+            }
         </div>
     )
 }

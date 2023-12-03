@@ -1,7 +1,7 @@
 .epoorderdetail {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
 
     .top {
         display: flex;
@@ -24,42 +24,58 @@
             display: flex;
             flex-direction: row;
             padding: 20px;
-            gap: 500px;
 
-            .header {
-                font-size: 25px;
-                font-weight: 700;
+            .col {
+                flex: 1;
 
-                span {
+                .header {
                     font-size: 25px;
-                    font-weight: 400;
+                    font-weight: 700;
+
+                    span {
+                        font-size: 25px;
+                        font-weight: 400;
+                    }
                 }
-            }
 
-            .header1 {
-                font-size: 20px;
-                font-weight: 600;
-
-                span {
+                .header1 {
                     font-size: 20px;
-                    font-weight: 400;
+                    font-weight: 600;
+
+                    span {
+                        font-size: 20px;
+                        font-weight: 400;
+                    }
                 }
             }
         }
     }
 
     .content {
-        padding: 20px;
 
-        .peopleInfo {
+        .row {
             display: flex;
             flex-direction: row;
-            gap: 540px;
-        }
+            padding: 20px;
 
-        .header {
-            font-size: 25px;
-            font-weight: 700;
+            .col {
+                flex: 1;
+
+                .header {
+                    font-size: 25px;
+                    font-weight: 700;
+                }
+
+                .header1 {
+                    font-size: 20px;
+                    font-weight: 600;
+
+                    span {
+                        font-size: 20px;
+                        font-weight: 400;
+                    }
+                }
+            }
         }
     }
 
@@ -68,6 +84,7 @@
         flex-direction: row;
         align-items: center;
         gap: 200px;
+        padding: 50px;
 
         .btn1 {
             margin-left: 400px;

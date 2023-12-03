@@ -33,3 +33,12 @@ export const ORDERSTATUS = {
     CONFIRMED: 'Confirmed',
     CANCEL: 'Cancel' 
 }
+
+export const CONFIRMORDER = {
+    SUCCESSDELIVER: 'Success Deliver',
+    FAILDELIVER: 'Fail Deliver',
+    RECEIVEBILL: 'Receive Bill',
+    NOTRECEIVEBILL: 'Not Receive Bill'
+}
+
+export const CUSTOMERPOINT = '656b4524130a2b089708c464';

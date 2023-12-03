@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DeliveryOrder, DeliveryOrderDocument } from "src/schemas/deliveryOrder.schema";
 import { AddOrderDto } from "./dto/addOrder.dto";
-import { BillStatus, OrderStatus } from "src/common/const";
+import { BillStatus, CONFIRMORDER, CUSTOMERPOINT, OrderStatus } from "src/common/const";
 import { Bill, BillDocument } from "src/schemas/bill.schema";
 
 @Injectable()
@@ -65,7 +65,7 @@ export class OrderService {
     async getOrderFrom(id: string) {
         return await this.orderModel.find({
             from: id
-        }, 'bill to createdAt status').populate('to', 'name').exec(); 
+        }, 'bill to createdAt status').populate('to', 'name').exec();
     }
 
     async getOrderTo(id: string) {
@@ -74,29 +74,42 @@ export class OrderService {
         }, 'bill from createdAt status').populate('from', 'name').exec();
     }
 
-    async confirmOrder(id: string) {
-        console.log(id);
+    async confirmSuccessOrder(id: string, type: string) {
         const order = await this.orderModel.findByIdAndUpdate(id, {
             status: OrderStatus.Confirmeed,
             confirmedAt: new Date()
         });
         if (order) {
             const bill = await this.billModel.findById(order.bill);
-            if (bill.status === BillStatus.InTransit2) {
+            if (type === CONFIRMORDER.RECEIVEBILL) {
+                if (bill.status === BillStatus.InTransit2) {
+                    return await this.billModel.findByIdAndUpdate(order.bill, {
+                        currentPoint: order.to,
+                        status: BillStatus.AtCP2
+                    });
+                } else if (bill.status === BillStatus.InTransit1) {
+                    return await this.billModel.findByIdAndUpdate(order.bill, {
+                        currentPoint: order.to,
+                        status: BillStatus.AtCP1
+                    });
+                } else {
+                    return await this.billModel.findByIdAndUpdate(order.bill, {
+                        currentPoint: order.to,
+                        status: BillStatus.ReachDesEP
+                    });
+                }
+            } else if (type === CONFIRMORDER.SUCCESSDELIVER) {
                 return await this.billModel.findByIdAndUpdate(order.bill, {
-                    currentPoint: order.to,
-                    status: BillStatus.AtCP2
+                    currentPoint: CUSTOMERPOINT,
+                    status: BillStatus.Delivered
                 });
-            } else if (bill.status === BillStatus.InTransit1) {
+            } else if (type === CONFIRMORDER.FAILDELIVER) {
                 return await this.billModel.findByIdAndUpdate(order.bill, {
-                    currentPoint: order.to,
-                    status: BillStatus.AtCP1
+                    currentPoint: CUSTOMERPOINT,
+                    status: BillStatus.FailAttempt
                 });
             } else {
-                return await this.billModel.findByIdAndUpdate(order.bill, {
-                    currentPoint: order.to,
-                    status: BillStatus.ReachDesEP
-                });
+
             }
         } else {
             throw new NotFoundException("Not found order with id", { cause: new Error() });
