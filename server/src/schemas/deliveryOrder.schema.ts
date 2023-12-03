@@ -14,7 +14,7 @@ export class DeliveryOrder {
     @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
     from: ObjectId;
 
-    @Prop({ type: mongoose.Types.ObjectId, ref: Point.name })
+    @Prop({ required: true, type: mongoose.Types.ObjectId, ref: Point.name, default: '656b4524130a2b089708c464' })
     to: ObjectId;
 
     @Prop({ required: true, type: String, enum: OrderStatus, default: OrderStatus.NotConfirmed })

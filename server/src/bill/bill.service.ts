@@ -17,7 +17,13 @@ export class BillService {
     }
 
     async getBillAtPoint(id: string) {
-        return await this.billModel.find({ currentPoint: id }, '_id sender.name receiver.name timeSent status');
+        return await this.billModel.find(
+            { 
+                currentPoint: id,
+                'sender.point': { $not: { $eq: id } }
+            }, 
+            '_id sender.name receiver.name timeSent status'
+        );
     }
 
     async addBill(addBillDto: AddBillDto) {

@@ -6,7 +6,8 @@ import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
+import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
+import MarkunreadMailboxOutlinedIcon from '@material-ui/icons/MarkunreadMailboxOutlined';
 import { useNavigate } from 'react-router-dom';
 import MenuBtn from '../MenuBtn/MenuBtn';
 
@@ -30,9 +31,14 @@ const SideBarEPO = () => {
     setActiveBtn('OOrder');
   }
 
-  const handleBillClick = () => {
-    navigate("bill");
-    setActiveBtn("Bill");
+  const handleSBillClick = () => {
+    navigate("sbill");
+    setActiveBtn("SBill");
+  }
+
+  const handleRBillClick = () => {
+    navigate("rbill");
+    setActiveBtn('RBill');
   }
 
   useEffect(() => {
@@ -50,9 +56,13 @@ const SideBarEPO = () => {
           <DashboardOutlinedIcon />
           <div>Dashboard</div>
         </MenuBtn>
-        <MenuBtn className='option' onClick={handleBillClick} isActive={activeBtn === 'Bill' ? true : false}>
-          <InsertDriveFileOutlinedIcon />
-          <div>Bill</div>
+        <MenuBtn onClick={handleSBillClick} isActive={activeBtn === 'SBill' ? true : false}>
+          <SendOutlinedIcon />
+          <div>Sending Bill</div>
+        </MenuBtn>
+        <MenuBtn onClick={handleRBillClick} isActive={activeBtn === 'RBill' ? true : false}>
+          <MarkunreadMailboxOutlinedIcon />
+          <div>Receiving Bill</div>
         </MenuBtn>
         <MenuBtn className='option' onClick={handleIncomingClick} isActive={activeBtn === 'IOrder' ? true : false}>
           <CallReceivedOutlinedIcon />

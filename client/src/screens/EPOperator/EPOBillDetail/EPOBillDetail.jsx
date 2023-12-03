@@ -36,12 +36,21 @@ const EPOBillDetail = () => {
     }, [id]);
 
     const createDelivery = async () => {
-        try {
-            const res = await axios.post("http://localhost:2504/order/add", {
+        let newOrder;
+        if (billData.status === BILLSTATUS.PENDING) {
+            newOrder = {
                 bill: billData._id,
                 from: currentPoint.epoint,
                 to: currentPoint.associatedPoint
-            })
+            }
+        } else {
+            newOrder = {
+                bill: billData._id,
+                from: currentPoint.epoint
+            }
+        }
+        try {
+            const res = await axios.post("http://localhost:2504/order/add", newOrder);
             if (res) {
                 console.log('successful');
                 setConfirmOpen(false);
@@ -103,24 +112,41 @@ const EPOBillDetail = () => {
 
             <div className='action'>
                 {
-                    billData.status === BILLSTATUS.PENDING ? (
-                        <button className='btn1' onClick={() => setConfirmOpen(true)}>
-                            <div className='text'>
-                                Create Delivery Order
-                            </div>
-                        </button>
+                    currentPoint.epoint === billData.sender.point ? (
+                        billData.status === BILLSTATUS.PENDING ? (
+                            <button className='btn1' onClick={() => setConfirmOpen(true)}>
+                                <div className='text'>
+                                    Create Delivery Order
+                                </div>
+                            </button>
+                        ) : (
+                            <button className='btn1'>
+                                <div className='text'>
+                                    Have Created Delivery Order
+                                </div>
+                            </button>
+                        )
                     ) : (
-                        <button className='btn1'>
-                            <div className='text'>
-                                Have Created Delivery Order
+                        billData.status === BILLSTATUS.REACHDESEP ? (
+                            <div className='action'>
+                                <button className='btn1' onClick={() => setConfirmOpen(true)}>
+                                    <div className='text'>
+                                        Create Delivery Order
+                                    </div>
+                                </button>
+                                <button className='btn2'>
+                                    <div className='text'>Create Return Order</div>
+                                </button>
                             </div>
-                        </button>
+                        ) : (
+                            <button className='btn1'>
+                                <div className='text'>
+                                    Have Created Delivery Order
+                                </div>
+                            </button>
+                        )
                     )
                 }
-
-                <button className='btn2'>
-                    <div className='text'>Cancel Bill</div>
-                </button>
             </div>
 
             {confirmOpen && <ModalConfirm isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} confirm={createDelivery} />}

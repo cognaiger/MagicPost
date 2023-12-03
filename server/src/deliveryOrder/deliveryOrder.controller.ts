@@ -40,4 +40,10 @@ export class OrderController {
     async cancelOrder(@Param('id') id: string): Promise<any> {
         return await this.orderSerive.cancelOrder(id);
     }
+
+    @Public()
+    @Get("/:id")
+    async getOrderDetail(@Param('id') id: string): Promise<any> {
+        return await this.orderSerive.getOrderDetail(id);
+    }
 }

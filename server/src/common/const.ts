@@ -33,6 +33,7 @@ export enum BillStatus {
     AtCP2 = 'At collection point 2',
     InTransit3 = 'In transit 3',
     ReachDesEP = "Reach destination exchange point",
+    InTransit4 = 'In transit 4',
     Delivered = "Delivered",
     FailAttempt = "Fail attempt",
     Return = "Return"

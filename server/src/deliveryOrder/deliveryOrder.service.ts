@@ -37,11 +37,17 @@ export class OrderService {
                 }, {
                     $set: { status: BillStatus.InTransit2 }
                 })
-            } else {
+            } else if (billData.status === BillStatus.AtCP2) {
                 return await this.billModel.updateOne({
                     _id: bill
                 }, {
                     $set: { status: BillStatus.InTransit3 }
+                })
+            } else {
+                return await this.billModel.updateOne({
+                    _id: bill
+                }, {
+                    $set: { status: BillStatus.InTransit4 }
                 })
             }
         }
@@ -57,7 +63,9 @@ export class OrderService {
     }
 
     async getOrderFrom(id: string) {
-
+        return await this.orderModel.find({
+            from: id
+        }, 'bill to createdAt status').populate('to', 'name').exec(); 
     }
 
     async getOrderTo(id: string) {
@@ -93,5 +101,11 @@ export class OrderService {
         } else {
             throw new NotFoundException("Not found order with id", { cause: new Error() });
         }
+    }
+
+    async getOrderDetail(id: string) {
+        return await this.orderModel.findOne({
+            _id: id
+        }).populate('bill').populate('from', 'name').populate('to', 'name').exec();
     }
 }

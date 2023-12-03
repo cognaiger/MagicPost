@@ -37,7 +37,7 @@ const EPOInOrder = () => {
     return () => {
       ignore = true;
     }
-  }, [currentPoint.cpoint]);
+  }, [currentPoint.epoint]);
 
   const onClickConfirm = async (id) => {
     setConfirmModal(true);

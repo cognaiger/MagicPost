@@ -25,6 +25,8 @@ import CPSBill from "./screens/CPStaff/CPSBill/CPSBill";
 import CPSBillDetail from "./screens/CPStaff/CPSBillDetail/CPSBillDetail";
 import EPOInOrder from "./screens/EPOperator/EPOInOrder/EPOInOrder";
 import EPOOutOrder from "./screens/EPOperator/EPOOutOrder/EPOOutOrder";
+import EPOReceiveBill from "./screens/EPOperator/EPOReceiveBill/EPOReceiveBill";
+import EPOOrderDetail from "./screens/EPOperator/EPOOrderDetail/EPOOrderDetail";
 
 function App() {
 
@@ -58,8 +60,10 @@ function App() {
           <Route path="" element={<EPODashboard />} />
           <Route path="iorder" element={<EPOInOrder />} />
           <Route path="oorder" element={<EPOOutOrder />} />
-          <Route path="bill" element={<EPOBill />} />
+          <Route path="sbill" element={<EPOBill />} />
           <Route path="bill/:id" element={<EPOBillDetail />} />
+          <Route path="rbill" element={<EPOReceiveBill />} />
+          <Route path="order/:id" element={<EPOOrderDetail />} />
         </Route>
         <Route path="/cpmhome" element={<CPManagerHome />}>
           <Route path="" element={<CPMDashboard />} />

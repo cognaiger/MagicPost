@@ -1,4 +1,4 @@
-import { IsMongoId, IsNotEmpty } from "class-validator";
+import { IsMongoId, IsNotEmpty, IsOptional } from "class-validator";
 
 export class AddOrderDto {
     @IsNotEmpty()
@@ -11,5 +11,6 @@ export class AddOrderDto {
 
     @IsNotEmpty()
     @IsMongoId()
-    to: String;
+    @IsOptional()
+    to?: String;
 }
