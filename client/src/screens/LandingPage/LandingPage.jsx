@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../img/logo.png";
-import map from "../../img/mapbig.png";
+import map from "../../img/map.png";
+import mapbig from "../../img/mapbig.png";
+import mapbig1 from "../../img/mapbig1.png";
 import "./LandingPage.scss";
 import Button from "../../components/Button/Button";
 
@@ -41,7 +43,7 @@ const LandingPage = () => {
         </div>
 
         <div className="right">
-          <img src={map} alt="map" />
+          <img src={mapbig} alt="map" />
         </div>
       </div>
     </div>
