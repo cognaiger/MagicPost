@@ -34,18 +34,16 @@ function Register() {
   return (
     <div className="register">
       <div className="card">
+        <div className="right"></div>
         <div className="left">
-          <h1>Lama Social.</h1>
+          <h1>Magic Post</h1>
           <p>
             Want to ship your package to everywhere in lighting speed? Begin the first step by creating an
             account
           </p>
-          <span>Do you have an account?</span>
-          <button>
+          {/* <button>
             <Link to="/login" style={{ textDecoration: "none" }}>Login</Link>
-          </button>
-        </div>
-        <div className="right">
+          </button> */}
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
             <input type="email" value={email}
@@ -58,6 +56,7 @@ function Register() {
 
             <div className="msg">{msg ? <p>{msg}</p> : null}</div>
           </form>
+          <span>Do you have an account? <a href = "/login" className="login">Login</a></span>
         </div>
       </div>
     </div>
