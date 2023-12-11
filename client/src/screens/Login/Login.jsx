@@ -21,7 +21,7 @@ const Login = () => {
       <div className="card">
         <div className="left"> </div>
         <div className="right">
-          <h1>Welcome Back !</h1>
+          <h1>Welcome back!</h1>
           <p>
             Please enter your details
           </p>
@@ -33,7 +33,7 @@ const Login = () => {
             <button onClick={handleLogin}>Login</button>
           </form>
           {msg}
-          <span>Don't you have an account? <a href = "/register" className="signup">Sign Up</a></span>
+          <span>Don't you have an account?&nbsp; <a href = "/register" className="signup"> Sign Up</a></span>
         </div>
       </div>
     </div>
