@@ -19,20 +19,12 @@ const Login = () => {
   return (
     <div className="login">
       <div className="card">
-        <div className="left">
-          <h1>Welcome Back</h1>
-          <p>
-            Please enter your credentials to access your account and manage your shipments with ease.
-            We're here to make your shipping experience as simple as possible.
-          </p>
-          <span>Don't you have an account?</span>
-          <button>
-            <Link to="/register" style={{ textDecoration: "none" }}>Register</Link>
-          </button>
-        </div>
-
+        <div className="left"> </div>
         <div className="right">
-          <h1>Login</h1>
+          <h1>Welcome Back !</h1>
+          <p>
+            Please enter your details
+          </p>
           <form>
             <input type="text" placeholder="Email" value={email}
               onChange={(e) => setEmail(e.target.value)} />
@@ -41,6 +33,7 @@ const Login = () => {
             <button onClick={handleLogin}>Login</button>
           </form>
           {msg}
+          <span>Don't you have an account? <a href = "/register" className="signup">Sign Up</a></span>
         </div>
       </div>
     </div>

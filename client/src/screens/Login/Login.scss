@@ -1,6 +1,6 @@
 .login {
   height: 100vh;
-  background-color: rgb(193, 190, 255);
+  background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,8 +15,8 @@
 
     .left {
       flex: 1;
-      background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-        url("https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600") center;
+      background:
+        url("https://cdn.dribbble.com/userupload/8432950/file/original-0c14504bd291054d76548cb015dff89a.png?resize=1024x768") center;
       background-size: cover;
       padding: 50px;
       display: flex;
@@ -25,8 +25,10 @@
       color: white;
 
       h1 {
+        color: black;
         font-size: 100px;
         line-height: 100px;
+        align-content: center;
       }
 
       span {
@@ -38,8 +40,8 @@
         padding: 10px;
         border: none;
         border-radius: 8px;
-        background-color: white;
-        color: rebeccapurple;
+        background-color: black;
+        color: rgb(255, 255, 255);
         font-weight: bold;
         cursor: pointer;
       }
@@ -55,6 +57,15 @@
 
       h1 {
         color: #555;
+        font-size: 80px;
+        line-height: 100px;
+        align-content: center;
+      }
+
+      p{
+        font-size: 20px;
+        line-height: 50px;
+        align-content: center;
       }
 
       form {
@@ -73,10 +84,16 @@
           padding: 10px;
           border: none;
           border-radius: 8px;
-          background-color: #938eef;
+          background-color:black;
           color: white;
           font-weight: bold;
           cursor: pointer;
+          align-items: center;
+          justify-items: center;
+        }
+
+        signup {
+          color: #555;     
         }
       }
     }
