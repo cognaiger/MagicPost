@@ -1,12 +1,12 @@
 .register {
   height: 100vh;
-  background-color: rgb(193, 190, 255);
+  background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
 
   .card {
-    width: 50%;
+    width: 80%;
     display: flex;
     flex-direction: row-reverse;
     background-color: white;
@@ -15,9 +15,9 @@
     overflow: hidden;
 
     .left {
-      flex: 1;
-      background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-        url("https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600") center;
+      flex: 10;
+      background:
+        url("https://cdn.dribbble.com/userupload/8432950/file/original-0c14504bd291054d76548cb015dff89a.png?resize=1024x768") center;
       background-size: cover;
       padding: 50px;
       display: flex;
@@ -26,6 +26,8 @@
       color: white;
 
       h1 {
+        display: flex;
+        color: black;
         font-size: 100px;
         line-height: 100px;
       }
@@ -39,22 +41,33 @@
         padding: 10px;
         border: none;
         background-color: white;
-        color: rebeccapurple;
+        color: black;
         font-weight: bold;
         cursor: pointer;
       }
     }
 
     .right {
-      flex: 1;
+      flex: 7;
       padding: 50px;
       display: flex;
       flex-direction: column;
-      gap: 50px;
+      gap: 30px;
       justify-content: center;
 
       h1 {
-        color: #555;
+        display: flex;
+        color: black;
+        font-size: 56px;
+        line-height: 100px;
+        align-content: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      h2{
+        display: flex;
+        color: black;
       }
 
       form {
@@ -66,13 +79,14 @@
           border: none;
           border-bottom: 1px solid lightgray;
           padding: 20px 10px;
+          border-radius: 8px;
         }
 
         button {
-          width: 50%;
+          width: 100%;
           padding: 10px;
           border: none;
-          background-color: #938eef;
+          background-color: black;
           color: white;
           font-weight: bold;
           cursor: pointer;
@@ -83,6 +97,16 @@
           text-align: center;
           color: #36a936;
         }
+      }
+      span{
+        display: flex;
+        align-content: center;
+        justify-content: center;
+      }
+
+      .Login{
+       color: #555;
+       font-weight: bold;
       }
     }
   }
