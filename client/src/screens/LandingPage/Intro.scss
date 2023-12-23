@@ -1,0 +1,69 @@
+.intro {
+    display: flex;
+    align-items: flex-start;
+    
+    .left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 84px 55px;
+        gap: 50px;
+        font-family: Inter;
+
+        .ti1 {
+            margin-top: 70px;
+            color: #000;
+            font-size: 55px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        .ti2 {
+            color: #000;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .line {
+            margin-top: 50px;
+            width: 100%;
+            height: 1px;
+            background: #000;
+        }
+
+        .statistic {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 90px;
+
+            .number {
+                text-align: center;
+                color: red;
+            }
+
+            div {
+                color: #000;
+                font-size: 40px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+        }
+    }
+
+    .right {
+        flex: 1;
+        height: 980px;
+        padding-top: 10px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

@@ -37,10 +37,6 @@ function Register() {
         <div className="left"></div>
         <div className="right">
           <h1>MagicPost</h1>
-          <p>
-            Want to ship your package to everywhere in lighting speed? Begin the first step by creating an
-            account
-          </p>
           <form onSubmit={handleSubmit}>
             <input type="email" value={email}
               onChange={(e) => setEmail(e.target.value)} placeholder="Email" />

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Login.scss';
 import { AuthContext } from '../../context/authContext';
 
@@ -22,9 +21,6 @@ const Login = () => {
         <div className="left"> </div>
         <div className="right">
           <h1>Welcome back!</h1>
-          <p>
-            Please enter your details
-          </p>
           <form>
             <input type="text" placeholder="Email" value={email}
               onChange={(e) => setEmail(e.target.value)} />

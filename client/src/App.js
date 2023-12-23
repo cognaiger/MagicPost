@@ -27,6 +27,10 @@ import EPOInOrder from "./screens/EPOperator/EPOInOrder/EPOInOrder";
 import EPOOutOrder from "./screens/EPOperator/EPOOutOrder/EPOOutOrder";
 import EPOReceiveBill from "./screens/EPOperator/EPOReceiveBill/EPOReceiveBill";
 import EPOOrderDetail from "./screens/EPOperator/EPOOrderDetail/EPOOrderDetail";
+import Intro from "./screens/LandingPage/Intro";
+import Tracking from "./screens/Tracking/Tracking";
+import Service from "./screens/Service/Service";
+import LocationPage from "./screens/Location/Location";
 
 function App() {
 
@@ -44,7 +48,12 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />}>
+          <Route path="" element={<Intro />} />
+          <Route path="tracking" element={<Tracking />} />
+          <Route path="service" element={<Service />} />
+          <Route path="location" element={<LocationPage />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/bhome" element={<BHome />}>
