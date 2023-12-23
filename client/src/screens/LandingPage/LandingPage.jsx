@@ -1,13 +1,38 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import logo from "../../img/logo.png";
 import map from "../../img/map.png";
 import mapbig from "../../img/mapbig.png";
 import mapbig1 from "../../img/mapbig1.png";
 import "./LandingPage.scss";
 import Button from "../../components/Button/Button";
+import TrackingBar from "../../components/TrackingBar/TrackingBar"
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const [content, setContent] = useState('services');
+
+    // Temporary
+    const Services = () => {
+      return (
+        <>
+          <div className="left">
+            <div className="ti1">Your lighting-fast delivery partner</div>
+            <div className="ti2">MagicPost is a logistic company providing courier, package delivery and express mail service. It helps everyone to send
+              documents, packages, parcels and letter to desired destination
+            </div>
+            <div className="line"></div>
+            <div className="statistic">
+              <div>24/7 Expedition</div>
+              <div>5M+ Packages Delivered</div>
+            </div>
+          </div>
+          <div className="right">
+            <img src={map} alt="map" />
+        </div>
+        </>
+      )
+    }
 
   return (
     <div className="page">
@@ -18,9 +43,9 @@ const LandingPage = () => {
         </div>
 
         <div className="menu">
-          <div>Services</div>
-          <div>Tracking</div>
-          <div>Locations</div>
+          <button onClick={() => setContent('services')}>Services</button>
+          <button onClick={() => setContent('tracking')}>Tracking</button>
+          <button onClick={() => setContent('locations')}>Locations</button>
         </div>
 
         <div className="button">
@@ -30,6 +55,9 @@ const LandingPage = () => {
       </div>
 
       <div className="content">
+          {content == 'services' && <Services/>}
+          {content == 'tracking' && <TrackingBar/>}
+
         <div className="left">
           <div className="ti1">Your lighting-fast delivery partner</div>
           <div className="ti2">MagicPost is a logistic company providing courier, package delivery and express mail service. It helps everyone to send
