@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import BossImg from "../../img/bossimg.png";
 import "./SideBarBoss.scss";
@@ -9,10 +9,9 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import { useNavigate } from 'react-router-dom';
 import MenuBtn from '../MenuBtn/MenuBtn';
 
-function SideBarBoss() {
+const SideBarBoss = ({ activeBtn, setActiveBtn }) => {
   const { currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [activeBtn, setActiveBtn] = useState('Db');
 
   const handleDbClick = () => {
     navigate('/bhome');
@@ -28,6 +27,10 @@ function SideBarBoss() {
     navigate("/bhome/account");
     setActiveBtn("Account");
   }
+
+  useEffect(() => {
+    navigate("/bhome");
+  }, [])
 
   return (
     <div className='sideBar'>

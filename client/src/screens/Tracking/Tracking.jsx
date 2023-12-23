@@ -1,9 +1,12 @@
 import React from 'react';
 import "./Tracking.scss";
+import TrackingBar from '../../components/TrackingBar/TrackingBar';
 
 function Tracking() {
   return (
-    <div>Tracking</div>
+    <div className='tracking'>
+        <TrackingBar />
+    </div>
   )
 }
 

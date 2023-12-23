@@ -2,7 +2,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.png";
 import "./LandingPage.scss";
 import Button from "../../components/Button/Button";
-import TrackingBar from "../../components/TrackingBar/TrackingBar"
 
 const LandingPage = () => {
   const navigate = useNavigate();
