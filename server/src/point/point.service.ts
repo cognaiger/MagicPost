@@ -10,12 +10,12 @@ export class PointService {
 
     async getAllPoint(type: string) {
         if (type === 'all') {
-            return await this.pointModel.find(null, 'name location type managerName').exec();
+            return await this.pointModel.find(null, 'name location type managerName sentPackage receivedPackage').sort({name: 1}).exec();
         } else if (type === 'ep') {
-            return await this.pointModel.find({ type: 'EPoint' }, 'name location type managerName').exec();
+            return await this.pointModel.find({ type: 'EPoint' }, 'name location type managerName sentPackage receivedPackage').exec();
         } 
         
-        return await this.pointModel.find({ type: 'CPoint' }, 'name location type managerName').exec();
+        return await this.pointModel.find({ type: 'CPoint' }, 'name location type managerName sentPackage receivedPackage').exec();
     }
 
     async addLocation(addLocationDto: AddLocationDto) {
@@ -35,6 +35,6 @@ export class PointService {
     }
 
     async getPointById(id: string) {
-        return await this.pointModel.find({ _id: id }, 'name type sentPackage pendingPackage receivedPackage').exec();
+        return await this.pointModel.find({ _id: id }, 'name type sentPackage pendingPackage receivedPackage suPackage returnPackage').exec();
     }
 }

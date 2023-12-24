@@ -53,3 +53,4 @@ export enum CONFIRMORDER {
 }
 
 export const CUSTOMERPOINT = '656b4524130a2b089708c464';
+export const ALLPOINT = '6586f3b8d93bbbef686640d2';

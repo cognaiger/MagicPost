@@ -1,0 +1,42 @@
+.trackDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    align-items: center;
+
+    .header {
+        font-size: 50px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .milestone {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: center;
+
+            .info {
+                display: flex;
+                flex-direction: column;
+
+                .content {
+                    font-size: 25px;
+                    font-weight: 600;
+                }
+
+                .time {
+                    font-size: 20px;
+                    font-weight: 300;
+                }
+            }
+
+
+        }
+    }
+}

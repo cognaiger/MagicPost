@@ -7,12 +7,12 @@ import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
 import axios from 'axios';
 
 const CPMDashboard = () => {
-    const { currentUser } = useContext(AuthContext);
+    const { currentPoint } = useContext(AuthContext);
     const [pointInfo, setPointInfo] = useState();
 
     useEffect(() => {
         let ignore = false;
-        const id = currentUser.cpoint;
+        const id = currentPoint.cpoint;
 
         async function fetchData() {
             try {
@@ -45,7 +45,7 @@ const CPMDashboard = () => {
             </div>
 
             <div className='content'>
-                <div className='branch'>{pointInfo.name} (Collection Point)</div>
+                <div className='branch'>{pointInfo.name}</div>
                 <div className='number'>
                     <SimpleGrid spacing={4} templateColumns='1fr 1fr' columnGap={40}>
                         <Card width={350} height={200} borderRadius={8} backgroundColor='#9CFF84' ml={200}>

@@ -3,14 +3,16 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DeliveryOrder, DeliveryOrderDocument } from "src/schemas/deliveryOrder.schema";
 import { AddOrderDto } from "./dto/addOrder.dto";
-import { BillStatus, CONFIRMORDER, CUSTOMERPOINT, OrderStatus } from "src/common/const";
+import { ALLPOINT, BillStatus, CONFIRMORDER, CUSTOMERPOINT, OrderStatus } from "src/common/const";
 import { Bill, BillDocument } from "src/schemas/bill.schema";
+import { Point, PointDocument } from "src/schemas/point.schema";
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectModel(DeliveryOrder.name) private readonly orderModel: Model<DeliveryOrderDocument>,
-        @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>
+        @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>,
+        @InjectModel(Point.name) private readonly pointModel: Model<PointDocument>
     ) {
     }
 
@@ -32,17 +34,24 @@ export class OrderService {
                     $set: { status: BillStatus.InTransit1 }
                 })
             } else if (billData.status === BillStatus.AtCP1) {
+                await this.pointModel.findOneAndUpdate(
+                    { _id: from },
+                    { $inc: { sentPackage: 1 } }
+                );
                 return await this.billModel.updateOne({
                     _id: bill
                 }, {
                     $set: { status: BillStatus.InTransit2 }
                 })
             } else if (billData.status === BillStatus.AtCP2) {
-                return await this.billModel.updateOne({
-                    _id: bill
-                }, {
-                    $set: { status: BillStatus.InTransit3 }
-                })
+                await this.pointModel.findOneAndUpdate(
+                    { _id: from },
+                    { $inc: { sentPackage: 1 } }
+                );
+                return await this.billModel.updateOne(
+                    { _id: bill },
+                    { $set: { status: BillStatus.InTransit3 } }
+                )
             } else {
                 return await this.billModel.updateOne({
                     _id: bill
@@ -56,7 +65,7 @@ export class OrderService {
     async cancelOrder(id: string) {
         const data = await this.orderModel.findById(id);
         if (!data) {
-            throw new NotFoundException("User not found", { cause: new Error() });
+            throw new NotFoundException("Order not found", { cause: new Error() });
         }
 
         return await this.orderModel.findByIdAndUpdate(id, { status: OrderStatus.Cancel });
@@ -83,27 +92,52 @@ export class OrderService {
             const bill = await this.billModel.findById(order.bill);
             if (type === CONFIRMORDER.RECEIVEBILL) {
                 if (bill.status === BillStatus.InTransit2) {
+                    await this.pointModel.findOneAndUpdate(
+                        { _id: order.to },
+                        { $inc: { receivedPackage: 1 } }
+                    )
+
                     return await this.billModel.findByIdAndUpdate(order.bill, {
                         currentPoint: order.to,
                         status: BillStatus.AtCP2
                     });
                 } else if (bill.status === BillStatus.InTransit1) {
+                    await this.pointModel.findOneAndUpdate(
+                        { _id: order.to },
+                        { $inc: { receivedPackage: 1 } }
+                    )
                     return await this.billModel.findByIdAndUpdate(order.bill, {
                         currentPoint: order.to,
                         status: BillStatus.AtCP1
                     });
                 } else {
+                    await this.pointModel.findOneAndUpdate(
+                        { _id: bill.receiver.point },
+                        { $inc: { receivedPackage: 1 } }
+                    );
+                    await this.pointModel.findOneAndUpdate(
+                        { _id: ALLPOINT },
+                        { $inc: { receivedPackage: 1 } }
+                    );
                     return await this.billModel.findByIdAndUpdate(order.bill, {
                         currentPoint: order.to,
                         status: BillStatus.ReachDesEP
                     });
                 }
             } else if (type === CONFIRMORDER.SUCCESSDELIVER) {
+                await this.pointModel.findOneAndUpdate(
+                    { _id: bill.sender.point },
+                    { $inc: { suPackage: 1, pendingPackage: -1 } }
+                );
                 return await this.billModel.findByIdAndUpdate(order.bill, {
                     currentPoint: CUSTOMERPOINT,
                     status: BillStatus.Delivered
                 });
             } else if (type === CONFIRMORDER.FAILDELIVER) {
+                await this.pointModel.findOneAndUpdate(
+                    { _id: bill.sender.point },
+                    { $inc: { returnPackage: 1, pendingPackage: -1 }}
+                )
                 return await this.billModel.findByIdAndUpdate(order.bill, {
                     currentPoint: CUSTOMERPOINT,
                     status: BillStatus.FailAttempt

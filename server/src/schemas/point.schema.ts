@@ -31,10 +31,10 @@ export class Point {
     @Prop({ default: '' })
     managerName: String;
 
-    @Prop()
+    @Prop({ required: true, default: 0 })
     suPackage: Number;
 
-    @Prop()
+    @Prop({ required: true, default: 0 })
     returnPackage: Number;
 }
 

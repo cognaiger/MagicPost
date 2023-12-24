@@ -44,7 +44,7 @@ const EPMDashboard = () => {
             </div>
 
             <div className='content'>
-                <div className='branch'>{pointInfo.name} (Exchange Point)</div>
+                <div className='branch'>{pointInfo.name}</div>
                 <div className='number'>
                     <SimpleGrid spacing={4} templateColumns='1fr 1fr 1fr' columnGap={40}>
                         <Card width={350} height={200} borderRadius={8} backgroundColor='#9CFF84'>

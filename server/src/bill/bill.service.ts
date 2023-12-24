@@ -3,10 +3,15 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Bill, BillDocument } from "src/schemas/bill.schema";
 import { AddBillDto } from "./dto/addBill.dto";
+import { Point, PointDocument } from "src/schemas/point.schema";
+import { ALLPOINT } from "src/common/const";
 
 @Injectable()
 export class BillService {
-    constructor(@InjectModel(Bill.name) private readonly billModel: Model<BillDocument>) { }
+    constructor(
+        @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>,
+        @InjectModel(Point.name) private readonly pointModel: Model<PointDocument>
+        ) { }
 
     async getAllBill() {
         return await this.billModel.find(null, '_id sender.name receiver.name timeSent status');
@@ -27,6 +32,16 @@ export class BillService {
     }
 
     async addBill(addBillDto: AddBillDto) {
+        await this.pointModel.findOneAndUpdate(
+            { _id: addBillDto.senderPoint },
+            { $inc: { sentPackage: 1, pendingPackage: 1 } },
+            { new: true}
+        );
+        await this.pointModel.findOneAndUpdate(
+            { _id: ALLPOINT },
+            { $inc: { sentPackage: 1 } }
+        );
+
         return await new this.billModel({
             sender: {
                 email: addBillDto.senderEmail,

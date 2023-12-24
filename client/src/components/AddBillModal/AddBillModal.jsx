@@ -5,7 +5,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FailOption } from '../../common/const';
 import { AuthContext } from '../../context/authContext';
 
-const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
+const AddBillModal = ({ addOpen, setAddOpen }) => {
     const [senderEmail, setSenderEmail] = useState('');
     const [senderName, setSenderName] = useState('');
     const [senderNum, setSenderNum] = useState('');
