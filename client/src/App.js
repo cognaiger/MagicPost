@@ -31,7 +31,6 @@ import Intro from "./screens/LandingPage/Intro";
 import Tracking from "./screens/Tracking/Tracking";
 import Service from "./screens/Service/Service";
 import LocationPage from "./screens/Location/Location";
-import TrackingDetail from "./screens/TrackingDetail/TrackingDetail";
 
 function App() {
 
@@ -54,7 +53,6 @@ function App() {
           <Route path="tracking" element={<Tracking />} />
           <Route path="service" element={<Service />} />
           <Route path="location" element={<LocationPage />} />
-          <Route path="tracking/detail" element={<TrackingDetail />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

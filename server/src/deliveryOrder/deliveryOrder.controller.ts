@@ -42,6 +42,12 @@ export class OrderController {
     }
 
     @Public()
+    @Get("/ofbill")
+    async getConfirmedOrderOfBill(@Query('id') id: string): Promise<any> {
+        return await this.orderSerive.getConfirmedOrderOfBill(id);
+    }
+
+    @Public()
     @Get("/:id")
     async getOrderDetail(@Param('id') id: string): Promise<any> {
         return await this.orderSerive.getOrderDetail(id);

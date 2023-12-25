@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
 import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
-import { ORDERSTATUS } from '../../../common/const';
+import { CONFIRMORDER, ORDERSTATUS } from '../../../common/const';
 
 const EPOInOrder = () => {
   const [orderData, setOrderData] = useState();
@@ -48,7 +48,8 @@ const EPOInOrder = () => {
     try {
       console.log(currentId);
       const res = await axios.put('http://localhost:2504/order/confirm', {
-        id: currentId
+        id: currentId,
+        type: CONFIRMORDER.RECEIVEBILL
       });
       if (res.status === 200) {
         console.log(res);

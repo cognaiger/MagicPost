@@ -1,4 +1,5 @@
-import { IsMongoId, IsNotEmpty, IsOptional } from "class-validator";
+import { IsEnum, IsMongoId, IsNotEmpty, IsOptional } from "class-validator";
+import { ORDERTYPE } from "src/common/const";
 
 export class AddOrderDto {
     @IsNotEmpty()
@@ -13,4 +14,8 @@ export class AddOrderDto {
     @IsMongoId()
     @IsOptional()
     to?: String;
+
+    @IsNotEmpty()
+    @IsEnum(ORDERTYPE)
+    type: String;
 }

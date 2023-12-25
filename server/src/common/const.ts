@@ -52,5 +52,12 @@ export enum CONFIRMORDER {
     NOTRECEIVEBILL = 'Not Receive Bill'
 }
 
+export enum ORDERTYPE {
+    TOCP1 = "To collection point 1",
+    TOCP2 = "To collection point 2",
+    TODESEP = "To destination exchange point",
+    TOCUS = "To customer"
+}
+
 export const CUSTOMERPOINT = '656b4524130a2b089708c464';
 export const ALLPOINT = '6586f3b8d93bbbef686640d2';

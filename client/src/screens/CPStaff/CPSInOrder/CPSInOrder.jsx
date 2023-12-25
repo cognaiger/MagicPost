@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 import ConfirmModal from './ConfirmModal';
 import CancelModal from './CancelModal';
-import { ORDERSTATUS } from '../../../common/const';
+import { CONFIRMORDER, ORDERSTATUS } from '../../../common/const';
 
 const CPSInOrder = () => {
     const [orderData, setOrderData] = useState();
@@ -48,7 +48,8 @@ const CPSInOrder = () => {
         try {
             console.log(currentId);
             const res = await axios.put('http://localhost:2504/order/confirm', {
-                id: currentId
+                id: currentId,
+                type: CONFIRMORDER.RECEIVEBILL
             });
             if (res.status === 200) {
                 console.log(res);

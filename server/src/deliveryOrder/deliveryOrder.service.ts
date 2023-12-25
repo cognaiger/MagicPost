@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { DeliveryOrder, DeliveryOrderDocument } from "src/schemas/deliveryOrder.schema";
 import { AddOrderDto } from "./dto/addOrder.dto";
 import { ALLPOINT, BillStatus, CONFIRMORDER, CUSTOMERPOINT, OrderStatus } from "src/common/const";
@@ -17,11 +17,12 @@ export class OrderService {
     }
 
     async addOrder(addOrderDto: AddOrderDto) {
-        const { bill, from, to } = addOrderDto;
+        const { bill, from, to, type } = addOrderDto;
         const res = await new this.orderModel({
             bill: bill,
             from: from,
             to: to,
+            type: type,
             status: OrderStatus.NotConfirmed,
             createdAt: new Date()
         }).save();
@@ -136,7 +137,7 @@ export class OrderService {
             } else if (type === CONFIRMORDER.FAILDELIVER) {
                 await this.pointModel.findOneAndUpdate(
                     { _id: bill.sender.point },
-                    { $inc: { returnPackage: 1, pendingPackage: -1 }}
+                    { $inc: { returnPackage: 1, pendingPackage: -1 } }
                 )
                 return await this.billModel.findByIdAndUpdate(order.bill, {
                     currentPoint: CUSTOMERPOINT,
@@ -154,5 +155,19 @@ export class OrderService {
         return await this.orderModel.findOne({
             _id: id
         }).populate('bill').populate('from', 'name').populate('to', 'name').exec();
+    }
+
+    async getConfirmedOrderOfBill(id: string) {
+        if (!mongoose.isValidObjectId(id)) {
+            throw new NotFoundException("Invalid ObjectId", { cause: new Error() });
+        }
+        const existingBill = await this.billModel.findById(id).exec();
+        if (!existingBill) {
+            throw new NotFoundException("Bill not found", { cause: new Error() });
+        }
+        return await this.orderModel.find({
+            bill: id,
+            status: OrderStatus.Confirmeed
+        }, 'status type confirmedAt').exec();
     }
 }

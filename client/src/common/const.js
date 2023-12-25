@@ -22,6 +22,7 @@ export const BILLSTATUS = {
     INTRANSIT2: 'In transit 2',
     ATCP2: 'At collection point 2',
     INTRANSIT3: 'In transit 3',
+    INTRANSIT4: "In transit 4",
     REACHDESEP: "Reach destination exchange point",
     DELIVERED: "Delivered",
     FAILATTEMPT: "Fail attempt",
@@ -40,5 +41,13 @@ export const CONFIRMORDER = {
     RECEIVEBILL: 'Receive Bill',
     NOTRECEIVEBILL: 'Not Receive Bill'
 }
+
+export const ORDERTYPE = {
+    TOCP1: "To collection point 1",
+    TOCP2: "To collection point 2",
+    TODESEP: "To destination exchange point",
+    TOCUS: "To customer"
+}
+
 
 export const CUSTOMERPOINT = '656b4524130a2b089708c464';

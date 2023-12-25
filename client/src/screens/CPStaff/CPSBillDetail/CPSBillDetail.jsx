@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalConfirm from './ModalConfirm';
 import { AuthContext } from '../../../context/authContext';
-import { BILLSTATUS } from '../../../common/const';
+import { BILLSTATUS, ORDERTYPE } from '../../../common/const';
 import { Divider } from '@chakra-ui/react';
 
 
@@ -42,13 +42,15 @@ const CPSBillDetail = () => {
       newOrder = {
         bill: billData._id,
         from: currentPoint.cpoint,
-        to: billData.receiver.point.associatedPoint
+        to: billData.receiver.point.associatedPoint,
+        type: ORDERTYPE.TOCP2
       }
     } else {
       newOrder = {
         bill: billData._id,
         from: currentPoint.cpoint,
-        to: billData.receiver.point._id
+        to: billData.receiver.point._id,
+        type: ORDERTYPE.TODESEP
       }
     }
 

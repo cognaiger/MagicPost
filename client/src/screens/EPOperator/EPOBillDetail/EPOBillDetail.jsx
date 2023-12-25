@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalConfirm from './ModalConfirm';
 import { AuthContext } from '../../../context/authContext';
-import { BILLSTATUS } from '../../../common/const';
+import { BILLSTATUS, ORDERTYPE } from '../../../common/const';
 
 const EPOBillDetail = () => {
     const { id } = useParams();
@@ -41,12 +41,14 @@ const EPOBillDetail = () => {
             newOrder = {
                 bill: billData._id,
                 from: currentPoint.epoint,
-                to: currentPoint.associatedPoint
+                to: currentPoint.associatedPoint,
+                type: ORDERTYPE.TOCP1
             }
         } else {
             newOrder = {
                 bill: billData._id,
-                from: currentPoint.epoint
+                from: currentPoint.epoint,
+                type: ORDERTYPE.TOCUS
             }
         }
         try {
