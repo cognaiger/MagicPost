@@ -57,7 +57,7 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => 
 
             if (response.status === 201) {
                 console.log("successful");
-                setLocationData([...locationData, newLocation])
+                setLocationData([newLocation, ...locationData]);
             } else {
                 console.log("err");
             }

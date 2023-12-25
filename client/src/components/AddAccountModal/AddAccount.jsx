@@ -63,7 +63,7 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
 
             if (response.status === 201) {
                 console.log("successful");
-                setAccountData([...accountData, newAccount]);
+                setAccountData([newAccount, ...accountData]);
             } else {
                 console.log("err");
             }

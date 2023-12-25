@@ -6,15 +6,20 @@ import { AddLocationDto } from "./dto/addLocation.dto";
 
 @Injectable()
 export class PointService {
-    constructor(@InjectModel(Point.name) private readonly pointModel: Model<PointDocument>) {}
+    constructor(@InjectModel(Point.name) private readonly pointModel: Model<PointDocument>) { }
 
     async getAllPoint(type: string) {
         if (type === 'all') {
-            return await this.pointModel.find(null, 'name location type managerName sentPackage receivedPackage').sort({name: 1}).exec();
-        } else if (type === 'ep') {
+            return await this.pointModel.find({ type: { $in: ['EPoint', 'CPoint', 'all'] } }, 'name location type managerName sentPackage receivedPackage')
+                .sort({ name: 1 }).exec();
+        } else if (type === 'both') {
+            return await this.pointModel.find({ type: { $in: ['EPoint', 'CPoint'] } }, 'name location type managerName sentPackage receivedPackage')
+                .sort({ name: 1 }).exec();
+        }
+        else if (type === 'ep') {
             return await this.pointModel.find({ type: 'EPoint' }, 'name location type managerName sentPackage receivedPackage').exec();
-        } 
-        
+        }
+
         return await this.pointModel.find({ type: 'CPoint' }, 'name location type managerName sentPackage receivedPackage').exec();
     }
 

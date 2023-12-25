@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Query, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
@@ -49,5 +49,11 @@ export class AuthController {
     @Get('account')
     async getAccount(@Query('type') type: string): Promise<any> {
         return await this.authService.getAccount(type);
+    }
+
+    @Public()
+    @Delete("account")
+    async deleteAccount(@Query('id') id: string): Promise<any> {
+        return await this.authService.deleteAccount(id);
     }
 }

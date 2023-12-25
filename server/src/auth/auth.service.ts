@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { User, UserDocument } from "src/schemas/user.schema";
 import { RegisterDto } from "./dto/register.dto";
 import * as bcrypt from 'bcrypt';
@@ -167,5 +167,12 @@ export class AuthService {
             .sort({ createdAt: -1 })
             .exec();
         return account;
+    }
+
+    async deleteAccount(id: string) {
+        if (!mongoose.isValidObjectId(id)) {
+            throw new NotFoundException("Invalid ObjectId", { cause: new Error() });
+        }
+        return await this.userModel.findByIdAndDelete(id).exec();
     }
 }

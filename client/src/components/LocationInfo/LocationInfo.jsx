@@ -1,8 +1,18 @@
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import './LocationInfo.scss';
+import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
-const LocationInfo = ({ name, location, head, type }) => {
+const LocationInfo = ({ id, name, location, head, type }) => {
+    const modifyLocation = () => {
+
+    }
+
+    const deleteLocation = () => {
+
+    }
+
     return (
         <div className='detail'>
             <div className='name'>{name}</div>
@@ -20,7 +30,22 @@ const LocationInfo = ({ name, location, head, type }) => {
                     <div className='value'>{type === 'EPoint' ? "Exchange Point" : "Collection Point"}</div>
                 </div>
             </div>
-            <MoreVertIcon />
+            <Menu>
+                <MenuButton
+                    as={IconButton}
+                    aria-label='Options'
+                    icon={<MoreVertIcon />}
+                    variant='outline'
+                />
+                <MenuList>
+                    <MenuItem icon={<EditIcon />} onClick={() => modifyLocation()}>
+                        Modify Location
+                    </MenuItem>
+                    <MenuItem icon={<DeleteIcon />} onClick={() => deleteLocation()}>
+                        Delete Location
+                    </MenuItem>
+                </MenuList>
+            </Menu>
         </div>
     )
 }
