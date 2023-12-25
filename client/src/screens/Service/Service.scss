@@ -1,0 +1,59 @@
+.service{
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 600px;
+    overflow: hidden;
+
+    .top{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      h1{
+        gap: 70px;
+        color: black;
+        font-weight: bold;
+        font-size: 46px;
+        line-height: 100px;
+        align-content: center;
+        justify-content: center;
+      }
+
+      .submenu{
+        text-transform: uppercase;
+        font-size: 24px;
+        line-height: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+    }
+
+    .mid{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bot{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+  }
+}
