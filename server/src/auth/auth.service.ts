@@ -170,12 +170,23 @@ export class AuthService {
         }).save();
     }
 
-    async getAccount(type: string) {
-        const account = await this.userModel
-            .find({ role: type }, 'email fullName role branch')
+    async getAccount(type: string, branchId: string) {
+        if (branchId === "all") {
+            const account = await this.userModel
+                .find({ role: type }, 'email fullName role branch')
+                .sort({ createdAt: -1 })
+                .exec();
+            return account;
+        }
+        return await this.userModel
+            .find({
+                role: type, $or: [
+                    { ePoint: branchId },
+                    { cPoint: branchId }
+                ]
+            })
             .sort({ createdAt: -1 })
             .exec();
-        return account;
     }
 
     async deleteAccount(id: string) {

@@ -47,8 +47,8 @@ export class AuthController {
 
     @Public()
     @Get('account')
-    async getAccount(@Query('type') type: string): Promise<any> {
-        return await this.authService.getAccount(type);
+    async getAccount(@Query('type') type: string, @Query('branchId') branchId: string): Promise<any> {
+        return await this.authService.getAccount(type, branchId);
     }
 
     @Public()

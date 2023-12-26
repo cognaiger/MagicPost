@@ -20,12 +20,14 @@ const BAccount = () => {
       try {
         const res1 = await axios.get("http://localhost:2504/auth/account", {
           params: {
-            type: 'EPManager'
+            type: 'EPManager',
+            branchId: "all"
           }
         });
         const res2 = await axios.get("http://localhost:2504/auth/account", {
           params: {
-            type: 'CPManager'
+            type: 'CPManager',
+            branchId: "all"
           }
         });
         if (!ignore) {
