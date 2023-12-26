@@ -5,6 +5,7 @@ import { Card, CardBody, CardHeader, Heading, SimpleGrid, Text } from '@chakra-u
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
 import axios from 'axios';
+import { BarChart } from '../../../components/Chart';
 
 const CPMDashboard = () => {
     const { currentPoint } = useContext(AuthContext);
@@ -42,6 +43,10 @@ const CPMDashboard = () => {
         <div className='cpmdashboard'>
             <div className='top'>
                 <div className='title'>Dashboard</div>
+            </div>
+
+            <div className='chart'>
+                <BarChart/>
             </div>
 
             <div className='content'>
