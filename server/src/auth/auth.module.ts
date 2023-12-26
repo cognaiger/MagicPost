@@ -7,6 +7,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
 import { AuthGuard } from "./guard/auth.guard";
+import { Point, PointSchema } from "src/schemas/point.schema";
 
 @Module({
     controllers: [AuthController],
@@ -19,7 +20,8 @@ import { AuthGuard } from "./guard/auth.guard";
     ],
     imports: [
         MongooseModule.forFeature([
-        { name: User.name, schema: UserSchema }
+        { name: User.name, schema: UserSchema },
+        { name: Point.name, schema: PointSchema }
         ]),
         JwtModule.registerAsync({
             useFactory: (ConfigService: ConfigService) => {

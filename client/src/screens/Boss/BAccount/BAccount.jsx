@@ -141,7 +141,7 @@ const BAccount = () => {
         </TableContainer>
       </div>
 
-      <AddAccount addOpen={addOpen} setAddOpen={setAddOpen} accountData={accountData} setAccountData={setAccountData} />
+      <AddAccount addOpen={addOpen} setAddOpen={setAddOpen} accountData={accountView} setAccountData={setAccountData} setAccoutView={setAccountView} />
     </div>
   )
 }

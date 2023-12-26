@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
+import { ConflictException, Inject, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
 import { User, UserDocument } from "src/schemas/user.schema";
@@ -7,11 +7,13 @@ import * as bcrypt from 'bcrypt';
 import { LoginDto } from "./dto/login.dto";
 import { JwtService } from "@nestjs/jwt";
 import { Role } from "src/common/const";
+import { Point } from "src/schemas/point.schema";
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+        @InjectModel(Point.name) private readonly pointModel: Model<Document>,
         private readonly jwtService: JwtService
     ) { }
 
@@ -90,7 +92,7 @@ export class AuthService {
     async bregister(registerDto: RegisterDto) {
         const { email, fullName, password, role, ePoint, cPoint, branch } = registerDto;
 
-        if (role !== 'EPManager' && role !== 'CPManager') {
+        if (role !== Role.EPManager && role !== Role.CPManager) {
             throw new ConflictException("Can't create this type of accounts", { cause: new Error() });
         }
 
@@ -102,8 +104,15 @@ export class AuthService {
         const saltOrRounds = 10;
         const hash = await bcrypt.hash(password, saltOrRounds);
 
-        console.log(ePoint);
-        console.log(cPoint);
+        if (role === Role.EPManager) {
+            await this.pointModel.findByIdAndUpdate(ePoint, {
+                $set: { managerName: fullName }
+            })
+        } else {
+            await this.pointModel.findByIdAndUpdate(cPoint, {
+                $set: { managerName: fullName }
+            })
+        }
 
         return await new this.userModel({
             email: email,

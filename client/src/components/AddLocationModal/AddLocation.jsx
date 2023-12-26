@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => {
+const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData, setLocationView }) => {
     const [type, setType] = useState('EPoint');
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
@@ -58,6 +58,7 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData }) => 
             if (response.status === 201) {
                 console.log("successful");
                 setLocationData([newLocation, ...locationData]);
+                setLocationView([newLocation, ...locationData]);
             } else {
                 console.log("err");
             }

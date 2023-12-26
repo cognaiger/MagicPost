@@ -1,6 +1,6 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { Point, PointDocument } from "src/schemas/point.schema";
 import { AddLocationDto } from "./dto/addLocation.dto";
 
@@ -41,5 +41,12 @@ export class PointService {
 
     async getPointById(id: string) {
         return await this.pointModel.find({ _id: id }, 'name type sentPackage pendingPackage receivedPackage suPackage returnPackage').exec();
+    }
+
+    async deletePoint(id: string) {
+        if (!mongoose.isValidObjectId(id)) {
+            throw new NotFoundException("Invalid ObjectId", { cause: new Error() });
+        }
+        return await this.pointModel.findByIdAndDelete(id);
     }
 }

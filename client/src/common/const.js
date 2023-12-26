@@ -6,6 +6,11 @@ export const FailOption = Object.freeze({
     Op5: 'Cancel'
 })
 
+export const POINTTYPE = {
+    TPoint: 'EPoint',
+    CPoint: 'CPoint'
+}
+
 export const ROLE = {
     BOSS: 'Boss',
     EPMANAGER: 'EPManager',

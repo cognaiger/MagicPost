@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
+const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData, setAccoutView }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -63,6 +63,7 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData }) => {
 
             if (response.status === 201) {
                 console.log("successful");
+                setAccoutView([newAccount, ...accountData]);
                 setAccountData([newAccount, ...accountData]);
             } else {
                 console.log("err");

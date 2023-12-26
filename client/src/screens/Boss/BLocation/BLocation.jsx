@@ -5,10 +5,13 @@ import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import LocationInfo from '../../../components/LocationInfo/LocationInfo';
 import AddLocation from '../../../components/AddLocationModal/AddLocation';
 import axios from 'axios';
+import { POINTTYPE } from '../../../common/const';
 
 const BLocation = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [locationData, setLocationData] = useState([]);
+  const [locationView, setLocationView] = useState([]);
+  const [menuOption, setMenuOption] = useState("Choose type");
 
   useEffect(() => {
     let ignore = false;
@@ -22,6 +25,7 @@ const BLocation = () => {
         });
         if (!ignore) {
           setLocationData(res.data);
+          setLocationView(res.data);
         }
       } catch(err) {
         console.log(err);
@@ -39,12 +43,15 @@ const BLocation = () => {
     setAddOpen(true);
   }
 
-  const getCollectionPoint = () => {
-
-  }
-
-  const getExchangePoint = () => {
-    
+  const filter = (type) => {
+    if (type === 'all') {
+      setLocationView(locationData);
+      setMenuOption("All");
+    } else {
+      const tmpData = locationData.filter((point) => point.type === type);
+      setLocationView(tmpData);
+      setMenuOption(type);
+    }
   }
 
   return (
@@ -60,25 +67,25 @@ const BLocation = () => {
         </Button>
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            Choose type
+            {menuOption}
           </MenuButton>
           <MenuList>
-            <MenuItem>All</MenuItem>
-            <MenuItem onClick={getExchangePoint}>Exchange Point</MenuItem>
-            <MenuItem onClick={getCollectionPoint}>Collection Point</MenuItem>
+            <MenuItem onClick={() => filter("all")}>All</MenuItem>
+            <MenuItem onClick={() => filter(POINTTYPE.TPoint)}>Exchange Point</MenuItem>
+            <MenuItem onClick={() => filter(POINTTYPE.CPoint)}>Collection Point</MenuItem>
           </MenuList>
         </Menu>
       </div>
 
       <div className='info'>
         {
-          locationData.map((el, i) => (
-            <LocationInfo id={el._id} name={el.name} location={el.location} head={el.head} type={el.type} key={i} />
+          locationView.map((el, i) => (
+            <LocationInfo id={el._id} name={el.name} location={el.location} head={el.managerName} type={el.type} key={i} setLocationData={setLocationData} />
           ))
         }
       </div>
 
-      <AddLocation addOpen={addOpen} setAddOpen={setAddOpen} locationData={locationData} setLocationData={setLocationData} />
+      <AddLocation addOpen={addOpen} setAddOpen={setAddOpen} locationData={locationData} setLocationData={setLocationData} setLocationView={setLocationView} />
     </div>
   )
 }

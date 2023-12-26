@@ -3,14 +3,27 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import './LocationInfo.scss';
 import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import axios from 'axios';
 
-const LocationInfo = ({ id, name, location, head, type }) => {
+const LocationInfo = ({ id, name, location, head, type, setLocationData }) => {
     const modifyLocation = () => {
 
     }
 
-    const deleteLocation = () => {
+    const deleteLocation = async () => {
+        try {
+            const res = await axios.delete("http://localhost:2504/point", {
+                params: {
+                    id: id
+                }
+            })
 
+            if (res.status === 200) {
+                setLocationData((prev) => (prev.filter((point) => point._id !== id)));
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
