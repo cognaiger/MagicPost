@@ -17,7 +17,6 @@ const EPOInOrder = () => {
   const [currentId, setCurrentId] = useState();
   const [menuName, setMenuName] = useState("Choose status");
   const [orderDateView, setOrderDataView] = useState();
-  const navigate = useNavigate();
 
   useEffect(() => {
     let ignore = false;

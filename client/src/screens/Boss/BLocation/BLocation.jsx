@@ -80,7 +80,9 @@ const BLocation = () => {
       <div className='info'>
         {
           locationView.map((el, i) => (
-            <LocationInfo id={el._id} name={el.name} location={el.location} head={el.managerName} type={el.type} key={i} setLocationData={setLocationData} />
+            <LocationInfo id={el._id} name={el.name} location={el.location} head={el.managerName} type={el.type} key={i} setLocationData={setLocationData} 
+            setLocationView={setLocationView}
+            />
           ))
         }
       </div>

@@ -59,6 +59,11 @@ const AddLocation = ({ addOpen, setAddOpen, locationData, setLocationData, setLo
                 console.log("successful");
                 setLocationData([newLocation, ...locationData]);
                 setLocationView([newLocation, ...locationData]);
+                setName('');
+                setLocation('');
+                setType('EPoint');
+                setAssociatedCPName('');
+                setAssociatedCP('');
             } else {
                 console.log("err");
             }

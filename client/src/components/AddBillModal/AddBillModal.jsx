@@ -5,7 +5,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FailOption } from '../../common/const';
 import { AuthContext } from '../../context/authContext';
 
-const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
+const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData, setBillDataView }) => {
     const [senderEmail, setSenderEmail] = useState('');
     const [senderName, setSenderName] = useState('');
     const [senderNum, setSenderNum] = useState('');
@@ -78,7 +78,8 @@ const AddBillModal = ({ addOpen, setAddOpen, billData, setBillData }) => {
             const response = await axios.post("http://localhost:2504/bill/add", newBill);
             if (response.status === 201) {
                 console.log(response.data);
-                setBillData([response.data, ...billData])
+                setBillData([response.data, ...billData]);
+                setBillDataView([response.data, ...billData]);
             } else {
                 console.log("err");
             }

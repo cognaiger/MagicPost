@@ -29,6 +29,9 @@ const AddAccountEPO = ({ addOpen, setAddOpen, accountData, setAccountData }) => 
             if (response.status === 201) {
                 console.log("successful");
                 setAccountData([...accountData, newAccount]);
+                setName("");
+                setEmail("");
+                setPassword("");
             } else {
                 console.log("err");
             }

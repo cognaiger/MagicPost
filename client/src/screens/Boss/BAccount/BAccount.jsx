@@ -60,6 +60,7 @@ const BAccount = () => {
 
       if (res.status === 200) {
         setAccountData((prev) => prev.filter((account) => account._id !== id));
+        setAccountView((prev) => prev.filter((account) => account._id !== id));
       }
     } catch (err) {
       console.log(err);

@@ -5,7 +5,7 @@ import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/rea
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 
-const LocationInfo = ({ id, name, location, head, type, setLocationData }) => {
+const LocationInfo = ({ id, name, location, head, type, setLocationData, setLocationView }) => {
     const modifyLocation = () => {
 
     }
@@ -20,6 +20,7 @@ const LocationInfo = ({ id, name, location, head, type, setLocationData }) => {
 
             if (res.status === 200) {
                 setLocationData((prev) => (prev.filter((point) => point._id !== id)));
+                setLocationView((prev) => (prev.filter((point) => point._id !== id)));
             }
         } catch (err) {
             console.log(err);

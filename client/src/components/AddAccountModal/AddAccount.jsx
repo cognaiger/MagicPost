@@ -65,6 +65,11 @@ const AddAccount = ({ addOpen, setAddOpen, accountData, setAccountData, setAccou
                 console.log("successful");
                 setAccoutView([newAccount, ...accountData]);
                 setAccountData([newAccount, ...accountData]);
+                setEmail('');
+                setName('');
+                setPassword('');
+                setBranchId('');
+                setBranchName('');
             } else {
                 console.log("err");
             }
