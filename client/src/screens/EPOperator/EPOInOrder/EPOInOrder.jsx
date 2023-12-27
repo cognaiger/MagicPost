@@ -115,7 +115,7 @@ const EPOInOrder = () => {
             <Tbody>
               {orderDateView && (
                 orderDateView.map((el, i) => (
-                  <Tr key={i} onClick={() => navigate(`/epohome/order/${el._id}`)} cursor='pointer'>
+                  <Tr key={i}>
                     <Td>{el.bill}</Td>
                     <Td>{el.from ? el.from.name : "Null"}</Td>
                     <Td>{formatTime(el.createdAt)}</Td>
