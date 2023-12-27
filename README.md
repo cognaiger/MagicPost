@@ -2,8 +2,8 @@
 <p align="center">
   <a href="https://uet.vnu.edu.vn/" title="Trường Đại học Công nghệ - Đại học Quốc Gia Hà Nội" style="border: none;"> </a>
 </p>
-
-<h1 align="center"><b>PHÁT TRIỂN ỨNG DỤNG WEB</b></h>
+<h1 align="center"> <b> TRƯỜNG ĐẠI HỌC CÔNG NGHỆ - ĐẠI HỌC QUỐC GIA HÀ NỘI </b> </h1>
+<h2 align="center"><b>PHÁT TRIỂN ỨNG DỤNG WEB</b></h>
 
 ## THÀNH VIÊN NHÓM
 |STT| MSSV      | Họ và Tên       |Chức Vụ    | Github                                                  | Email                   |
