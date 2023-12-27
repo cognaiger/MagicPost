@@ -46,6 +46,16 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      h1{
+        gap: 70px;
+        color: black;
+        font-weight: bold;
+        font-size: 46px;
+        line-height: 100px;
+        align-content: center;
+        justify-content: center;
+      }
     }
 
     .bot{
@@ -53,6 +63,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      h1{
+        gap: 70px;
+        color: black;
+        font-weight: bold;
+        font-size: 46px;
+        line-height: 100px;
+        align-content: center;
+        justify-content: center;
+      }
     }
 
   }

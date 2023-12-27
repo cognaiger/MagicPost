@@ -15,10 +15,10 @@ function Service() {
             </ul>
         </div>
         <div className="mid">
-          <h2>Dịch vụ quốc tế</h2>
+          <h1>Dịch vụ quốc tế</h1>
         </div>
         <div className="bot">
-          <h2>Dịch vụ Logistics</h2>
+          <h1>Dịch vụ Logistics</h1>
         </div>
       </div>
     </div>
