@@ -5,12 +5,32 @@ import { Card, CardBody, CardHeader, Heading, SimpleGrid, Text } from '@chakra-u
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import CallMadeOutlinedIcon from '@material-ui/icons/CallMadeOutlined';
 import axios from 'axios';
-import { BarChart } from '../../../components/Chart';
+import BarChart from '../../../components/BarChart/BarChart';
 
 const CPMDashboard = () => {
     const { currentPoint } = useContext(AuthContext);
     const [pointInfo, setPointInfo] = useState();
 
+    const [fakeData, _] = useState({
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+          {
+              label: 'Incoming',
+              data: [25, 14, 566, 3, 123, 34, 12, 345, 21, 78, 123, 321],
+              backgroundColor: 'rgba(86, 181, 168, 0.1)',
+              borderColor: 'rgba(86, 181, 168, 1)',
+              borderWidth: 1,
+          },
+          {
+              label: 'Outgoing',
+              data: [253, 14, 566, 43, 123, 134, 132, 345, 311, 78, 123, 321],
+              backgroundColor: 'rgba(44, 111, 170, 0.1)',
+              borderColor: 'rgba(44, 111, 170, 1)',
+              borderWidth: 1,
+          }
+        ],
+      })
+      
     useEffect(() => {
         let ignore = false;
         const id = currentPoint.cpoint;
@@ -39,6 +59,7 @@ const CPMDashboard = () => {
         )
     }
 
+
     return (
         <div className='cpmdashboard'>
             <div className='top'>
@@ -46,7 +67,7 @@ const CPMDashboard = () => {
             </div>
 
             <div className='chart'>
-                <BarChart/>
+                <BarChart data={fakeData}/>
             </div>
 
             <div className='content'>
