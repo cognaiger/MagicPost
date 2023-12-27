@@ -4,17 +4,12 @@ import { Button, Divider, Menu, MenuButton, MenuItem, MenuList, Table, TableCont
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
-import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
-import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
 import { ORDERSTATUS, formatTime } from '../../../common/const';
 import { useNavigate } from 'react-router-dom';
 
 const EPOOutOrder = () => {
   const [orderData, setOrderData] = useState();
   const { currentPoint } = useContext(AuthContext);
-  const [confirmModal, setConfirmModal] = useState(false);
-  const [cancelModal, setCancelModal] = useState(false);
-  const [currentId, setCurrentId] = useState();
   const navigate = useNavigate();
   const [menuName, setMenuName] = useState("Choose status");
   const [orderDateView, setOrderDataView] = useState();
@@ -31,6 +26,7 @@ const EPOOutOrder = () => {
         });
         if (!ignore) {
           setOrderData(res.data);
+          setOrderDataView(res.data);
         }
       } catch (err) {
         console.log(err);
@@ -43,26 +39,6 @@ const EPOOutOrder = () => {
       ignore = true;
     }
   }, [currentPoint.epoint]);
-
-  const onClickConfirm = async (id) => {
-    setConfirmModal(true);
-    setCurrentId(id);
-  }
-
-  const confirm = async () => {
-    try {
-      console.log(currentId);
-      const res = await axios.put('http://localhost:2504/order/confirm', {
-        id: currentId
-      });
-      if (res.status === 200) {
-        console.log(res);
-        setConfirmModal(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   const filter = (type) => {
     if (type === "All") {
@@ -96,9 +72,6 @@ const EPOOutOrder = () => {
         </Menu>
       </div>
 
-      {confirmModal && <ConfirmModal isOpen={confirmModal} onClose={() => setConfirmModal(false)} confirm={confirm} />}
-      {cancelModal && <CancelModal isOpen={cancelModal} onClose={() => setCancelModal(false)} />}
-
       <div className='content'>
         <TableContainer>
           <Table variant='simple'>
@@ -110,8 +83,8 @@ const EPOOutOrder = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {orderData && (
-                orderData.map((el, i) => (
+              {orderDateView && (
+                orderDateView.map((el, i) => (
                   <Tr key={i} onClick={() => navigate(`/epohome/order/${el._id}`)} cursor='pointer'>
                     <Td>{el.bill}</Td>
                     <Td>{el.to ? el.to.name : "null"}</Td>
@@ -120,17 +93,20 @@ const EPOOutOrder = () => {
                       {
                         el.status === ORDERSTATUS.NOTCONFIRMED ? (
                           <div className='buttons'>
-                            <button onClick={() => onClickConfirm(el._id)} className='confirm'>
-                              <div>Confirm</div>
+                            <button className='notconfirm'>
+                              <div>Not Confirmed</div>
                             </button>
-                            <button onClick={() => setCancelModal(true)} className='cancel'>
-                              <div>Cancel</div>
+                          </div>
+                        ) : el.status === ORDERSTATUS.CONFIRMED ? (
+                          <div className='buttons'>
+                            <button className='confirmed'>
+                              <div>Confirmed</div>
                             </button>
                           </div>
                         ) : (
                           <div className='buttons'>
-                            <button className='confirmed'>
-                              <div>Confirmed</div>
+                            <button className='cancel'>
+                              <div>Canceled</div>
                             </button>
                           </div>
                         )

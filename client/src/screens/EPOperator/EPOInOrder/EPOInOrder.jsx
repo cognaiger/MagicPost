@@ -7,6 +7,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
 import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
 import { CONFIRMORDER, ORDERSTATUS, formatTime } from '../../../common/const';
+import { useNavigate } from 'react-router-dom';
 
 const EPOInOrder = () => {
   const [orderData, setOrderData] = useState();
@@ -16,6 +17,7 @@ const EPOInOrder = () => {
   const [currentId, setCurrentId] = useState();
   const [menuName, setMenuName] = useState("Choose status");
   const [orderDateView, setOrderDataView] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let ignore = false;
@@ -113,7 +115,7 @@ const EPOInOrder = () => {
             <Tbody>
               {orderDateView && (
                 orderDateView.map((el, i) => (
-                  <Tr key={i}>
+                  <Tr key={i} onClick={() => navigate(`/epohome/order/${el._id}`)} cursor='pointer'>
                     <Td>{el.bill}</Td>
                     <Td>{el.from ? el.from.name : "Null"}</Td>
                     <Td>{formatTime(el.createdAt)}</Td>
@@ -128,10 +130,16 @@ const EPOInOrder = () => {
                               <div>Cancel</div>
                             </button>
                           </div>
-                        ) : (
+                        ) : el.status === ORDERSTATUS.CONFIRMED ? (
                           <div className='buttons'>
                             <button className='confirmed'>
                               <div>Confirmed</div>
+                            </button>
+                          </div>
+                        ) : (
+                          <div className='buttons'>
+                            <button className='cancel'>
+                              <div>Canceled</div>
                             </button>
                           </div>
                         )

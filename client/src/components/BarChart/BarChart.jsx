@@ -49,7 +49,7 @@ const BarChart = ({data}) => {
     return (
       <>
         <div>
-          <Bar style={{height: '300px'}} data={data} options={opt} />
+          <Bar style={{height: '500px'}} data={data} options={opt} />
         </div>
       </>
     );

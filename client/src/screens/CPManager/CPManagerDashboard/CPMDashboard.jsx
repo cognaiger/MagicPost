@@ -14,23 +14,23 @@ const CPMDashboard = () => {
     const [fakeData, _] = useState({
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [
-          {
-              label: 'Incoming',
-              data: [25, 14, 566, 3, 123, 34, 12, 345, 21, 78, 123, 321],
-              backgroundColor: 'rgba(86, 181, 168, 0.1)',
-              borderColor: 'rgba(86, 181, 168, 1)',
-              borderWidth: 1,
-          },
-          {
-              label: 'Outgoing',
-              data: [253, 14, 566, 43, 123, 134, 132, 345, 311, 78, 123, 321],
-              backgroundColor: 'rgba(44, 111, 170, 0.1)',
-              borderColor: 'rgba(44, 111, 170, 1)',
-              borderWidth: 1,
-          }
+            {
+                label: 'Incoming',
+                data: [25, 14, 566, 3, 123, 34, 12, 345, 21, 78, 123, 321],
+                backgroundColor: 'rgba(86, 181, 168, 0.1)',
+                borderColor: 'rgba(86, 181, 168, 1)',
+                borderWidth: 1,
+            },
+            {
+                label: 'Outgoing',
+                data: [253, 14, 566, 43, 123, 134, 132, 345, 311, 78, 123, 321],
+                backgroundColor: 'rgba(44, 111, 170, 0.1)',
+                borderColor: 'rgba(44, 111, 170, 1)',
+                borderWidth: 1,
+            }
         ],
-      })
-      
+    })
+
     useEffect(() => {
         let ignore = false;
         const id = currentPoint.cpoint;
@@ -66,10 +66,6 @@ const CPMDashboard = () => {
                 <div className='title'>Dashboard</div>
             </div>
 
-            <div className='chart'>
-                <BarChart data={fakeData}/>
-            </div>
-
             <div className='content'>
                 <div className='branch'>{pointInfo.name}</div>
                 <div className='number'>
@@ -93,6 +89,10 @@ const CPMDashboard = () => {
                             </CardBody>
                         </Card>
                     </SimpleGrid>
+                </div>
+
+                <div className='chart'>
+                    <BarChart data={fakeData} />
                 </div>
             </div>
         </div>

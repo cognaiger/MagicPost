@@ -85,7 +85,7 @@ const CPSInOrder = () => {
                                 orderData.map((el, i) => (
                                     <Tr key={i}>
                                         <Td>{el.bill}</Td>
-                                        <Td>{el.from.name}</Td>
+                                        <Td>{el.from?.name}</Td>
                                         <Td>{el.createdAt}</Td>
                                         <Td>
                                             {

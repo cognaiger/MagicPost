@@ -1,16 +1,14 @@
 import './EPOOrderDetail.scss';
 import { Divider } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalConfirm from '../../../components/ModalConfirm/ModalConfirm';
-import { AuthContext } from '../../../context/authContext';
-import { BILLSTATUS, CONFIRMORDER, ORDERSTATUS } from '../../../common/const';
+import { CONFIRMORDER, ORDERSTATUS, formatTime } from '../../../common/const';
 
 const EPOOrderDetail = () => {
     const { id } = useParams();
     const [orderData, setOrderData] = useState();
-    const { currentPoint } = useContext(AuthContext);
     const [successDeliverOpen, setSuccessDeliverOpen] = useState(false);
     const [failDeliverOpen, setFailDeliverOpen] = useState(false);
 
@@ -67,24 +65,6 @@ const EPOOrderDetail = () => {
         }
     }
 
-    const formatTime = (dateString) => {
-        let res = '';
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const day = date.getDate();
-        const hour = date.getHours();
-        const min = date.getMinutes();
-        const sec = date.getSeconds();
-        res += hour < 10 ? `0${hour}h:` : `${hour}h:`;
-        res += min < 10 ? `0${min}m:` : `${min}m:`;
-        res += sec < 10 ? `0${sec}s ` : `${sec}s `;
-        res += day < 10 ? `0${day}/` : `${day}/`;
-        res += month < 10 ? `0${month}/` : `${month}/`;
-        res += year;
-        return res;
-    }
-
     if (!orderData) {
         return (
             <div>Loading...</div>
@@ -102,25 +82,25 @@ const EPOOrderDetail = () => {
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>
-                            1. From: <span>{orderData.from.name}</span>
+                            1. From: <span>{orderData.from?.name}</span>
                         </div>
                     </div>
 
                     <div className='col'>
                         <div className='header'>
-                            2. To: <span>{orderData.to.name}</span>
+                            2. To: <span>{orderData.to?.name}</span>
                         </div>
                         {
-                            orderData.to._id === '656b4524130a2b089708c464' && (
+                            orderData.to?._id === '656b4524130a2b089708c464' && (
                                 <div>
                                     <div className='header1'>
-                                        Name: <span>{orderData.bill.receiver.name}</span>
+                                        Name: <span>{orderData.bill?.receiver?.name}</span>
                                     </div>
                                     <div className='header1'>
-                                        Mobile Number: <span>{orderData.bill.receiver.mobile}</span>
+                                        Mobile Number: <span>{orderData.bill?.receiver?.mobile}</span>
                                     </div>
                                     <div className='header1'>
-                                        Address: <span>{orderData.bill.receiver.address}</span>
+                                        Address: <span>{orderData.bill?.receiver.address}</span>
                                     </div>
                                 </div>
                             )
@@ -145,33 +125,33 @@ const EPOOrderDetail = () => {
             <Divider />
 
             <div className='top'>
-                <div className='title'>Bill #{orderData.bill._id}</div>
+                <div className='title'>Bill #{orderData.bill?._id}</div>
             </div>
             <div className='content'>
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>1. Sender</div>
                         <div className='header1'>
-                            Name: <span>{orderData.bill.sender.name}</span>
+                            Name: <span>{orderData.bill?.sender.name}</span>
                         </div>
                         <div className='header1'>
-                            Address: <span>{orderData.bill.sender.address}</span>
+                            Address: <span>{orderData.bill?.sender.address}</span>
                         </div>
                         <div className='header1'>
-                            Mobile Number: <span>{orderData.bill.sender.mobile}</span>
+                            Mobile Number: <span>{orderData.bill?.sender.mobile}</span>
                         </div>
                     </div>
 
                     <div className='col'>
                         <div className='header'>2. Receiver</div>
                         <div className='header1'>
-                            Name: <span>{orderData.bill.receiver.name}</span>
+                            Name: <span>{orderData.bill?.receiver.name}</span>
                         </div>
                         <div className='header1'>
-                            Address: <span>{orderData.bill.receiver.address}</span>
+                            Address: <span>{orderData.bill?.receiver.address}</span>
                         </div>
                         <div className='header1'>
-                            Mobile Number: <span>{orderData.bill.receiver.mobile}</span>
+                            Mobile Number: <span>{orderData.bill?.receiver.mobile}</span>
                         </div>
                     </div>
                 </div>
@@ -179,49 +159,49 @@ const EPOOrderDetail = () => {
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>3. Package Type</div>
-                        <div> {orderData.bill.packageType}</div>
+                        <div> {orderData.bill?.packageType}</div>
                     </div>
 
                     <div className='col'>
                         <div className='header'>4. Fail Option</div>
-                        <div>{orderData.bill.failOption}</div>
+                        <div>{orderData.bill?.failOption}</div>
                     </div>
                 </div>
 
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>5. Time created</div>
-                        <div>{formatTime(orderData.bill.timeSent)}</div>
+                        <div>{formatTime(orderData.bill?.timeSent)}</div>
                     </div>
 
                     <div className='col'>
                         <div className='header'>6. Fee</div>
-                        <div>${orderData.bill.fee}</div>
+                        <div>${orderData.bill?.fee}</div>
                     </div>
                 </div>
 
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>7. Weigh</div>
-                        <div>{orderData.bill.weigh} kg</div>
+                        <div>{orderData.bill?.weigh} kg</div>
                     </div>
 
                     <div className='col'>
                         <div className='header'>8. Receiver's Payment</div>
-                        <div>${orderData.bill.receiverPayment}</div>
+                        <div>${orderData.bill?.receiverPayment}</div>
                     </div>
                 </div>
 
                 <div className='row'>
                     <div className='col'>
                         <div className='header'>9. Status</div>
-                        <div>{orderData.bill.status}</div>
+                        <div>{orderData.bill?.status}</div>
                     </div>
                 </div>
             </div>
 
             {
-                orderData.to._id === '656b4524130a2b089708c464' ? (
+                orderData.to?._id === '656b4524130a2b089708c464' ? (
                     orderData.status === ORDERSTATUS.NOTCONFIRMED ? (
                         <div className='action'>
                             <button className='btn1' onClick={() => setSuccessDeliverOpen(true)}>
