@@ -12,4 +12,8 @@
 | 2 | 21020128  | Phạm Gia Phong  |Thành viên |[phong812](https://github.com/phong812)                  |21020128@vnu.edu.vn      |
 | 3 | 21020553  | Hoàng Minh Quân |Thành viên |[suracI-invert](https://github.com/suracI-invert)        |21020553@vnu.edu.vn      |
 
-
+## GIỚI THIỆU MÔN HỌC
+* **Tên môn học:** Phát triển ứng dụng Web
+* **Mã môn học:** INT3306_2
+* **Năm học:** HK1 (2023 - 2024)
+* **Giảng viên**: TS. Lê Đình Thanh
