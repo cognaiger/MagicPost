@@ -1,4 +1,6 @@
 <!-- Banner -->
+![image](https://github.com/cognaiger/MagicPost/assets/93062362/ee94c65e-d6d9-4219-987e-ea15c82f441e)
+
 <p align="center">
   <a href="https://uet.vnu.edu.vn/" title="Trường Đại học Công nghệ - Đại học Quốc Gia Hà Nội" style="border: none;">
     <img src="![image](https://github.com/cognaiger/MagicPost/assets/93062362/5abe058c-34d4-4d73-8ba3-8c3129667672)
