@@ -1,8 +1,6 @@
 <!-- Banner -->
 <p align="center">
   <a href="https://uet.vnu.edu.vn/" title="Trường Đại học Công nghệ - Đại học Quốc Gia Hà Nội" style="border: none;">
-    <img src="![image](https://github.com/cognaiger/MagicPost/assets/93062362/5abe058c-34d4-4d73-8ba3-8c3129667672)
-" alt="Trường Đại học Công nghệ - Đại học Quốc Gia Hà Nội | University of Engineering and Technology">
   </a>
 </p>
 
