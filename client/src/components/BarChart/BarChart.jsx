@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-const BarChart = (data) => {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const BarChart = ({data}) => {
     const opt = {
         scales: {
             x: {

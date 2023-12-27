@@ -5,12 +5,42 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import LocalPostOfficeOutlinedIcon from '@material-ui/icons/LocalPostOfficeOutlined';
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import axios from 'axios';
+import BarChart from '../../../components/BarChart/BarChart';
 
 const BDashboard = () => {
     const [point, setPoint] = useState();
     const [branchName, setBranchName] = useState();
     const [sentPackage, setSentPackage] = useState(0);
     const [receivedPackage, setReceivedPackage] = useState(0);
+
+    const [fakeData, _] = useState({
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+              label: 'Sent',
+              data: [25, 14, 566, 3, 123, 34, 12, 345, 21, 78, 123, 321],
+              backgroundColor: 'rgba(86, 181, 168, 0.1)',
+              borderColor: 'rgba(86, 181, 168, 1)',
+              borderWidth: 1,
+            },
+            {
+              label: 'Pending',
+              data: [253, 14, 566, 43, 123, 134, 132, 345, 311, 78, 123, 321],
+              backgroundColor: 'rgba(44, 111, 170, 0.1)',
+              borderColor: 'rgba(44, 111, 170, 1)',
+              borderWidth: 1,
+            },
+            {
+              label: 'Received',
+              data: [245, 143, 5, 33, 53, 341, 132, 3, 51, 34, 55, 100],
+              backgroundColor: 'rgba(146, 52, 193, 0.1)',
+              borderColor: 'rgba(146, 52, 193, 1)',
+              borderWidth: 1,
+            },
+          ],
+      })
+
+    console.log(fakeData)
 
     const chooseBranch = (name, index) => {
         setBranchName(name);
@@ -65,6 +95,10 @@ const BDashboard = () => {
                         )}
                     </Menu>
                 </div>
+            </div>
+
+            <div className='chart'>
+                <BarChart data={fakeData}/>
             </div>
 
             <div className='content'>

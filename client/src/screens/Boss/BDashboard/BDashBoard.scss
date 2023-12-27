@@ -23,6 +23,14 @@
         }
     }
 
+    .chart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        flex-direction: column;
+    }
+
     .content {
         flex: 12;
         padding: 40px;

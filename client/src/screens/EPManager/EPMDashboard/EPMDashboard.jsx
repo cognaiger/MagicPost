@@ -6,6 +6,7 @@ import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined'
 import CallReceivedOutlinedIcon from '@material-ui/icons/CallReceivedOutlined';
 import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
+import BarChart from '../../../components/BarChart/BarChart';
 
 const EPMDashboard = () => {
     const { currentPoint } = useContext(AuthContext);
