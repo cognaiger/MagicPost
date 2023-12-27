@@ -2,8 +2,8 @@ import { Divider } from '@chakra-ui/react';
 import "./EPOBillDetail.scss";
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import ModalConfirm from './ModalConfirm';
+import { useNavigate, useParams } from 'react-router-dom';
+import ModalConfirm from "../../../components/ModalConfirm/ModalConfirm";
 import { AuthContext } from '../../../context/authContext';
 import { BILLSTATUS, ORDERTYPE } from '../../../common/const';
 
@@ -12,23 +12,25 @@ const EPOBillDetail = () => {
     const [billData, setBillData] = useState();
     const { currentPoint } = useContext(AuthContext);
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+    const navigate = useNavigate();
+
+    async function fetchData(ignore) {
+        try {
+            const res = await axios.get(`http://localhost:2504/bill/${id}`);
+            console.log(res.data);
+            if (!ignore) {
+                setBillData(res.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     useEffect(() => {
         let ignore = false;
 
-        async function fetchData() {
-            try {
-                const res = await axios.get(`http://localhost:2504/bill/${id}`);
-                console.log(res.data);
-                if (!ignore) {
-                    setBillData(res.data);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-        fetchData();
+        fetchData(ignore);
 
         return () => {
             ignore = true;
@@ -56,6 +58,25 @@ const EPOBillDetail = () => {
             if (res) {
                 console.log('successful');
                 setConfirmOpen(false);
+                fetchData();
+            }
+        } catch (err) {
+            console.log('in catch');
+            console.log(err);
+        }
+    }
+
+    const deleteBill = async () => {
+        try {
+            const res = await axios.delete("http://localhost:2504/bill", {
+                params: {
+                    id: id
+                }
+            });
+            if (res.status === 200) {
+                console.log('successful');
+                setConfirmOpen(false);
+                navigate("/epohome/sbill")
             }
         } catch (err) {
             console.log('in catch');
@@ -116,17 +137,28 @@ const EPOBillDetail = () => {
                 {
                     currentPoint.epoint === billData.sender.point ? (
                         billData.status === BILLSTATUS.PENDING ? (
-                            <button className='btn1' onClick={() => setConfirmOpen(true)}>
-                                <div className='text'>
-                                    Create Delivery Order
-                                </div>
-                            </button>
+                            <div className='action'>
+                                <button className='btn1' onClick={() => setConfirmOpen(true)}>
+                                    <div className='text'>
+                                        Create Delivery Order
+                                    </div>
+
+                                </button>
+                                <button className='btn2' onClick={() => setConfirmDeleteOpen(true)}>
+                                    <div className='text'>Delete Bill</div>
+                                </button>
+                            </div>
                         ) : (
-                            <button className='btn1'>
-                                <div className='text'>
-                                    Have Created Delivery Order
-                                </div>
-                            </button>
+                            <div className='action'>
+                                <button className='btn1'>
+                                    <div className='text'>
+                                        Have Created Delivery Order
+                                    </div>
+                                </button>
+                                <button className='btn2' onClick={() => setConfirmDeleteOpen(true)}>
+                                    <div className='text'>Delete Bill</div>
+                                </button>
+                            </div>
                         )
                     ) : (
                         billData.status === BILLSTATUS.REACHDESEP ? (
@@ -151,7 +183,10 @@ const EPOBillDetail = () => {
                 }
             </div>
 
-            {confirmOpen && <ModalConfirm isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} confirm={createDelivery} />}
+            {confirmOpen && <ModalConfirm isOpen={confirmOpen} close={() => setConfirmOpen(false)} confirm={createDelivery}
+                title={"Create delivery order"} />}
+            {confirmDeleteOpen && <ModalConfirm isOpen={confirmDeleteOpen} close={() => setConfirmDeleteOpen(false)} confirm={deleteBill}
+                title="Delete Bill" />}
         </div>
     )
 }

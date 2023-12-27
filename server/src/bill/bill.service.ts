@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { Bill, BillDocument } from "src/schemas/bill.schema";
 import { AddBillDto } from "./dto/addBill.dto";
 import { Point, PointDocument } from "src/schemas/point.schema";
@@ -18,7 +18,7 @@ export class BillService {
     }
 
     async getBillByPoint(id: string) {
-        return await this.billModel.find({ 'sender.point': id }, '_id sender.name receiver.name timeSent status');
+        return await this.billModel.find({ 'sender.point': id }, '_id sender.name receiver.name timeSent status').sort({ timeSent: -1 });
     }
 
     async getBillAtPoint(id: string) {
@@ -69,5 +69,12 @@ export class BillService {
 
     async getBillById(id: string) {
         return await this.billModel.findById(id).populate('receiver.point', 'associatedPoint').exec();
+    }
+
+    async deleteById(id: string) {
+        if (!mongoose.isValidObjectId(id)) {
+            throw new NotFoundException("Invalid ObjectId", { cause: new Error() });
+        }
+        return await this.billModel.findByIdAndDelete(id).exec();
     }
 }

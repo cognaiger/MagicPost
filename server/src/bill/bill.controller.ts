@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query } from "@nestjs/common";
 import { Public } from "src/decorator/public.decorator";
 import { BillService } from "./bill.service";
 import { AddBillDto } from "./dto/addBill.dto";
@@ -36,5 +36,11 @@ export class BillController {
     @Get(":id")
     async getBillById(@Param('id') id: string): Promise<any> {
         return await this.billService.getBillById(id);
+    }
+
+    @Public()
+    @Delete("/")
+    async deleteBill(@Query('id') id: string): Promise<any> {
+        return await this.billService.deleteById(id);
     }
 }

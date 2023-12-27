@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import "./EPOInOrder.scss";
-import { Divider, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Button, Divider, Menu, MenuButton, MenuItem, MenuList, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
 import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
-import { CONFIRMORDER, ORDERSTATUS } from '../../../common/const';
+import { CONFIRMORDER, ORDERSTATUS, formatTime } from '../../../common/const';
 
 const EPOInOrder = () => {
   const [orderData, setOrderData] = useState();
@@ -13,6 +14,8 @@ const EPOInOrder = () => {
   const [confirmModal, setConfirmModal] = useState(false);
   const [cancelModal, setCancelModal] = useState(false);
   const [currentId, setCurrentId] = useState();
+  const [menuName, setMenuName] = useState("Choose status");
+  const [orderDateView, setOrderDataView] = useState();
 
   useEffect(() => {
     let ignore = false;
@@ -26,6 +29,8 @@ const EPOInOrder = () => {
         });
         if (!ignore) {
           setOrderData(res.data);
+          setOrderDataView(res.data);
+          console.log(res.data);
         }
       } catch (err) {
         console.log(err);
@@ -60,11 +65,36 @@ const EPOInOrder = () => {
     }
   }
 
+  const filter = (type) => {
+    if (type === "All") {
+      setOrderDataView(orderData);
+      setMenuName("All");
+    } else {
+      const tmpArr = orderData.filter((order) => order.status === type);
+      setOrderDataView(tmpArr);
+      setMenuName(type);
+    }
+  }
+
   return (
     <div className='inorder'>
       <div className='top'>
         <div className='title'>Incoming Delivery Order</div>
         <Divider />
+      </div>
+
+      <div className='option'>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            {menuName}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => filter("All")}>All</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.CONFIRMED)}>Confirmed</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.NOTCONFIRMED)}>Not Confirmed</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.CANCEL)}>Cancel</MenuItem>
+          </MenuList>
+        </Menu>
       </div>
 
       {confirmModal && <ConfirmModal isOpen={confirmModal} onClose={() => setConfirmModal(false)} confirm={confirm} />}
@@ -81,12 +111,12 @@ const EPOInOrder = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {orderData && (
-                orderData.map((el, i) => (
+              {orderDateView && (
+                orderDateView.map((el, i) => (
                   <Tr key={i}>
                     <Td>{el.bill}</Td>
-                    <Td>{el.from.name}</Td>
-                    <Td>{el.createdAt}</Td>
+                    <Td>{el.from ? el.from.name : "Null"}</Td>
+                    <Td>{formatTime(el.createdAt)}</Td>
                     <Td>
                       {
                         el.status === ORDERSTATUS.NOTCONFIRMED ? (

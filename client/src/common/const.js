@@ -56,3 +56,21 @@ export const ORDERTYPE = {
 
 
 export const CUSTOMERPOINT = '656b4524130a2b089708c464';
+
+export const formatTime = (dateString) => {
+    let res = '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+    res += hour < 10 ? `0${hour}h:` : `${hour}h:`;
+    res += min < 10 ? `0${min}m:` : `${min}m:`;
+    res += sec < 10 ? `0${sec}s ` : `${sec}s `;
+    res += day < 10 ? `0${day}/` : `${day}/`;
+    res += month < 10 ? `0${month}/` : `${month}/`;
+    res += year;
+    return res;
+  }

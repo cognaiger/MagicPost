@@ -75,13 +75,13 @@ export class OrderService {
     async getOrderFrom(id: string) {
         return await this.orderModel.find({
             from: id
-        }, 'bill to createdAt status').populate('to', 'name').exec();
+        }, 'bill to createdAt status').populate('to', 'name').sort({ createdAt: -1 }).exec();
     }
 
     async getOrderTo(id: string) {
         return await this.orderModel.find({
             to: id
-        }, 'bill from createdAt status').populate('from', 'name').exec();
+        }, 'bill from createdAt status').populate('from', 'name').sort({ createdAt: -1 }).exec();
     }
 
     async confirmSuccessOrder(id: string, type: string) {
@@ -169,5 +169,12 @@ export class OrderService {
             bill: id,
             status: OrderStatus.Confirmeed
         }, 'status type confirmedAt').exec();
+    }
+
+    async deleteOrder(id: string) {
+        if (!mongoose.isValidObjectId(id)) {
+            throw new NotFoundException("Invalid ObjectId", { cause: new Error() });
+        }
+        return await this.orderModel.findByIdAndDelete(id).exec();
     }
 }

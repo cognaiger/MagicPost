@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument, ObjectId } from "mongoose";
-import { Bill } from "./bill.schema";
+import { Bill, BillSchema } from "./bill.schema";
 import { Point } from "./point.schema";
 import { ORDERTYPE, OrderStatus } from "src/common/const";
 
@@ -31,3 +31,4 @@ export class DeliveryOrder {
 }
 
 export const DeliveryOrderSchema = SchemaFactory.createForClass(DeliveryOrder);
+

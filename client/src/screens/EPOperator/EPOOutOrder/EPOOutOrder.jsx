@@ -1,11 +1,12 @@
 import './EPOOutOrder.scss';
 import React, { useContext, useEffect, useState } from 'react';
-import { Divider, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Button, Divider, Menu, MenuButton, MenuItem, MenuList, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
 import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
-import { ORDERSTATUS } from '../../../common/const';
+import { ORDERSTATUS, formatTime } from '../../../common/const';
 import { useNavigate } from 'react-router-dom';
 
 const EPOOutOrder = () => {
@@ -15,6 +16,8 @@ const EPOOutOrder = () => {
   const [cancelModal, setCancelModal] = useState(false);
   const [currentId, setCurrentId] = useState();
   const navigate = useNavigate();
+  const [menuName, setMenuName] = useState("Choose status");
+  const [orderDateView, setOrderDataView] = useState();
 
   useEffect(() => {
     let ignore = false;
@@ -61,11 +64,36 @@ const EPOOutOrder = () => {
     }
   }
 
+  const filter = (type) => {
+    if (type === "All") {
+      setOrderDataView(orderData);
+      setMenuName("All");
+    } else {
+      const tmpArr = orderData.filter((order) => order.status === type);
+      setOrderDataView(tmpArr);
+      setMenuName(type);
+    }
+  }
+
   return (
     <div className='outorder'>
       <div className='top'>
         <div className='title'>Outgoing Delivery Order</div>
         <Divider />
+      </div>
+
+      <div className='option'>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            {menuName}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => filter("All")}>All</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.CONFIRMED)}>Confirmed</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.NOTCONFIRMED)}>Not Confirmed</MenuItem>
+            <MenuItem onClick={() => filter(ORDERSTATUS.CANCEL)}>Cancel</MenuItem>
+          </MenuList>
+        </Menu>
       </div>
 
       {confirmModal && <ConfirmModal isOpen={confirmModal} onClose={() => setConfirmModal(false)} confirm={confirm} />}
@@ -86,8 +114,8 @@ const EPOOutOrder = () => {
                 orderData.map((el, i) => (
                   <Tr key={i} onClick={() => navigate(`/epohome/order/${el._id}`)} cursor='pointer'>
                     <Td>{el.bill}</Td>
-                    <Td>{el.to.name}</Td>
-                    <Td>{el.createdAt}</Td>
+                    <Td>{el.to ? el.to.name : "null"}</Td>
+                    <Td>{formatTime(el.createdAt)}</Td>
                     <Td>
                       {
                         el.status === ORDERSTATUS.NOTCONFIRMED ? (

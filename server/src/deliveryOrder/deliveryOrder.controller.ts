@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { OrderService } from "./deliveryOrder.service";
 import { AddOrderDto } from "./dto/addOrder.dto";
 import { Public } from "src/decorator/public.decorator";
@@ -51,5 +51,11 @@ export class OrderController {
     @Get("/:id")
     async getOrderDetail(@Param('id') id: string): Promise<any> {
         return await this.orderSerive.getOrderDetail(id);
+    }
+
+    @Public()
+    @Delete("/")
+    async deleteOrder(@Query("id") id: string): Promise<any> {
+        return await this.orderSerive.deleteOrder(id);
     }
 }
