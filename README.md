@@ -17,3 +17,8 @@
 * **Mã môn học:** INT3306_2
 * **Năm học:** HK1 (2023 - 2024)
 * **Giảng viên**: TS. Lê Đình Thanh
+
+## PHAN CHIA CONG VIEC
+1. Truong Gia Ngoc: Design database, phat trien backend, design UX, UI
+2. Pham Gia Phong: Design UX, UI, phat trien frontend
+3. Hoang Minh Quan: Design UX, UI, phat trien frontend
