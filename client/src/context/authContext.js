@@ -24,7 +24,7 @@ export const AuthContextProvider = ({ children }) => {
         JSON.parse(localStorage.getItem('point') || null)
     );
 
-    const login = async (email, password) => {
+    const login = async (email, password, setMsg) => {
         try {
             const response = await axios.post("http://localhost:2504/auth/login", {
                 email: email,
@@ -78,13 +78,14 @@ export const AuthContextProvider = ({ children }) => {
             }
         } catch (err) {
             console.log(err);
+            setMsg("Credential doesn't match our recording");
         }
     }
 
     const logout = () => {
+        navigate('/login');
         setCurrentUser(null);
         setCurrentPoint(null);
-        navigate('/login');
     }
 
     useEffect(() => {

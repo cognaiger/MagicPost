@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import Login from "./screens/Login/Login";
 import Register from "./screens/Register/Register";
@@ -34,12 +34,14 @@ import LocationPage from "./screens/Location/Location";
 
 function App() {
 
-  const protectedRoute = ({ children }) => {
+  const naviate = useNavigate();
+
+  const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem("accessToken");
     setAuthToken(token);
 
     if (token === null) {
-      <Navigate to="/login" />
+      naviate("/login");
     }
     
     return children;

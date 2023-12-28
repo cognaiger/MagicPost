@@ -11,8 +11,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    login(email, pass);
-
+    const success = login(email, pass, setMsg);
   }
 
   return (
@@ -28,8 +27,8 @@ const Login = () => {
               onChange={(e) => setPass(e.target.value)} />
             <button onClick={handleLogin}>Login</button>
           </form>
-          {msg}
-          <span>Don't you have an account?&nbsp; <a href = "/register" className="signup"> Sign Up</a></span>
+          <div className="msg">{msg ? <p>{msg}</p> : null}</div>
+          <span>Don't you have an account?&nbsp; <a href="/register" className="signup"> Sign Up</a></span>
         </div>
       </div>
     </div>

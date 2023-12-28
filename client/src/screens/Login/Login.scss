@@ -33,6 +33,12 @@
       gap: 50px;
       justify-content: center;
 
+      .msg {
+        font-size: 1.2em;
+        text-align: center;
+        color: red;
+      }
+
       h1 {
         color: black;
         font-weight: bold;
@@ -42,7 +48,7 @@
         justify-content: center;
       }
 
-      p{
+      p {
         display: flex;
         font-size: 20px;
         line-height: 50px;
@@ -55,7 +61,7 @@
         flex-direction: column;
         gap: 40px;
         align-items: center;
-        
+
 
         input {
           width: 100%;
@@ -71,23 +77,25 @@
           padding: 10px;
           border: none;
           border-radius: 8px;
-          background-color:black;
+          background-color: black;
           color: white;
           font-weight: bold;
           cursor: pointer;
           align-items: center;
           justify-items: center;
-          
+
         }
       }
-      span{
+
+      span {
         display: flex;
         align-content: center;
         justify-content: center;
       }
+
       .signup {
         color: #555;
-        font-weight: bold;     
+        font-weight: bold;
       }
     }
   }

@@ -23,11 +23,13 @@ function Register() {
       if (response.status === 201) {
         console.log("successful");
         navigate("/");
-      } else {
+      } else if (response.status === 400) {
         console.log("error");
+        setMsg(response.message);
       }
     } catch (err) {
       console.log(err);
+      setMsg("Password must be longer than 8 characters");
     }
   }
 
@@ -48,7 +50,7 @@ function Register() {
 
             <div className="msg">{msg ? <p>{msg}</p> : null}</div>
           </form>
-          <span>Do you have an account?&nbsp; <a href = "/login" className="Login"> Login</a></span>
+          <span>Do you have an account?&nbsp; <a href="/login" className="Login"> Login</a></span>
         </div>
       </div>
     </div>
