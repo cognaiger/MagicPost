@@ -18,7 +18,7 @@
 * **Năm học:** HK1 (2023 - 2024)
 * **Giảng viên**: TS. Lê Đình Thanh
 
-## PHAN CHIA CONG VIEC
-1. Truong Gia Ngoc: Design database, phat trien backend, design UX, UI
-2. Pham Gia Phong: Design UX, UI, phat trien frontend
-3. Hoang Minh Quan: Design UX, UI, phat trien frontend
+## PHÂN CHIA CÔNG VIỆC
+1. Trương Gia Ngọc: Design database, phat trien backend, design UX, UI
+2. Phạm Gia Phong: Design UX, UI, phat trien frontend
+3. Hoàng Minh Quân: Design UX, UI, phat trien frontend
