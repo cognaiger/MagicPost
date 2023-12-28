@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ModalConfirm from "../../../components/ModalConfirm/ModalConfirm";
 import { AuthContext } from '../../../context/authContext';
 import { BILLSTATUS, ORDERTYPE } from '../../../common/const';
+import { formatTime } from '../../../common/const';
 
 const EPOBillDetail = () => {
     const { id } = useParams();
@@ -55,7 +56,7 @@ const EPOBillDetail = () => {
         }
         try {
             const res = await axios.post("http://localhost:2504/order/add", newOrder);
-            if (res) {
+            if (res.status === 201) {
                 console.log('successful');
                 setConfirmOpen(false);
                 fetchData();
@@ -122,7 +123,7 @@ const EPOBillDetail = () => {
                 <div className='header1'>4. Fail Option</div>
                 <div>{billData.failOption}</div>
                 <div className='header1'>5. Time created</div>
-                <div>{billData.timeSent}</div>
+                <div>{formatTime(billData.timeSent)}</div>
                 <div className='header1'>6. Fee</div>
                 <div>${billData.fee}</div>
                 <div className='header1'>7. Weigh</div>

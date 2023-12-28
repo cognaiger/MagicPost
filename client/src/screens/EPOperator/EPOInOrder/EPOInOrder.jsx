@@ -7,7 +7,6 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import ConfirmModal from '../../CPStaff/CPSInOrder/ConfirmModal';
 import CancelModal from '../../CPStaff/CPSInOrder/CancelModal';
 import { CONFIRMORDER, ORDERSTATUS, formatTime } from '../../../common/const';
-import { useNavigate } from 'react-router-dom';
 
 const EPOInOrder = () => {
   const [orderData, setOrderData] = useState();
@@ -18,27 +17,27 @@ const EPOInOrder = () => {
   const [menuName, setMenuName] = useState("Choose status");
   const [orderDateView, setOrderDataView] = useState();
 
+  async function fetchOrder(ignore) {
+    try {
+      const res = await axios.get(`http://localhost:2504/order/to`, {
+        params: {
+          id: currentPoint.epoint
+        }
+      });
+      if (!ignore) {
+        setOrderData(res.data);
+        setOrderDataView(res.data);
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     let ignore = false;
 
-    async function fetchOrder() {
-      try {
-        const res = await axios.get(`http://localhost:2504/order/to`, {
-          params: {
-            id: currentPoint.epoint
-          }
-        });
-        if (!ignore) {
-          setOrderData(res.data);
-          setOrderDataView(res.data);
-          console.log(res.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    fetchOrder();
+    fetchOrder(ignore);
 
     return () => {
       ignore = true;
@@ -60,6 +59,7 @@ const EPOInOrder = () => {
       if (res.status === 200) {
         console.log(res);
         setConfirmModal(false);
+        fetchOrder(false);
       }
     } catch (err) {
       console.log(err);

@@ -4,6 +4,7 @@ import { Divider, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakr
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/authContext';
+import { formatTime } from '../../../common/const';
 
 const CPSBill = () => {
     const navigate = useNavigate();
@@ -61,7 +62,7 @@ const CPSBill = () => {
                                         <Td>{el._id}</Td>
                                         <Td>{el.sender.name}</Td>
                                         <Td>{el.receiver.name}</Td>
-                                        <Td>{el.timeSent}</Td>
+                                        <Td>{formatTime(el.timeSent)}</Td>
                                         <Td>{el.status}</Td>
                                     </Tr>
                                 ))

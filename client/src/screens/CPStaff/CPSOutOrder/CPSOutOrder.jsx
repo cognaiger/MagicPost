@@ -5,12 +5,10 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { AuthContext } from '../../../context/authContext';
 import axios from 'axios';
 import { ORDERSTATUS, formatTime } from '../../../common/const';
-import { useNavigate } from 'react-router-dom';
 
 const CPSOutOrder = () => {
   const [orderData, setOrderData] = useState();
   const { currentPoint } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [menuName, setMenuName] = useState("Choose status");
   const [orderDateView, setOrderDataView] = useState();
 
@@ -38,7 +36,7 @@ const CPSOutOrder = () => {
     return () => {
       ignore = true;
     }
-  }, [currentPoint.epoint]);
+  }, [currentPoint.cpoint]);
 
   const filter = (type) => {
     if (type === "All") {

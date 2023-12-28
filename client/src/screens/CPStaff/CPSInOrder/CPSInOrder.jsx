@@ -18,26 +18,26 @@ const CPSInOrder = () => {
     const [orderDateView, setOrderDataView] = useState();
     const [menuName, setMenuName] = useState("Choose status");
 
+    async function fetchOrder(ignore) {
+        try {
+            const res = await axios.get(`http://localhost:2504/order/to`, {
+                params: {
+                    id: currentPoint.cpoint
+                }
+            });
+            if (!ignore) {
+                setOrderData(res.data);
+                setOrderDataView(res.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         let ignore = false;
 
-        async function fetchOrder() {
-            try {
-                const res = await axios.get(`http://localhost:2504/order/to`, {
-                    params: {
-                        id: currentPoint.cpoint
-                    }
-                });
-                if (!ignore) {
-                    setOrderData(res.data);
-                    setOrderDataView(res.data);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-        fetchOrder();
+        fetchOrder(ignore);
 
         return () => {
             ignore = true;
@@ -70,6 +70,7 @@ const CPSInOrder = () => {
             if (res.status === 200) {
                 console.log(res);
                 setConfirmModal(false);
+                fetchOrder(false);
             }
         } catch (err) {
             console.log(err);
@@ -128,10 +129,16 @@ const CPSInOrder = () => {
                                                             <div>Cancel</div>
                                                         </button>
                                                     </div>
-                                                ) : (
+                                                ) : el.status === ORDERSTATUS.CONFIRMED ? (
                                                     <div className='buttons'>
                                                         <button className='confirmed'>
                                                             <div>Confirmed</div>
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <div className='buttons'>
+                                                        <button className='cancel'>
+                                                            <div>Canceled</div>
                                                         </button>
                                                     </div>
                                                 )

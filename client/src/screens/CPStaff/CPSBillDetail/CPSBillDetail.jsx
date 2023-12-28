@@ -6,7 +6,7 @@ import ModalConfirm from './ModalConfirm';
 import { AuthContext } from '../../../context/authContext';
 import { BILLSTATUS, ORDERTYPE } from '../../../common/const';
 import { Divider } from '@chakra-ui/react';
-
+import { formatTime } from '../../../common/const';
 
 const CPSBillDetail = () => {
   const { id } = useParams();
@@ -14,22 +14,22 @@ const CPSBillDetail = () => {
   const { currentPoint } = useContext(AuthContext);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
+  async function fetchData(ignore) {
+    try {
+      const res = await axios.get(`http://localhost:2504/bill/${id}`);
+      console.log(res.data);
+      if (!ignore && res.status === 200) {
+        setBillData(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     let ignore = false;
 
-    async function fetchData() {
-      try {
-        const res = await axios.get(`http://localhost:2504/bill/${id}`);
-        console.log(res.data);
-        if (!ignore && res.status === 200) {
-          setBillData(res.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    fetchData();
+    fetchData(ignore);
 
     return () => {
       ignore = true;
@@ -59,6 +59,7 @@ const CPSBillDetail = () => {
       if (res.status === 201) {
         console.log('successful');
         setConfirmOpen(false);
+        fetchData(false);
       }
     } catch (err) {
       console.log('in catch');
@@ -104,7 +105,7 @@ const CPSBillDetail = () => {
         <div className='header1'>4. Fail Option</div>
         <div>{billData.failOption}</div>
         <div className='header1'>5. Time created</div>
-        <div>{billData.timeSent}</div>
+        <div>{formatTime(billData.timeSent)}</div>
         <div className='header1'>6. Fee</div>
         <div>${billData.fee}</div>
         <div className='header1'>7. Weigh</div>

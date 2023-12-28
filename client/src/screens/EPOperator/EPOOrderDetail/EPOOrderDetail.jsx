@@ -12,23 +12,23 @@ const EPOOrderDetail = () => {
     const [successDeliverOpen, setSuccessDeliverOpen] = useState(false);
     const [failDeliverOpen, setFailDeliverOpen] = useState(false);
 
+    async function fetchData(ignore) {
+        try {
+            const res = await axios.get(`http://localhost:2504/order/${id}`);
+            if (!ignore && res.status === 200) {
+                setOrderData(res.data);
+            } else {
+                console.log('response status different from 200');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         let ignore = false;
 
-        async function fetchData() {
-            try {
-                const res = await axios.get(`http://localhost:2504/order/${id}`);
-                if (!ignore && res.status === 200) {
-                    setOrderData(res.data);
-                } else {
-                    console.log('response status different from 200');
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-        fetchData();
+        fetchData(ignore);
 
         return () => {
             ignore = true;
@@ -44,6 +44,7 @@ const EPOOrderDetail = () => {
             if (res.status === 200) {
                 console.log(res);
                 setSuccessDeliverOpen(false);
+                fetchData(false);
             }
         } catch (err) {
             console.log(err);
@@ -59,6 +60,7 @@ const EPOOrderDetail = () => {
             if (res.status === 200) {
                 console.log(res);
                 setFailDeliverOpen(false);
+                fetchData(false);
             }
         } catch (err) {
             console.log(err);
